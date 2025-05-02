@@ -1,0 +1,69 @@
+<section class="result-list-page">
+    <div class="container">
+        <div x-data="{ secondsLeft: {{ config('quiz.secondsPerQuestion') }} }" x-init="setInterval(() => {
+    if (secondsLeft > 1) { secondsLeft--; } else {
+        secondsLeft = {{ config('quiz.secondsPerQuestion') }};
+        $wire.nextQuestion();
+    }
+}, 1000);">
+            <div class="items-end justify-between result-summary d-flex">
+                <div class="heading short">Level 1 <span>Question {{ $currentQuestionIndex + 1 }} of {{ $this->questionsCount }}:</div>
+                <div class="result-sumary-test">
+                    <ul class="justify-between d-flex">
+                        <li>
+                            <span>Date : </span> {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
+                        </li>
+                        <li>
+                        <span>Time: </span>{{ \Carbon\Carbon::now('Asia/Kolkata')->format('h:i A') }}
+
+
+                        </li>
+                        <li>
+                            <span>Time Left: </span> <em x-text="secondsLeft" class="font-bold"></em>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-question-answer step-first">
+                <ul class="justify-center d-flex">
+                    <li class="justify-between outer d-flex">
+                        <div class="count">{{ $currentQuestionIndex + 1 }}</div>
+                        <div class="detail">
+                            <div class="question">{{ $currentQuestion->text }}</div>
+                            @if ($currentQuestion->image_path)
+                            <div class="justify-center mt-2 mb-2 image d-flex">
+                                <img src="{{url($currentQuestion->image_path)}}">
+                            </div>
+                            @endif
+                            <ul class="answer">
+                                @foreach ($currentQuestion->options as $option)
+                                <li>
+                                    <input type="radio" id="option.{{ $option->id }}" wire:model.defer="answersOfQuestions.{{ $currentQuestionIndex }}" name="answersOfQuestions.{{ $currentQuestionIndex }}" value="{{ $option->id }}">
+                                    <label for="option.{{ $option->id }}">{{ $option->text }}</label>
+                                </li>
+                                @endforeach
+                            </ul>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="justify-center mt-6 links d-flex">
+                @if ($currentQuestionIndex < $this->questionsCount - 1)
+                    <div class="mt-4">
+                        <x-secondary-button class="red" x-on:click="secondsLeft = {{ config('quiz.secondsPerQuestion') }}; $wire.nextQuestion();">
+                            Next question
+                        </x-secondary-button>
+                    </div>
+                    @else
+                    <div class="mt-4">
+                        <x-primary-button class="red" x-on:click="$wire.submit();">Submit
+                        </x-primary-button>
+                    </div>
+                    @endif
+            </div>
+        </div>
+    </div>
+</section>

@@ -65,7 +65,7 @@ Route::view('guidelines', 'content.guidelines');
 Route::view('institutes', 'content.institutes');
 Route::view('rewards', 'content.rewards');
 Route::view('terms_and_conditions', 'content.terms_and_conditions');
-Route::view('thankyou', 'content.thankyou');
+Route::view('thankyou/{id?}', 'content.thankyou');
 Route::view('congratulation', 'content.congratulation')->name('quiz.congratulation');
 Route::view('privacy-policy', 'content.privacy_policy');
 

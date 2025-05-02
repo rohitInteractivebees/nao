@@ -3,10 +3,11 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Response;
+use App\Models\Instute;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\View\View;
 
 class CollegeList extends Component
 {
@@ -32,6 +33,13 @@ class CollegeList extends Component
         if ($admin) {
             $admin->is_verified = $request->verify;
             $admin->save();
+            if ($admin->institute) {
+                $institute = Instute::find($admin->institute);
+                if ($institute) {
+                    $institute->status = 1;
+                    $institute->save();
+                }
+            }
           // Mail::to($admin->email)->send(new VarifyEmail($admin->name));
             return response()->json(['success' => true]);
         }

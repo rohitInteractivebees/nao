@@ -18,10 +18,13 @@
                                         ID
                                     </th>
                                     <th width="200">
-                                        Name
+                                       Principal Name
                                     </th>
                                     <th width="300">
                                         Email
+                                    </th>
+                                    <th width="300">
+                                        Mobile
                                     </th>
                                     <th width="400">
                                         School
@@ -44,6 +47,9 @@
                                         </td>
                                         <td>
                                             {{ $admin->email }}
+                                        </td>
+                                        <td>
+                                            {{ $admin->phone }}
                                         </td>
                                         @php
                                             $inst =  App\Models\Instute::find($admin->institute);

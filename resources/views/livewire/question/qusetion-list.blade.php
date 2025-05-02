@@ -50,7 +50,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3"
+                                        <td colspan="4"
                                             class="px-6 py-4 leading-5 text-center text-gray-900 whitespace-no-wrap">
                                             No questions were found.
                                         </td>

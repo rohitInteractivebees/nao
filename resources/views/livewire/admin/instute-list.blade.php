@@ -1,17 +1,17 @@
 <div>
-   
+
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden">
                 <div class="p-6 text-gray-900">
-                    <div class="mb-4">
+                    {{-- <div class="mb-4">
                         <a href="{{ route('institute.create') }}"
                             class="common-btn short">
                             Create School
                         </a>
-                    </div>
+                    </div> --}}
 
-                    <div class="mb-4 min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
+                    <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
                                 <tr>
@@ -21,7 +21,10 @@
                                     <th width="900">
                                         Name
                                     </th>
-                                    <th width="100" align="center">      
+                                    <th width="900">
+                                        Status
+                                    </th>
+                                    <th width="100" align="center">
                                         Action
                                     </th>
                                 </tr>
@@ -33,20 +36,26 @@
                                         <td>
                                             {{ $admin->name }}
                                         </td>
-                                       
+                                        <td>
+                                            @if($admin->status == 0)
+                                                <button type="button" class="table-btn red no-hov no-pointer">Not Verified</button>
+                                            @elseif($admin->status == 1)
+                                                <button type="button" class="table-btn green no-hov no-pointer">Verified</button>
+                                            @endif
+                                        </td>
                                         <td>
                                         <a href="{{ route('institute.edit',  $admin->id ) }}">
                                             <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="">
                                         </a>
-                                            <a href="{{ route('institute.delete',  $admin->id ) }}">
+                                            {{-- <a href="{{ route('institute.delete',  $admin->id ) }}">
                                                 <img src="{{ asset('/assets/images/icon-delete.png') }}" alt="">
-                                            </a>
+                                            </a> --}}
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
                                         <td colspan="8"
-                                            class="px-6 py-4 text-center leading-5 text-gray-900 whitespace-no-wrap">
+                                            class="px-6 py-4 leading-5 text-center text-gray-900 whitespace-no-wrap">
                                             No School were found.
                                         </td>
                                     </tr>

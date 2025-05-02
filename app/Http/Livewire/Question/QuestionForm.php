@@ -27,7 +27,8 @@ class QuestionForm extends Component
         'question.answer_explanation' => 'nullable|string',
         'question.more_info_link' => 'nullable',
         'options' => 'required|array',
-        'options.*.text' => 'required|string',
+        'question.text' => 'required|string',
+        'options.*.text' => 'nullable|string',
         'selectedClassIds' => 'required|array|min:1',
         'selectedClassIds.*' => 'exists:classess,id',
     ];
@@ -69,24 +70,54 @@ class QuestionForm extends Component
     public function save()
     {
         $this->validate();
+         // Count how many options have non-empty text
+        $filledOptions = collect($this->options)->filter(function ($option) {
+            return !empty($option['text']);
+        });
 
+        if ($filledOptions->count() < 2) {
+            $this->addError('options', 'At least 2 options must be filled.');
+            return;
+        }
+        // Handle image upload
         if ($this->image) {
             $imageName = time() . '.' . $this->image->getClientOriginalExtension();
             $imagePath = $this->image->storeAs('byd', $imageName, 'public');
-
             $this->question->image_path =  $imagePath;
         }
+
+        // Update other question fields
         $this->question->class_ids = json_encode($this->selectedClassIds);
         $this->question->save();
 
-        $this->question->options()->delete();
-
-        foreach ($this->options as $option) {
-            $this->question->options()->create($option);
+        // --- Handle options update ---
+        $existingOptionIds = $this->question->options()->pluck('id')->toArray();
+        $submittedOptionIds = [];
+        ksort($this->options);
+        foreach ($this->options as $optionData) {
+            if($optionData['text'] != '' && $optionData['text'] !=null)
+            {
+                if (!empty($optionData['id']) && in_array($optionData['id'], $existingOptionIds)) {
+                    // Update existing option
+                    $option = $this->question->options()->find($optionData['id']);
+                    $option->update($optionData);
+                    $submittedOptionIds[] = $option->id;
+                } else {
+                    // Create new option
+                    $newOption = $this->question->options()->create($optionData);
+                    $submittedOptionIds[] = $newOption->id;
+                }
+            }
         }
+
+        // Delete removed options (those not present in submitted data)
+        $this->question->options()
+            ->whereNotIn('id', $submittedOptionIds)
+            ->delete();
 
         return redirect()->route('questions');
     }
+
 
 
     public function render(): View

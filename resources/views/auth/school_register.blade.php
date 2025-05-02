@@ -6,20 +6,15 @@
         @csrf
 
 
-        @php
+        {{-- @php
             $data = App\Models\Instute::get();
-        @endphp
+        @endphp --}}
 
         <div class="justify-between half-view d-flex">
             <div class="form-style">
-                <x-input-label for="school" :value="__('School')" />
-                <select id="school" class="block w-full mt-1" name="school" required>
-                    <option value="" disabled selected>Select your School</option>
-                    @foreach($data as $val)
-                        <option value="{{$val->id}}">{{$val->name}}</option>
-                    @endforeach
-
-                </select>
+                <x-input-label for="school" :value="__('School Name')" />
+                <x-text-input id="school" class="block w-full mt-1" type="text" name="school" :value="old('school')" required
+                    autofocus autocomplete="school" />
                 <x-input-error :messages="$errors->get('school')" class="mt-2" />
             </div>
 

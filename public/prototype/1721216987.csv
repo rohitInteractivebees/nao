@@ -1,0 +1,321 @@
+1,Lead-acid (Pb-acid),Null,1
+2,AA Cells,Null,2
+3,Primary Battery,Null,3
+4,Measurement Of Current In Which A Battery Is Charged,Null,4
+5,Mechanical,Null,5
+6,     Lead Acid,Null,6
+7,Permanent magnet,Null,7
+8,     AC to DC,Null,8
+9,Matching maximum motor speed with maximum vehicle speed,Null,9
+10,Unit cell voltages add up in series.,Null,10
+11,Unit cell currents add up in series.,Null,11
+12,Unit cell energies add up in series.,Null,12
+13,    Battery energy storage and power acceptance capacity,Null,13
+14,Inclined,Null,14
+15,Ability of the vehicle to climb 1.5 m over 100 m of horizontal distance.,Null,15
+16,Security of Charging,Null,16
+17,State of Happiness,Null,17
+18,Depth of Decay,Null,18
+19,Brake Management System,Null,19
+20,It is this voltage that generally defines the “full” state of the battery.,Null,20
+21,"The number of discharge-charge cycles for which the
+battery can be used.",Null,21
+22,400 V,Null,22
+23,Helium & Oxygen,Null,23
+24,Constant Current-Constant Vehicle,Null,24
+25,Compound Velocity Controlled Combustion,Null,25
+26,CV-CC,Null,26
+27,500 A,Null,27
+28,Kilowatt-hour (kWh),Null,28
+29,Li-Ion Battery,Null,29
+30,310 Kg,Null,30
+31,10 KWh,Null,31
+32,ICEV,Null,32
+33,PHEV,Null,33
+34,ICEV,Null,34
+35,ICEV,Null,35
+36,ICEV,Null,36
+37,ICEV,Null,37
+38,Micro Hybrid,Null,38
+39,EV Supply Equipment,Null,39
+40,Faster Addition & Maintenance of EVs,Null,40
+41,Fast AC Charging,Null,41
+42,Sodium Azide,Null,42
+43,Belt replacement,Null,43
+44,8,Null,44
+45,Controlled Area Network,Null,45
+46,Share information between power train & ECUs,Null,46
+47,LiCoO2: Lithium-cobalt-oxide,Null,47
+48,Automobile Indian Standards,Null,48
+49,AIS-100 (Rev. 1)/DF,Null,49
+50,General Motors,Null,50
+51,ISO-14001: 2015,Null,51
+52,Lead-acid (100~130 Wh/Kg),Null,52
+53,4000 Cells,Null,53
+54,Panasonic,Null,54
+55,Buy Your Dream,Null,55
+56,Clean Advanced Technology Lab,Null,56
+57,"1. Lead Acid
+2. Ni-MH
+3. Ni-Cd
+4. Li-Ion",Null,57
+58,21700,Null,58
+59,"1. 65 mm is the Dia Of Cell
+2. 18 mm is the Length of Cell",Null,59
+60,O Cha Demo Ikaga Desuka,Null,60
+61,USA,Null,61
+62,1 hour,Null,62
+63,Limited charging infrastructure,Null,63
+64,80~100 KM,Null,64
+65,Kinetic conversion,Null,65
+66,Controlling the air conditioning system,Null,66
+67,Balancing cell voltages,Null,67
+68,Adjusting the side mirrors,Null,68
+69,By decreasing the battery's capacity,Null,69
+70,Tire pressure,Null,70
+71,150 (ICEV)/24 (EV),Null,71
+72,30 (ICEV)/10 (EV),Null,72
+73,70%~80%,Null,73
+74,0.25,Null,74
+75,10%~20%,Null,75
+76,Lithium-ion (Li-ion),Null,1
+77,AAA Cells,Null,2
+78,Secondary Battery,Null,3
+79,Measurement Of Current In Which A Battery Is Discharged,Null,4
+80,Electrical,Null,5
+81,Nickle-Metal Hydride,Null,6
+82,Windings or coils,Null,7
+83,DC to AC,Null,8
+84,Matching maximum motor torque with maximum vehicle gradeability,Null,9
+85,    Unit cell voltages add up in parallel,Null,10
+86,    Unit cell currents add up in parallel,Null,11
+87,Unit cell energies add up in parallel,Null,12
+88,    Route profile and speed v/s time for the drive cycle,Null,13
+89,Series,Null,14
+90,Ability of the vehicle to climb 150 m over 100 m of horizontal distance.,Null,15
+91,State of Charge,Null,16
+92,State of Hygiene,Null,17
+93,Deepness of Discharge,Null,18
+94,Browser Management System,Null,19
+95,It is this voltage that generally defines the “empty” state of the battery.,Null,20
+96,"The number of discharge-charge cycles which the
+battery can sustain till it fails.",Null,21
+97,600 V,Null,22
+98,Nitrogen & Oxygen,Null,23
+99,Constant Cost-Constant Volume,Null,24
+100,Compound Vortex Controlled Combustion,Null,25
+101,CC-CV,Null,26
+102,250 A,Null,27
+103,Horse Power (hp),Null,28
+104,Lead Acid Battery,Null,29
+105,320 Kg,Null,30
+106,36 KWh,Null,31
+107,EV,Null,32
+108,HICEV,Null,33
+109,HICEV,Null,34
+110,HICEV,Null,35
+111,PHEV,Null,36
+112,PHEV,Null,37
+113,Mild Hybrid,Null,38
+114,AC & DC Charging Equipment,Null,39
+115,Faster Adoption & Manufacturing of EVs,Null,40
+116,DC Charging,Null,41
+117,Potassium Nitrate,Null,42
+118,Brake pad inspections,Null,43
+119,12,Null,44
+120,Controller Area Network,Null,45
+121,Share information between the body ECUs,Null,46
+122,LiSiO2: Lithium-Silicon-oxide.,Null,47
+123,Automotive Indian Standards,Null,48
+124,AIS-004 (Part 3) and Amd. 1,Null,49
+125,Toyota,Null,50
+126,ISO-11898: 2003,Null,51
+127,NiMH (30~50 Wh/Kg),Null,52
+128,5000 Cells,Null,53
+129,LG Electronics,Null,54
+130,Build Your Dream,Null,55
+131,Consumer Advanced Technology Lab,Null,56
+132,"1. Li-Ion
+2. Lead Acid
+3. Ni-Cd
+4. Ni-MH
+",Null,57
+133,26650,Null,58
+134,"1. 18 mm is the Dia Of Cell
+2. 65 mm is the Length of Cell",Null,59
+135,Charge de Move,Null,60
+136,China,Null,61
+137,48 hours,Null,62
+138,Higher greenhouse gas emissions,Null,63
+139,300~500 KM,Null,64
+140,Regenerative braking,Null,65
+141,Monitoring and managing battery performance,Null,66
+142,Monitoring cabin temperature,Null,67
+143,Controlling windshield wiper speed,Null,68
+144,By preventing deep discharges and overcharging,Null,69
+145,Ambient humidity & Temp.,Null,70
+146,150 (ICEV)/34 (EV),Null,71
+147,30 (ICEV)/15 (EV),Null,72
+148,80%~90%,Null,73
+149,0.35,Null,74
+150,20%~30%,Null,75
+151,Sodium-sulphur (NaS),Null,1
+152,18650 Cells,Null,2
+153,Neither Primary Nor secondary,Null,3
+154,Measurement Of Current In Which A Battery Is Charged And Discharged,Null,4
+155,Hybrid,Null,5
+156,Lithium Ion,Null,6
+157,Electromagnets,Null,7
+158,DC to DC,Null,8
+159,Both,Null,9
+160,None of the 1 & 2,Null,10
+161,None of the 1 & 2,Null,11
+162,None of the 1 & 2,Null,12
+163,Both,Null,13
+164,Parallel,Null,14
+165,Ability of the vehicle to climb 15 m over 100 m of horizontal distance.,Null,15
+166,State of Coulomb,Null,16
+167,State of Health,Null,17
+168,Deptt. Of Defence,Null,18
+169,Battery Management System,Null,19
+170,It is this voltage that generally defines the “50%” state of the battery.,Null,20
+171,"The number of discharge-charge cycles the
+battery can experience before it fails to meet specific performance criteria",Null,21
+172,800 V,Null,22
+173,Hydrogen & Oxygen,Null,23
+174,Constant Current-Constant Voltage,Null,24
+175,Compound Volume Controlled Combustion,Null,25
+176,VV-CC,Null,26
+177,100 A,Null,27
+178,Gallon,Null,28
+179,Ni-Cd Battery,Null,29
+180,330 Kg,Null,30
+181,3.6 KWh,Null,31
+182,HEV,Null,32
+183,BEV,Null,33
+184,FCEV,Null,34
+185,FCEV,Null,35
+186,HEV,Null,36
+187,HEV,Null,37
+188,Strong Hybrid,Null,38
+189,Charging Cables/ Metering,Null,39
+190,"Feasibility, Adoption, & Manufacturing of EVs",Null,40
+191,Slow AC Charging,Null,41
+192,Both Sodium Azide & Potassium Nitrate,Null,42
+193,"	Oil change",Null,43
+194,16,Null,44
+195,Campus Area Network,Null,45
+196,Share information between different ECUs,Null,46
+197,LiMnNiCo: Lithium-manganese-nickel-cobalt,Null,47
+198,Automotive Industry Standards,Null,48
+199,AIS-156 & AIS-038 (Rev. 2),Null,49
+200,BOSCH,Null,50
+201,ISO-9001: 2015,Null,51
+202,Li-Ion (30~50 WH/Kg),Null,52
+203,6000 Cells,Null,53
+204,CATL,Null,54
+205,Beyond Your Dreams,Null,55
+206,Contemporary Amperex Technology Co. Limited,Null,56
+207,"1. Lead Acid
+2. Li-Ion
+3. Ni-Cd
+4. Ni-MH
+",Null,57
+208,10440,Null,58
+209,"1. 186 mm is the Length Of Cell
+2. 50 mm is the Dia of Cell",Null,59
+210,Charge for Moving,Null,60
+211,Germany,Null,61
+212,24 hours,Null,62
+213,Lower energy efficiency,Null,63
+214,800~1000 KM,Null,64
+215,Friction recovery,Null,65
+216,Adjusting tire pressure,Null,66
+217,Adjusting seat positions,Null,67
+218,Adjusting the steering wheel angle,Null,68
+219,By increasing the battery's weight,Null,69
+220,State of charge (SOC),Null,70
+221,150 (ICEV)/44 (EV),Null,71
+222,24 (ICEV)/11 (EV),Null,72
+223,90%~100%,Null,73
+224,0.45,Null,74
+225,30%~40%,Null,75
+226,Nickel-cadmium (NiCd),Null,1
+227,Button Cells,Null,2
+228,Both primary and Secondary,Null,3
+229,None Of These,Null,4
+230,Electro-mechanical,Null,5
+231,Zinc-Carbon,Null,6
+232,None of the above,Null,7
+233,AC to AC,Null,8
+234,None,Null,9
+235,Both 1 & 2,Null,10
+236,Both 1 & 2,Null,11
+237,Both 1 & 2,Null,12
+238,None,Null,13
+239,Series-Parallel,Null,14
+240,Ability of the vehicle to climb 0.15 m over 100 m of horizontal distance.,Null,15
+241,Status of Charging,Null,16
+242,Status of Health,Null,17
+243,Depth of Discharge,Null,18
+244,Baking Management System,Null,19
+245,It is this voltage that generally defines the “10%” state of the battery.,Null,20
+246,"The total number of discharge-charge cycles the
+battery can experience.",Null,21
+247,All of Them,Null,22
+248,Water & Oxygen,Null,23
+249,Constant Cost-Constant Vehicle,Null,24
+250,Compound Vortex Controlled Capacity,Null,25
+251,VC-CV,Null,26
+252,1000 A,Null,27
+253,Ampere,Null,28
+254,Al-Air Battery,Null,29
+255,340 Kg,Null,30
+256,None Of These,Null,31
+257,PHEV,Null,32
+258,FCEV,Null,33
+259,BEV,Null,34
+260,BEV,Null,35
+261,BEV,Null,36
+262,BEV,Null,37
+263,None of these,Null,38
+264,All of these,Null,39
+265,All of these,Null,40
+266,Induction Charging,Null,41
+267,None of the two,Null,42
+268,New spark plugs,Null,43
+269,24,Null,44
+270,Community Area Network,Null,45
+271,Provide entertainment in the vehicle,Null,46
+272,LiMnO2: Lithium-manganese-oxide,Null,47
+273,All of them,Null,48
+274,AIS-049 and Amd. 1 & 2,Null,49
+275,Mercedez,Null,50
+276,ISO-50001: 2018,Null,51
+277,Ni-Cd (45~80 Wh/kg),Null,52
+278,7000 Cells,Null,53
+279,BYD,Null,54
+280,Better Your Drive,Null,55
+281,Cylindrical Amperex Technology Limited,Null,56
+282,"1. Lead Acid
+2. Ni-Cd
+3. Ni-MH
+4. Li-Ion",Null,57
+283,18650,Null,58
+284,It is random number and does not indicate anything.,Null,59
+285,All of Them,Null,60
+286,Japan,Null,61
+287,4-6 hours,Null,62
+288,Higher operating costs,Null,63
+289,1600~2500 KM,Null,64
+290,Energy recapture,Null,65
+291,Regulating the suspension system,Null,66
+292,Controlling the radio volume,Null,67
+293,Preventing overcharging and overheating of the battery,Null,68
+294,By reducing the number of charging cycles,Null,69
+295,Vehicle Speed,Null,70
+296,150 (ICEV)/54 (EV),Null,71
+297,22 (ICEV)/11 (EV),Null,72
+298,605~70%,Null,73
+299,0.5,Null,74
+300,50%~60%,Null,75

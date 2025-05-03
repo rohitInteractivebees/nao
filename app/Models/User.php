@@ -40,7 +40,8 @@ class User extends Authenticatable
         'state',
         'city',
         'spoc_mobile',
-        'country'
+        'country',
+        'reg_no'
 
 
 

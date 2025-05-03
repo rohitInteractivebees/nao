@@ -2,25 +2,30 @@
     <div class="text-center text-sec">
         <div class="heading">Register to Participate</div>
     </div>
-    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('register.store') }}" enctype="multipart/form-data">
         @csrf
 
 
         @php
-            $data = App\Models\Instute::get();
+            $data = App\Models\Instute::where('status',1)->get();
             $data_classess = App\Models\Classess::get();
         @endphp
 
         <div class="justify-between half-view d-flex">
             <div class="form-style">
                 <x-input-label for="school" :value="__('School')" />
-                <select id="school" class="block w-full mt-1" name="school" required>
-                    <option value="" disabled selected>Select your School</option>
-                    @foreach($data as $val)
-                        <option value="{{$val->id}}">{{$val->name}}</option>
-                    @endforeach
+                @if($institude_data != null)
+                    <input type="text" class="block w-full mt-1" readonly value="{{ $institude_data->name }}" required />
+                    <input type="hidden" value={{ $institude_data->id }} name="school" required />
+                @else
+                    <select id="school" class="block w-full mt-1" name="school" required>
+                        <option value="" disabled selected>Select your School</option>
+                        @foreach($data as $val)
+                            <option value="{{$val->id}}">{{$val->name}}</option>
+                        @endforeach
 
-                </select>
+                    </select>
+                @endif
                 <x-input-error :messages="$errors->get('school')" class="mt-2" />
             </div>
 

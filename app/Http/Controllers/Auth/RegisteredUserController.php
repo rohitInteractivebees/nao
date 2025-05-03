@@ -15,19 +15,24 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use App\Mail\InstituteLoginMail;
-
+use App\Models\Instute;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create($code = null): View
     {
+        $institude_data = null;
 
+        if (!empty($code)) {
+            $institude_data = Instute::where('code', $code)->where('status',1)->first();
+        }
 
-        return view('auth.register');
+        return view('auth.register', compact('institude_data'));
     }
+
     public function school_create(): View
     {
 
@@ -114,6 +119,18 @@ class RegisteredUserController extends Controller
             $encodedClassname = json_encode([(string) $inputClassname]);
         }
 
+        $lastUser = User::where('reg_no', 'LIKE', 'USER_%')
+        ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
+        ->first();
+
+        $lastNumber = 0;
+        if ($lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)) {
+            $lastNumber = (int) $matches[1];
+        }
+
+        $newRegNo = 'USER_' . ($lastNumber + 1);
+
+
         $user = User::create([
             'name' => $request->student_name,
             'parent_name' => $request->parent_name,
@@ -126,6 +143,7 @@ class RegisteredUserController extends Controller
             'phone' => $request->phone,
             'idcard' => 'idcards/'.$idcardPath,
             'password' => Hash::make($request->password),
+            'reg_no' => $newRegNo,
         ]);
 
         event(new Registered($user));
@@ -133,7 +151,7 @@ class RegisteredUserController extends Controller
         // Auth::login($user);
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect('/thankyou');
+        return redirect('/thankyou/');
     }
     public function school_store(Request $request): RedirectResponse
     {
@@ -144,7 +162,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'mobile' => ['required', 'string', 'min:10', 'max:10','unique:users,phone'],
             'spoc_mobile' => ['required', 'string', 'min:10', 'max:10', 'unique:users,spoc_mobile'],
-            'school' => ['required', 'integer', 'exists:instutes,id'],
+            'school' => ['required', 'string', 'unique:instutes,name'],
             'state' => ['required', 'string'],
             'city' => ['required', 'string'],
             'country' => ['required', 'string'],
@@ -157,11 +175,42 @@ class RegisteredUserController extends Controller
 
         $encodedClassname = json_encode(array_map('strval', (array) $inputClassname));
 
+        $lastUser = User::where('reg_no', 'LIKE', 'SCHOOL_%')
+        ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
+        ->first();
+
+        $lastNumber = 0;
+        if ($lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)) {
+            $lastNumber = (int) $matches[1];
+        }
+
+        $newRegNo = 'SCHOOL_' . ($lastNumber + 1);
+
+        $schoolName = trim($request->school);
+        // Create the institute
+        $institute = Instute::create([
+            'name' => $schoolName,
+        ]);
+
+        // Generate code: first letter of each word + ID
+        $initials = collect(explode(' ', $schoolName))
+            ->filter()
+            ->map(fn($word) => strtoupper(substr($word, 0, 1)))
+            ->implode('');
+
+        $code = $initials . $institute->id;
+
+        // Update the record with the generated code
+        $institute->code = $code;
+        $institute->save();
+
+        $institute_id = $institute->id;
+
         $user = User::create([
             'name' => $request->principal_name,
             'parent_name' => $request->spoc_name,
             'email' => $request->spoc_email,
-            'institute' => $request->school,
+            'institute' => $institute_id,
             'class' => $encodedClassname,
             'state' =>$request->state,
             'city' =>$request->city,
@@ -170,10 +219,11 @@ class RegisteredUserController extends Controller
             'country' => $request->country,
             'password' => Hash::make($request->password),
             'is_college' => 1,
+            'reg_no' => $newRegNo,
         ]);
         //Mail::to($request->spoc_email)->send(new InstituteLoginMail($request->spoc_name,$request->spoc_email,$request->password));
 
-        return redirect('/thankyou');
+        return redirect('/thankyou/'.$user->id);
     }
 
 }

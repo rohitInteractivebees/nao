@@ -28,7 +28,7 @@
                             <input wire:model="image" id="image" class="block w-full mt-1" type="file" name="image" accept="image/*" />
                             <x-input-error :messages="$errors->get('image')" class="mt-2" />
                         </div>
-
+                        
                         <div class="mt-4">
                             {{-- Option 1 --}}
                             <div class="items-end form-style d-flex add-form">
@@ -80,7 +80,7 @@
                         </div>
 
 
-                        <div class="form-style">
+                        {{-- <div class="form-style">
                             <x-input-label for="code_snippet" value="Code snippet" />
                             <x-textarea wire:model.defer="question.code_snippet" id="code_snippet" class="block w-full mt-1" name="code_snippet"></x-textarea>
                             <x-input-error :messages="$errors->get('question.code_snippet')" class="mt-2" />
@@ -96,7 +96,7 @@
                             <x-input-label for="more_info_link" value="More info link" />
                             <x-text-input wire:model.defer="question.more_info_link" id="more_info_link" class="block w-full mt-1" type="text" name="more_info_link" />
                             <x-input-error :messages="$errors->get('question.more_info_link')" class="mt-2" />
-                        </div>
+                        </div> --}}
 
                         <div class="justify-center mt-8 d-flex">
                             <x-primary-button>Submit</x-primary-button>

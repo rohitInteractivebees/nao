@@ -17,6 +17,11 @@ class Quiz extends Model
         'published',
         'public',
         'result_show',
+        'duration',
+        'start_date',
+        'end_date',
+        'result_date',
+        'class_ids',
     ];
 
     protected $casts = [

@@ -22,13 +22,18 @@
                             <x-textarea wire:model.defer="question.text" id="text" class="block w-full mt-1" name="text" required></x-textarea>
                             <x-input-error :messages="$errors->get('question.text')" class="mt-2" />
                         </div>
+                        <div class="form-style">
+                            <x-input-label for="text" value="Question Marks" />
+                            <x-text-input type="number" wire:model.defer="question.marks" id="marks" class="block w-full mt-1" name="marks" required />
+                            <x-input-error :messages="$errors->get('question.text')" class="mt-2" />
+                        </div>
 
                         <div class="form-style">
                             <x-input-label for="image" value="Upload Image" />
                             <input wire:model="image" id="image" class="block w-full mt-1" type="file" name="image" accept="image/*" />
                             <x-input-error :messages="$errors->get('image')" class="mt-2" />
                         </div>
-                        
+
                         <div class="mt-4">
                             {{-- Option 1 --}}
                             <div class="items-end form-style d-flex add-form">

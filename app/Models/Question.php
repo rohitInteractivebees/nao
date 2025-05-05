@@ -16,6 +16,7 @@ class Question extends Model
         'answer_explanation',
         'more_info_link',
         'image_path',
+        'marks',
     ];
 
     public function options(): HasMany

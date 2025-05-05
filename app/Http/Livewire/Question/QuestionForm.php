@@ -22,6 +22,7 @@ class QuestionForm extends Component
 
     protected $rules = [
         'question.text' => 'required|string',
+        'question.marks' => 'required|integer',
         'image' => 'nullable|image|max:1024', // Validate image file
         'question.code_snippet' => 'nullable|string',
         'question.answer_explanation' => 'nullable|string',

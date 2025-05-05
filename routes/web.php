@@ -166,6 +166,7 @@ Route::view('not-found','404.blade.php');
     Route::get('quizzes', QuizList::class)->name('quizzes');
     Route::get('quizzes/create', QuizForm::class)->name('quiz.create');
     Route::get('quizzes/{quiz}/edit', QuizForm::class)->name('quiz.edit');
+    Route::post('/quizzes/{quiz}/copy', [QuizForm::class, 'copy'])->name('quizzes.copy');
     Route::get('admins', AdminList::class)->name('admins');
     Route::get('admins/create', AdminForm::class)->name('admin.create');
     Route::get('institute/{instute}/delete', [InstuteList::class,'delete'])->name('institute.delete');

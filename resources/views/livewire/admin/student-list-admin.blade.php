@@ -4,10 +4,10 @@
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white">
                     @if(auth()->user()->is_admin)
-                        <div class="w-100 gap d-flex sm:justify-between justify-center items-end">
+                        <div class="items-end justify-center w-100 gap d-flex sm:justify-between">
                             <div class="form-style sm:w-1/2">
-                                <label class="block font-medium text-sm text-gray-700" for="quiz">School</label>
-                                <select class="block mt-1 w-full" wire:model="quiz_id1" name="quiz">
+                                <label class="block text-sm font-medium text-gray-700" for="quiz">School</label>
+                                <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
                                     <option value="0">All School</option>
                                     @foreach(App\Models\Instute::all() as $college)
                                         <option value="{{ $college->id }}">{{ $college->name }}</option>
@@ -25,7 +25,7 @@
 
                     @endif
 
-                    <div class="mt-6 mb-4 min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
+                    <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
                                 <tr>
@@ -62,10 +62,10 @@
 
 @if($student->is_verified == null)
 <button type="button" class="table-btn yellow no-hov no-pointer">Verify</button>
-  
+
 @elseif($student->is_verified == 1)
 <button type="button" class="table-btn green no-hov no-pointer">Verified</button>
-    
+
 @else
 <button type="button" class="table-btn red no-hov no-pointer">Not Verified</button>
 @endif
@@ -83,13 +83,13 @@
                                                                         <!--    <img src="{{ asset('/assets/images/icon-view-closed.png') }}" alt="">-->
                                                                         <!--@endif-->
                                                                         <!--<div class="verify-sec" id="dialog-content{{ $student->id }}">-->
-                                                                        <!--    <div class="d-flex justify-center">-->
+                                                                        <!--    <div class="justify-center d-flex">-->
                                                                         <!--        <div class="image">-->
                                                                         <!--            <img src="{{ url('/' . $student->idcard) }}" alt="">-->
                                                                         <!--        </div>-->
-                                                                        <!--        <div class="d-flex justify-center w-100 links mt-6">-->
+                                                                        <!--        <div class="justify-center mt-6 d-flex w-100 links">-->
                                                                         <!--            <a href="{{ url('/' . $student->idcard) }}"-->
-                                                                        <!--                class="common-btn admin-btn d-flex items-center" download>-->
+                                                                        <!--                class="items-center common-btn admin-btn d-flex" download>-->
                                                                         <!--                <span class="reverse-pos"><img-->
                                                                         <!--                        src="{{ asset('/assets/images/icon-upload.png') }}"-->
                                                                         <!--                        alt=""></span>-->
@@ -97,13 +97,13 @@
                                                                         <!--            </a>-->
                                                                         <!--        </div>-->
 
-                                                                        <!--        <div class="d-flex justify-center w-100 links mt-6">-->
+                                                                        <!--        <div class="justify-center mt-6 d-flex w-100 links">-->
                                                                         <!--            <button type="button"-->
                                                                         <!--                class="common-btn admin-btn green verify-button"-->
                                                                         <!--                data-admin-id="{{ $student->id }}">Verify</button>-->
                                                                         <!--        </div>-->
 
-                                                                        <!--        <div class="d-flex justify-center w-100 links mt-6">-->
+                                                                        <!--        <div class="justify-center mt-6 d-flex w-100 links">-->
                                                                         <!--            <button type="button"-->
                                                                         <!--                class="common-btn admin-btn green notverify-button"-->
                                                                         <!--                data-admin-id="{{ $student->id }}">Not Verify</button>-->
@@ -116,7 +116,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="8"
-                                            class="px-6 py-4 text-center leading-5 text-gray-900 whitespace-no-wrap">
+                                            class="px-6 py-4 leading-5 text-center text-gray-900 whitespace-no-wrap">
                                             No Student were found.
                                         </td>
                                     </tr>
@@ -237,7 +237,7 @@
             button.addEventListener('click', function (event) {
                 let adminId = event.target.dataset.adminId;
                 let buttonContainer = event.target.parentElement;
-                
+
 
                 // Hide the "Not Verify" button
                 event.target.style.display = 'none';

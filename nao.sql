@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2025 at 07:29 AM
+-- Generation Time: May 06, 2025 at 03:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -115,13 +115,11 @@ CREATE TABLE `instutes` (
 --
 
 INSERT INTO `instutes` (`id`, `code`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'JNV1', 'Jawahar Navodaya Vidyalaya', 1, '2025-04-30 07:14:53', '2025-04-30 07:14:53'),
-(2, 'CIRS2', 'Chinmaya International Residential School', 1, '2025-04-30 07:14:53', '2025-04-30 07:14:53'),
-(3, 'JPSB3', 'Jain Public school Barnagar', 1, '2025-04-30 07:14:53', '2025-04-30 07:14:53'),
-(4, 'KGNHS4', 'KAKATPUR GIRLS NODAL HIGH SCHOOL', 1, '2025-04-30 07:14:53', '2025-04-30 07:14:53'),
-(5, 'JNVEM5', 'Jawahar Navodaya vidyalaya East Medinipur', 1, '2025-04-30 07:14:53', '2025-04-30 07:14:53'),
-(6, 'JNVEMD6', 'Jawahar Navodaya vidyalaya East Medini Dehlipur', 1, '2025-05-02 02:19:06', '2025-05-02 02:19:06'),
-(7, 'JND7', 'Jawahar Navodaya Dehli1', 1, '2025-05-02 02:22:13', '2025-05-02 04:40:24');
+(1, 'JNV1', 'Jawahar Navodaya Vidyalaya', 1, '2025-05-06 03:01:01', '2025-05-06 03:01:01'),
+(2, 'AS2', 'ABC School', 1, '2025-05-06 05:41:48', '2025-05-06 05:41:48'),
+(3, 'SPS3', 'SD public School', 1, '2025-05-06 05:41:48', '2025-05-06 05:41:48'),
+(4, 'DPS4', 'Delhi public School', 1, '2025-05-06 05:41:48', '2025-05-06 05:41:48'),
+(5, 'ZS5', 'ZXC School', 1, '2025-05-06 06:34:26', '2025-05-06 06:34:26');
 
 -- --------------------------------------------------------
 
@@ -165,19 +163,6 @@ CREATE TABLE `options` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `options`
---
-
-INSERT INTO `options` (`id`, `text`, `correct`, `question_id`, `created_at`, `updated_at`) VALUES
-(1, 'ab', 0, 1, '2025-05-02 05:53:25', '2025-05-02 05:55:59'),
-(2, 'b', 1, 1, '2025-05-02 05:53:25', '2025-05-02 05:54:20'),
-(6, 'sdfghl', 0, 1, '2025-05-02 05:56:54', '2025-05-02 05:56:54'),
-(7, 'aaa', 1, 2, '2025-05-02 06:47:28', '2025-05-02 07:01:16'),
-(8, 'bbb', 0, 2, '2025-05-02 06:47:28', '2025-05-02 07:01:16'),
-(9, 'ccc', 0, 2, '2025-05-02 06:47:28', '2025-05-02 07:01:23'),
-(10, 'ddd', 0, 2, '2025-05-02 06:47:28', '2025-05-02 07:01:16');
 
 -- --------------------------------------------------------
 
@@ -284,15 +269,6 @@ CREATE TABLE `questions` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `questions`
---
-
-INSERT INTO `questions` (`id`, `text`, `image_path`, `code_snippet`, `answer_explanation`, `more_info_link`, `class_ids`, `marks`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'test1', NULL, NULL, NULL, NULL, '[\"1\",\"3\"]', 1, '2025-05-02 05:53:25', '2025-05-02 05:53:25', NULL),
-(2, 'test2', NULL, NULL, NULL, NULL, '[\"2\",\"4\"]', 1, '2025-05-02 06:47:28', '2025-05-02 06:47:28', NULL),
-(3, 'test3', NULL, NULL, NULL, NULL, '[\"1\",\"3\"]', 1, '2025-05-02 05:53:25', '2025-05-02 05:53:25', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -303,18 +279,6 @@ CREATE TABLE `question_quiz` (
   `question_id` bigint(20) UNSIGNED NOT NULL,
   `quiz_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `question_quiz`
---
-
-INSERT INTO `question_quiz` (`question_id`, `quiz_id`) VALUES
-(2, 1),
-(1, 2),
-(3, 2),
-(2, 4),
-(2, 5),
-(2, 6);
 
 -- --------------------------------------------------------
 
@@ -348,11 +312,7 @@ CREATE TABLE `quizzes` (
 --
 
 INSERT INTO `quizzes` (`id`, `title`, `slug`, `result_show`, `description`, `published`, `public`, `not_open`, `class_ids`, `duration`, `start_date`, `end_date`, `result_date`, `total_question`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Quiz 1', 'quiz-1', NULL, 'testing', 0, 0, NULL, 2, 30, '2025-05-05 08:23:00', '2025-05-07 08:23:00', '2025-05-15 08:23:00', 1, 1, '2025-05-05 02:53:39', '2025-05-05 05:43:35', NULL),
-(2, 'fty', 'fty', NULL, 'dty', 0, 0, NULL, 1, 55, '2025-05-05 06:52:00', '2025-05-12 06:52:00', '2025-05-13 06:52:00', 2, 1, '2025-05-05 03:56:39', '2025-05-05 06:52:01', NULL),
-(4, 'Quiz 1 (Copy)', 'quiz-1-copy', NULL, 'testing', 0, 0, NULL, 2, 30, '2025-05-05 06:56:17', '2025-05-12 06:56:17', '2025-05-13 06:56:17', 1, 0, '2025-05-05 06:56:17', '2025-05-05 06:56:17', NULL),
-(5, 'fty (Copy)', 'fty-copy', NULL, 'dty', 0, 0, NULL, 4, 55, '2025-05-05 06:52:00', '2025-05-12 06:52:00', '2025-05-13 06:52:00', 1, 1, '2025-05-05 06:58:23', '2025-05-05 07:03:56', NULL),
-(6, 'fty (Copy) (Copy)', 'fty-copy-copy', NULL, 'dty', 0, 0, NULL, 4, 55, '2025-05-05 06:52:00', '2025-05-12 06:52:00', '2025-05-13 06:52:00', 1, 0, '2025-05-05 07:06:06', '2025-05-05 07:06:06', NULL);
+(2, 'Quiz 1', 'quiz-1', NULL, 'testing', 0, 0, NULL, 2, 30, '2025-05-05 02:53:00', '2025-05-07 02:53:00', '2025-05-15 02:53:00', 1, 1, '2025-05-04 21:23:39', '2025-05-05 00:13:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -421,6 +381,7 @@ CREATE TABLE `tests` (
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `reg_no` varchar(255) DEFAULT NULL,
+  `loginId` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `parent_name` varchar(255) DEFAULT NULL,
   `idcard` varchar(255) DEFAULT NULL,
@@ -461,23 +422,18 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `reg_no`, `name`, `parent_name`, `idcard`, `institute`, `college`, `streams`, `other_stream`, `session_year`, `email`, `remark`, `phone`, `email_verified_at`, `password`, `is_admin`, `is_verified`, `level2result`, `level3result`, `level2show`, `level3show`, `level2enddate`, `level3enddate`, `is_college`, `is_selected`, `facebook_id`, `google_id`, `github_id`, `remember_token`, `created_at`, `updated_at`, `class`, `city`, `state`, `country`, `spoc_mobile`) VALUES
-(1, NULL, 'Admin', 'Admin', NULL, '1', '3', 'biomedical', NULL, '2024', 'admin@gmail.com', NULL, '7667013312', '2024-06-08 17:40:31', '$2y$10$OvynOQzHLiOxq084xsi/veIj18V/b9k4s5inNzSDJIRjx.OQn3Tjy', 1, '1', 0, 0, 1, 1, '2024-07-24', '2024-07-24', 0, 1, NULL, NULL, NULL, '6JxhjvVUh0U44mXZBXosZ3jmBzgVCrO6ZTaOIsJ8n7azNurK2gsvArZng65h', '2024-06-08 17:40:31', '2025-05-02 04:28:00', '0', NULL, NULL, NULL, NULL),
-(572, NULL, 'Sunny', NULL, 'idcards/1745999811_1720098393_Logo-01-02 1.jpg', '1', NULL, NULL, NULL, '2025-2026', 'sunny@gmail.com', NULL, '9910177633', NULL, '$2y$10$NMP2cS1or8XsZ5oUwtJkVewPQ809JHio575DIwaVRrQTRg895DSIG', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-04-30 02:26:51', '2025-04-30 02:26:51', '[\"4\"]', NULL, NULL, NULL, NULL),
-(573, NULL, 'Sunny', 'Parent', 'idcards/1746000089_1720098393_Logo-01-02 1.jpg', '2', NULL, NULL, NULL, '2025-2026', 'sunny1@gmail.com', NULL, '9910177631', NULL, '$2y$10$cCE3R2BVNgs7uvPC6.TbpuQlw/05YkDuPiPfxyqqgUpwb0Gesjqp.', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-04-30 02:31:29', '2025-04-30 02:31:29', '[\"3\"]', 'dehli', 'Sunny', NULL, NULL),
-(574, NULL, 'sunny', 'Parent', 'idcards/1746000616_1720098393_Logo-01-02 1.jpg', '2', NULL, NULL, NULL, '2025-2026', 'sunny12@gmail.com', NULL, '9910177634', NULL, '$2y$10$9hGGQwAM17VwyzXi4kuV/OxWQ7R9VVIkiuXT1UjJd7zAZWPi7I6I.', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-04-30 02:40:16', '2025-05-01 03:50:42', '[\"3\"]', 'dehli', 'dehli', NULL, NULL),
-(575, NULL, 'sunny', 'Parent', 'idcards/1746000858_1720098393_Logo-01-02 1.jpg', '2', NULL, NULL, NULL, '2025-2026', 'sunny13@gmail.com', NULL, '9910177637', NULL, '$2y$10$7tHNoP1xdWHSsvF/EoiKmuUbImxyrvXwwmb4t5NEOClu9FEZWbwcm', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-04-30 02:44:18', '2025-05-01 03:49:23', '[\"3\"]', 'dehli', 'dehli', NULL, NULL),
-(576, NULL, 'sunny', 'sunnyb', NULL, '4', NULL, NULL, NULL, NULL, 'sunny11@gmail.com', NULL, '9876543211', NULL, '$2y$10$ljqOk/boakK/fUu04jJpie4JRXbzUcfarUZXhOrR4jCYP0Gkx7w46', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-04-30 04:42:47', '2025-04-30 23:47:18', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'dehli', 'dehli', 'india', '8989898989'),
-(577, NULL, 'frh', 'dfg', 'idcards/1746013769_1720435077_dummy id.jpg', '1', NULL, NULL, NULL, '2025-2026', 's@gmail.com', NULL, '9910177622', NULL, '$2y$10$UnzzjbVmobyC2t4pm4Uyf.QI0ym7Jqaw6IPRiISXbZOkyC92l5bdu', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-04-30 10:49:29', '2025-04-30 10:49:29', '[\"1\"]', 'dehli', 'dehli', NULL, NULL),
-(578, NULL, 'sdf', 'fdg', NULL, '2', NULL, NULL, NULL, NULL, 'a@gmail.com', NULL, '8976543212', NULL, '$2y$10$vqPdUzlAiyzTcgXNKHFqLeODHtTX/wvwwI5NaP4DqNyqrMZLM9wbG', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-04-30 10:50:38', '2025-04-30 10:50:38', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'dfgdf', 'fdhdf', 'india', '6785685875'),
-(579, NULL, 'bhupendra', 'parent', '1746091698_1720435077_dummy id.jpg', '2', NULL, NULL, NULL, '212', 'bh@gmail.com', NULL, '9876543556', NULL, '$2y$10$EljrsQOSJLyvHVoOnsN8rOdFVL3UwGYO340XP0NVYReAFXY8ebhLi', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-01 03:58:18', '2025-05-01 03:58:18', '[\"2\"]', 'dehli', 'bhupendra', NULL, NULL),
-(580, NULL, 'sdfghjj', 'sdfghj', 'idcardPath/1746091981_1721179576_Karthik.JPG', '2', NULL, NULL, NULL, '212', 'asd@gmail.com', NULL, '9876545567', NULL, '$2y$10$BZff5rBpK0FtbZv8hkvR4.krv5J0Fqb7vfYu1j3Exa68JxD0iTsuG', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-01 04:03:01', '2025-05-01 04:03:01', '[\"1\"]', 'fdgh', 'sdfghjj', NULL, NULL),
-(581, NULL, 'sdfghj', 'dfgjh', 'idcards/1746092056_1721190383_IMG_20240717_094823.jpg', '2', NULL, NULL, NULL, '212', 'DFD@gmail.com', NULL, '9876556467', NULL, '$2y$10$2XzZ8osfewYeEcYSOcjKpuOTg49cPy8Vgd5UrL4qFGnSZoTVLTrXO', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-01 04:04:16', '2025-05-01 04:04:41', '[\"1\"]', 'fghfh', 'fgjgh', NULL, NULL),
-(582, NULL, 'test', 'abcd', NULL, '6', NULL, NULL, NULL, NULL, 'test@gmail.com', NULL, '3456789097', NULL, '$2y$10$Q5HazL7MdnfH/1BtpXkr7e1K83TekRd0yKtUsRDufA09y3/pamPH.', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-05-02 02:19:06', '2025-05-02 02:19:06', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'delhi', 'delhi', 'india', '5345346546'),
-(583, 'SCHOOL_1', 'test', 'abcd', NULL, '7', NULL, NULL, NULL, NULL, 'test1@gmail.com', NULL, '7896543212', NULL, '$2y$10$IA68Pi7Ey6VI8InrIKAy6.NCQA9T9JCg0uNmgu22HE9nXxz68Cir2', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-05-02 02:22:13', '2025-05-02 04:40:24', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'delhi', 'delhi', 'india', '6678578765'),
-(584, 'USER_1', 'test', 'aaaa', 'idcards/1746178567_1720501131_dummy id.jpg', '7', NULL, NULL, NULL, '2025-2026', 'adggs@gmail.com', NULL, '7667016546', NULL, '$2y$10$GKE3Yt3uZM8OlC7sVUoDl..Af9e5Qo/Ml91TKcM0QyQxGZfRtnpOi', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-02 04:06:08', '2025-05-02 04:06:08', '[\"1\"]', 'fdhh', 'fgdf', NULL, NULL),
-(585, 'USER_2', 'test', 'aaaa', 'idcards/1746178647_1720501131_dummy id.jpg', '7', NULL, NULL, NULL, '2025-2026', 'ggs@gmail.com', NULL, '7667016565', NULL, '$2y$10$ILe4mkbnoafktfgOnoc0v.ExJGl.kr9/7bG4t1tgPU.gonRp.6j82', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-02 04:07:27', '2025-05-02 04:07:27', '[\"1\"]', 'fdhh', 'fgdf', NULL, NULL),
-(586, 'USER_3', 'rrr', 'rrrr', 'idcards/1746180733_1720435077_dummy id.jpg', '7', NULL, NULL, NULL, '2025-2026', 'rrr@eee.vv', NULL, '2342342342', NULL, '$2y$10$jpUUnIbf1D0mKP/6A/GeKOILtT.t0zm/G.FevlrpPY0KYsrHQmxL.', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-02 04:42:13', '2025-05-02 04:43:45', '[\"5\"]', 'dfvdfv', 'fdf', NULL, NULL);
+INSERT INTO `users` (`id`, `reg_no`, `loginId`, `name`, `parent_name`, `idcard`, `institute`, `college`, `streams`, `other_stream`, `session_year`, `email`, `remark`, `phone`, `email_verified_at`, `password`, `is_admin`, `is_verified`, `level2result`, `level3result`, `level2show`, `level3show`, `level2enddate`, `level3enddate`, `is_college`, `is_selected`, `facebook_id`, `google_id`, `github_id`, `remember_token`, `created_at`, `updated_at`, `class`, `city`, `state`, `country`, `spoc_mobile`) VALUES
+(1, NULL, 'Admin', 'Admin', 'Admin', NULL, '0', '0', 'biomedical', NULL, '2024', 'admin@gmail.com', NULL, '7667013312', '2024-06-08 17:40:31', '$2y$10$OvynOQzHLiOxq084xsi/veIj18V/b9k4s5inNzSDJIRjx.OQn3Tjy', 1, '1', 0, 0, 1, 1, '2024-07-24', '2024-07-24', 0, 1, NULL, NULL, NULL, 'aWlypcNT6Av3BxMwY87yOsfK6cb1kyIn44qSyFJDizQLlnDUHrSSimcCve9A', '2024-06-08 17:40:31', '2025-05-02 04:28:00', '0', NULL, NULL, NULL, NULL),
+(587, 'JNV1', 'JNV16217', 'Sunny', 'Spoc Name', NULL, '1', NULL, NULL, NULL, NULL, 'sunny@gmail.com', NULL, '9875645678', NULL, '$2y$10$ju3pJC.P603M/S4d8XnW1OQUpv4rP0A9v9WwpiC7yLQtNFyFavThW', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-05-06 03:01:01', '2025-05-06 03:01:01', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'delhi', 'delhi', 'india', '9898989876'),
+(588, 'JNV1_1', 'JNV1588', 'sunny', 'parent', 'idcards/1746523145_1720435077_dummy id.jpg', '1', NULL, NULL, NULL, '2025-2026', 'sunny1@gmail.com', NULL, '9910177633', NULL, '$2y$10$/sdwA1M53J4Dt1IuZvyqAOTKxlnm8V6EoAhMc8u2YRifrMQycRxoa', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-06 03:49:05', '2025-05-06 03:57:14', '[\"2\"]', 'delhi', 'delhi', NULL, NULL),
+(589, 'AS2', 'ABC123', 'Raj kumar', 'KulshAN', NULL, '2', NULL, NULL, NULL, NULL, 'dummy1@email.com', NULL, '7897897980', NULL, '$2y$10$524CVW4eXZswQEHptkfR6.GKs2zHKEbrBSjeKh6vn0ODuhnyBD2cS', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-05-06 05:41:48', '2025-05-06 05:41:48', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'New Delhi', 'Delhi', 'India', '7897897890'),
+(590, 'SPS3', 'SDP123', 'Mohini', 'KulshAN', NULL, '3', NULL, NULL, NULL, NULL, 'dummy2@email.com', NULL, '9988774455', NULL, '$2y$10$eDYlU34MQqnIbzzyOvO4mO90e2bREpkPCrXBRgILfSh54u3Ne3NPa', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-05-06 05:41:48', '2025-05-06 05:41:48', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'New Delhi', 'Delhi', 'India', '9877899875'),
+(591, 'DPS4', 'DPS123', 'Megha rani', 'KulshAN', NULL, '4', NULL, NULL, NULL, NULL, 'dummy3@email.com', NULL, '8899775522', NULL, '$2y$10$Qc90JgYUbyEQCtE9HGoz7.JpZMuUI1YrPg8k5SQtZkwVQVWntOCqi', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-05-06 05:41:49', '2025-05-06 05:41:49', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'New Delhi', 'Delhi', 'India', '9874569852'),
+(592, 'ZS5', 'ZXC123', 'Deepak', 'KulshAN', NULL, '5', NULL, NULL, NULL, NULL, 'dummyedit5@email.com', NULL, '9988669988', NULL, '$2y$10$uIP.rJhrpQmqGFVVHTSgJe4W8Wc89ZZ5/5y3HYBlTJTnYB.CCwXWW', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2025-05-06 06:34:26', '2025-05-06 06:34:26', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]', 'New Delhi', 'Delhi', 'India', '9988552200'),
+(597, 'JNV1_2', 'one123', 'one', 'one parent', NULL, '1', NULL, NULL, NULL, '2024-2025', 'oneparent@email.com', NULL, '7897897988', NULL, '$2y$10$wypRWgIUszt/W2bncmjo9evfvCo75ruwQI5etNOdBnuqpnFZpOuMO', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-06 07:48:47', '2025-05-06 07:48:47', '[\"1\"]', 'New Delhi', 'Delhi', NULL, NULL),
+(598, 'JNV1_3', 'two123', 'two', 'Two parent', NULL, '1', NULL, NULL, NULL, '2024-2025', 'twoparent@email.com', NULL, '9988774498', NULL, '$2y$10$gO3AIDsp2LNgHp8TbzvgHuBpY9omC/I7lfIorR5F3QJ8gwd2y1ttG', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-06 07:48:47', '2025-05-06 07:48:47', '[\"2\"]', 'New Delhi', 'Delhi', NULL, NULL),
+(599, 'JNV1_4', 'three123', 'three', 'Mohit Kumar', NULL, '1', NULL, NULL, NULL, '2024-2025', 'deepak@example.com', NULL, '8899775565', NULL, '$2y$10$pd.i6V/vZcSRGbMMiHcMy.R9HeLEETLJum3d2YZUj4ol.yH7nxP06', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-06 07:48:47', '2025-05-06 07:48:47', '[\"3\"]', 'New Delhi', 'Delhi', NULL, NULL),
+(600, 'JNV1_5', 'four123', 'four name', 'Jack', NULL, '1', NULL, NULL, NULL, '2024-2025', 'sunny@email.com', NULL, '9988669655', NULL, '$2y$10$wzvIneDOnfyvyul9sGFn3uRIB6Cxrd3CDaeELCuC5HuV0QpcXfNnK', 0, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-06 07:48:47', '2025-05-06 07:48:47', '[\"4\"]', 'New Delhi', 'Delhi', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -643,7 +599,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `instutes`
 --
 ALTER TABLE `instutes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -655,7 +611,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `options`
 --
 ALTER TABLE `options`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -685,7 +641,7 @@ ALTER TABLE `prototypes`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `quizzes`
@@ -715,7 +671,7 @@ ALTER TABLE `tests`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=587;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=601;
 
 --
 -- Constraints for dumped tables

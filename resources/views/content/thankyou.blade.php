@@ -18,6 +18,8 @@
                                 @endphp
 
                                 @if ($user && $institute)
+                                    <p>User ID : <strong> {{ $user->loginId }}</strong></p>
+                                    <p>Password : <strong> @if (session('password')){{ session('password') }}@endif</strong></p>
                                     <p>Your Referral Link :
                                         <strong>
                                             <a href="{{ $baseUrl . '/' . $institute->code }}" target="_blank">
@@ -26,6 +28,15 @@
                                         <p style="color:red;">Please wait until your school has been verified by the NAO team. You may share the referral link once verification is complete.</p>
                                         </strong>
                                     </p>
+                                @else
+                                    <p>User or School not found.</p>
+                                @endif
+                            </div>
+                        @else
+                            <div class="description">
+                                @if ($user)
+                                    <p>User ID : <strong> {{ $user->loginId }}</strong></p>
+                                    <p>Password : <strong> @if (session('password')){{ session('password') }}@endif</strong></p>
                                 @else
                                     <p>User or Institute not found.</p>
                                 @endif

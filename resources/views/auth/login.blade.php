@@ -11,10 +11,10 @@
 
         <!-- Email Address -->
         <div class="form-style">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-input-label for="user_id" :value="__('User Id')" />
+            <x-text-input id="user_id" class="block w-full mt-1" type="user_id" name="user_id" :value="old('user_id')" required
+                autofocus autocomplete="user_id" />
+            <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
         </div>
 
         <!-- Password -->

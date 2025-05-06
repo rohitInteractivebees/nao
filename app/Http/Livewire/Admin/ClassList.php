@@ -2,30 +2,20 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\User;
-use App\Models\Instute;
 use Livewire\Component;
 use App\Models\Classess;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Hash;
 
-class CollegeList extends Component
+class ClassList extends Component
 {
-    public function delete(User $admin)
-    {
-        abort_if(!auth()->user()->is_admin, Response::HTTP_FORBIDDEN, 403);
-
-        $admin->delete();
-    }
-
     public function render(): View
     {
-        $admins = User::where('is_college',1)->paginate();
+        $classes = Classess::all();
 
-        return view('livewire.admin.college-list', [
-            'admins' => $admins
+        return view('livewire.admin.class-list', [
+            'classes' => $classes
         ]);
     }
 

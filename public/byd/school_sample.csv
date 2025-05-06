@@ -1,0 +1,5 @@
+s.no,school_name,principal_name,mobile,country,state,city,spoc_name,spoc_email,spoc_mobile,login_id,password
+1,ABC School,Raj kumar,7897897980,India,Delhi,New Delhi,KulshAN,dummy1@email.com,7897897890,ABC123,12345678
+2,SD public School,Mohini,9988774455,India,Delhi,New Delhi,KulshAN,dummy2@email.com,9877899875,SDP123,12345678
+3,Delhi public School,Megha rani,8899775522,India,Delhi,New Delhi,KulshAN,dummy3@email.com,9874569852,DPS123,12345678
+4,ZXC School,Deepak,9988669988,India,Delhi,New Delhi,KulshAN,dummy3@email.com,9988552200,ZXC123,12345678

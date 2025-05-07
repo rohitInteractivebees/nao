@@ -59,9 +59,18 @@ class CollegeList extends Component
         $csvData = array_map('str_getcsv', file($path));
 
         if (empty($csvData) || count($csvData) < 2) {
-            return redirect()->back()->with('error', 'CSV file is empty or improperly formatted.');
+            return response()->json([
+                'success' => false,
+                'message' => 'CSV file is empty or improperly formatted.'
+            ]);
         }
-
+        $headerData = $csvData[0];
+        if(!($headerData[1] == 'school_name') || !($headerData[2] == 'principal_name') || !($headerData[3] == 'mobile') || !($headerData[4] == 'country') || !($headerData[5] == 'state') || !($headerData[6] == 'city') || !($headerData[7] == 'spoc_name') || !($headerData[8] == 'spoc_email') || !($headerData[9] == 'spoc_mobile') || !($headerData[10] == 'login_id') || !($headerData[11] == 'password')){
+            return response()->json([
+                'success' => false,
+                'message' => 'CSV file is improperly formatted.'
+            ]);
+        }
         $classIds = Classess::pluck('id')->toArray();
         $encodedClassIds = json_encode(array_map('strval', $classIds));
 
@@ -127,7 +136,10 @@ class CollegeList extends Component
             // Mail::to($spocEmail)->send(new WelcomeEmail($schoolName, $spocEmail, $spocName));
         }
 
-        return redirect()->back()->with('success', 'CSV uploaded and users created successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'CSV uploaded and schools created successfully.'
+        ]);
     }
 
 }

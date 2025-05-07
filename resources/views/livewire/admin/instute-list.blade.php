@@ -22,6 +22,12 @@
                                         Name
                                     </th>
                                     <th width="900">
+                                        Code
+                                    </th>
+                                    <th width="900">
+                                        Register Link
+                                    </th>
+                                    <th width="900">
                                         Status
                                     </th>
                                     <th width="100" align="center">
@@ -35,6 +41,15 @@
                                         <td>{{ $instute->firstItem() + $index }}</td>
                                         <td>
                                             {{ $admin->name }}
+                                        </td>
+                                        <td>
+                                            {{ $admin->code }}
+                                        </td>
+                                        <td>
+                                            @php
+                                                $baseUrl = url('/register/')
+                                            @endphp
+                                            {{ $baseUrl . '/' . $admin->code }}
                                         </td>
                                         <td>
                                             @if($admin->status == 0)

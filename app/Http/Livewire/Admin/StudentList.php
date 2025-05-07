@@ -62,7 +62,19 @@ class StudentList extends Component
         $path = $file->getRealPath();
         $csvData = array_map('str_getcsv', file($path));
         if (empty($csvData) || count($csvData) < 2) {
-            return redirect()->back()->with('error', 'CSV file is empty or improperly formatted.');
+
+            return response()->json([
+                'success' => false,
+                'message' => 'CSV file is empty or improperly formatted.'
+            ]);
+        }
+        $headerData = $csvData[0];
+        if(!($headerData[1] == 'student_name') || !($headerData[2] == 'class_id') || !($headerData[3] == 'session_year') || !($headerData[4] == 'parent_name') || !($headerData[5] == 'parent_email') || !($headerData[6] == 'phone') || !($headerData[7] == 'state') || !($headerData[8] == 'city') || !($headerData[9] == 'login_id') || !($headerData[10] == 'password')){
+
+            return response()->json([
+                'success' => false,
+                'message' => 'CSV file is improperly formatted.'
+            ]);
         }
         $is_login = auth()->user();
         $id = $is_login->institute;
@@ -128,8 +140,10 @@ class StudentList extends Component
             // Optional: send email
             // Mail::to($spocEmail)->send(new WelcomeEmail($schoolName, $spocEmail, $spocName));
         }
-
-        return redirect()->back()->with('success', 'CSV uploaded and users created successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'CSV uploaded and users created successfully.'
+        ]);
     }
 
 
@@ -146,5 +160,19 @@ class StudentList extends Component
         }
 
         return response()->json(['success' => false]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'password' => 'required|min:6',
+        ]);
+        $user = User::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        session()->flash('success', 'Password updated successfully!');
+        return redirect()->back()->with('success', 'Password updated successfully!');
     }
 }

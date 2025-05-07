@@ -1,12 +1,6 @@
 <x-app-layout>
-
     @auth
-
-
-
-
         @if(auth()->user()->is_admin == 1)
-
             @php
                 $students = App\Models\User::where(function ($query) {
                     $query->where('is_college', 0)
@@ -28,7 +22,7 @@
 
                 })->get();
 
-                
+
                 $totalpartis = App\Models\Test::selectRaw('user_id, COUNT(*) as total_tests')
                     ->groupBy('user_id')
                     ->get();
@@ -43,23 +37,23 @@
 
                 $total = count($students);
                 $totalverystudent = count($verfystudents);
-                 
+
                 $totalNotverystudent = $total - $totalverystudent;
 
                 $totalclg = App\Models\Instute::get();
-           
+
                 $sno = 1;
-                
+
                 $oldEndDateLevel2 = auth()->user()->level2enddate;
                 $oldEndDateLevel3 = auth()->user()->level3enddate;
 
                 $currentDate = \Carbon\Carbon::now()->format('Y-m-d');
             @endphp
-             
+
             <div id="quiz-blade1" style="display: none;">
                 <div class="text-center">
                     <p><b>Are you sure to publish Quiz?</b></p>
-                    <div class="buttons-sec d-flex justify-center gap w-100 links mt-6">
+                    <div class="justify-center mt-6 buttons-sec d-flex gap w-100 links">
                         <button type="button" class="common-btn admin-btn green" onclick="updateStatus('quiz', 1)">Yes</button>
                         <button type="button" class="common-btn admin-btn red" onclick="updateStatus('quiz', 0)">NO</button>
                     </div>
@@ -67,44 +61,44 @@
             </div>
 
             <div id="quiz-blade2" style="display: none;">
-    <div class="text-center">
-        <p><b>Are you sure to publish level 2?</b></p>
-        <div class="form-style text-left" style="width: 80%;margin: 0 auto;">
-            <label class="block font-medium text-sm text-gray-700" for="name">Select Submission End Date</label>
-            <input type="date" id="end-date-level2" name="end-date-level2" class="form-control w-100"  value="{{ $oldEndDateLevel2 ?? '' }}" min="{{ $currentDate }}">
-        </div>
-        <div class="buttons-sec d-flex justify-center gap w-100 links mt-6">            
-            <button type="button" class="common-btn admin-btn green" onclick="updateStatus('level2', 1)">Yes</button>
-            <button type="button" class="common-btn admin-btn red" onclick="updateStatus('level2', 0)">No</button>
-        </div>
-    </div>
-</div>
+                <div class="text-center">
+                    <p><b>Are you sure to publish level 2?</b></p>
+                    <div class="text-left form-style" style="width: 80%;margin: 0 auto;">
+                        <label class="block text-sm font-medium text-gray-700" for="name">Select Submission End Date</label>
+                        <input type="date" id="end-date-level2" name="end-date-level2" class="form-control w-100"  value="{{ $oldEndDateLevel2 ?? '' }}" min="{{ $currentDate }}">
+                    </div>
+                    <div class="justify-center mt-6 buttons-sec d-flex gap w-100 links">
+                        <button type="button" class="common-btn admin-btn green" onclick="updateStatus('level2', 1)">Yes</button>
+                        <button type="button" class="common-btn admin-btn red" onclick="updateStatus('level2', 0)">No</button>
+                    </div>
+                </div>
+            </div>
 
-<div id="quiz-blade3" style="display: none;">
-    <div class="text-center">
-        <p><b>Are you sure to publish level 3?</b></p>
-        <div class="form-style text-left" style="width: 80%;margin: 0 auto;">
-            <label class="block font-medium text-sm text-gray-700" for="name">Select Submission End Date</label>
-            <input type="date" id="end-date-level3" name="end-date-level3" class="form-control w-100"  value="{{ $oldEndDateLevel3 ?? '' }}" min="{{ $currentDate }}">
-        </div>
-        <div class="buttons-sec d-flex justify-center gap w-100 links mt-6">            
-            <button type="button" class="common-btn admin-btn green" onclick="updateStatus('level3', 1)">Yes</button>
-            <button type="button" class="common-btn admin-btn red" onclick="updateStatus('level3', 0)">No</button>
-        </div>
-    </div>
-</div>
+            <div id="quiz-blade3" style="display: none;">
+                <div class="text-center">
+                    <p><b>Are you sure to publish level 3?</b></p>
+                    <div class="text-left form-style" style="width: 80%;margin: 0 auto;">
+                        <label class="block text-sm font-medium text-gray-700" for="name">Select Submission End Date</label>
+                        <input type="date" id="end-date-level3" name="end-date-level3" class="form-control w-100"  value="{{ $oldEndDateLevel3 ?? '' }}" min="{{ $currentDate }}">
+                    </div>
+                    <div class="justify-center mt-6 buttons-sec d-flex gap w-100 links">
+                        <button type="button" class="common-btn admin-btn green" onclick="updateStatus('level3', 1)">Yes</button>
+                        <button type="button" class="common-btn admin-btn red" onclick="updateStatus('level3', 0)">No</button>
+                    </div>
+                </div>
+            </div>
 
             <section class="common-sec collage-dashboared">
                 <div class="container">
                     <div class="heading short">Dashboard</div>
-                    <div class="toggle-buttons d-flex justify-end mb-4">
+                    <div class="justify-end mb-4 toggle-buttons d-flex">
 
                         @php
                             $result2 = App\Models\User::where('is_admin', 1)->where('level2show', 1)->first();
                             $result3 = App\Models\User::where('is_admin', 1)->where('level3show', 1)->first();
                             $result1 = App\Models\Quiz::where('published', 1)->first();
                         @endphp
-                        <div class="item-btn d-flex items-center">
+                        <div class="items-center item-btn d-flex">
                             <span>Publish Quiz</span>
                             @if($result1)
                                 <span data-fancybox data-src="#quiz-blade1" class="quiz-btn active">&nbsp;</span>
@@ -112,7 +106,7 @@
                                 <span data-fancybox data-src="#quiz-blade1" class="quiz-btn">&nbsp;</span>
                             @endif
                         </div>
-                        <div class="item-btn d-flex items-center">
+                        <div class="items-center item-btn d-flex">
                             <span>Publish Level 2</span>
                             @if($result2)
                                 <span data-fancybox data-src="#quiz-blade2" class="quiz-btn active">&nbsp;</span>
@@ -120,7 +114,7 @@
                                 <span data-fancybox data-src="#quiz-blade2" class="quiz-btn">&nbsp;</span>
                             @endif
                         </div>
-                        <div class="item-btn d-flex items-center">
+                        <div class="items-center item-btn d-flex">
                             <span>Publish Level 3</span>
                             @if($result3)
                                 <span data-fancybox data-src="#quiz-blade3" class="quiz-btn active">&nbsp;</span>
@@ -130,7 +124,7 @@
                         </div>
                     </div>
                     <div class="dashboared-items d-flex">
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Total Participants</div>
@@ -138,7 +132,7 @@
                             </div>
                         </div>
 
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Total Verified Participants</div>
@@ -146,7 +140,7 @@
                             </div>
                         </div>
 
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Total Not Verified Participants</div>
@@ -154,14 +148,14 @@
                             </div>
                         </div>
 
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-quiz-attempts.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Quiz Attempts</div>
                                 <div class="total">{{$totalpar}} Students</div>
                             </div>
                         </div>
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-time-taken.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Min. Time Taken</div>
@@ -169,17 +163,17 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="filter-data d-flex justify-between items-center">
-                        <div class="right w-100 d-flex sm:justify-between justify-center items-end">
+                    <!-- <div class="items-center justify-between filter-data d-flex">
+                        <div class="items-end justify-center right w-100 d-flex sm:justify-between">
                             <div class="form-style">
                             </div>
-                            <a class="common-btn admin-btn d-flex items-center" href="{{url('/admins/create')}}">
+                            <a class="items-center common-btn admin-btn d-flex" href="{{url('/admins/create')}}">
                                 <span><img src="{{ asset('/assets/images/icon-addmore.png') }}" alt=""></span>
                                 <span>Create Admin</span>
                             </a>
                         </div>
                     </div> -->
-                    <div class="table-sec-outer mt-6">
+                    <div class="mt-6 table-sec-outer">
                         <table class="table-sec">
                             <thead>
                                 <tr>
@@ -301,21 +295,21 @@
                 <div class="container">
                     <div class="heading short">Dashboard</div>
                     <div class="dashboared-items d-flex">
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Total Participants</div>
                                 <div class="total">{{$total}} Students</div>
                             </div>
                         </div>
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-quiz-attempts.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Quiz Attempts</div>
                                 <div class="total">{{$totalpar}} Students</div>
                             </div>
                         </div>
-                        <div class="item d-flex justify-between items-center">
+                        <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-time-taken.png') }}" alt=""></span>
                             <div class="text">
                                 <div class="title">Min. Time Taken</div>
@@ -323,20 +317,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="filter-data d-flex justify-between items-center">
+                    <div class="items-center justify-between filter-data d-flex">
 
                         <div class="right d-flex">
-                            <a class="common-btn admin-btn d-flex items-center" href="{{url('/student/create')}}">
+                            {{-- <a class="items-center common-btn admin-btn d-flex" href="{{url('/student/create')}}">
                                 <span><img src="{{ asset('/assets/images/icon-addmore.png') }}" alt=""></span>
                                 <span>Add New</span>
-                            </a>
-                            <a class="common-btn admin-btn d-flex items-center" href="{{url('student')}}">
+                            </a> --}}
+                            <a class="items-center common-btn admin-btn d-flex" href="{{url('student')}}">
                                 <span><img src="{{ asset('/assets/images/icon-addmore.png') }}" alt=""></span>
                                 <span>Bulk Upload</span>
                             </a>
                         </div>
                     </div>
-                    <div class="table-sec-outer mt-6">
+                    <div class="mt-6 table-sec-outer">
                         <table class="table-sec">
                             <thead>
                                 <tr>
@@ -345,6 +339,9 @@
                                     </th>
                                     <th width="440">
                                         Student Name
+                                    </th>
+                                    <th width="440">
+                                        Login Id
                                     </th>
                                     <th width="220">
                                         Email ID
@@ -365,6 +362,9 @@
                                             {{$stu->name}}
                                         </td>
                                         <td>
+                                            {{$stu->loginId}}
+                                        </td>
+                                        <td>
                                             {{$stu->email}}
                                         </td>
                                         <td>
@@ -379,7 +379,7 @@
                         </table>
                     </div>
                     @if(count($students) > 9)
-                        <div class="links mt-6 d-flex justify-center">
+                        <div class="justify-center mt-6 links d-flex">
                             <a class="common-btn short" href="/student">View All</a>
                         </div>
                     @endif
@@ -388,181 +388,177 @@
 
         @else
 
-        @php
-    $testuser = App\Models\Test::where('user_id', auth()->user()->id)->first();
-    $resultpublished = App\Models\Quiz::where('id', 2)->first();
+            @php
+                $testuser = App\Models\Test::where('user_id', auth()->user()->id)->first();
+                $resultpublished = App\Models\Quiz::where('id', 2)->first();
 
-    $result2show = App\Models\User::where('is_admin', 1)->where('level2show', 1)->first();
-    $resultFshow = App\Models\User::where('is_admin', 1)->where('level3show', 1)->first();
+                $result2show = App\Models\User::where('is_admin', 1)->where('level2show', 1)->first();
+                $resultFshow = App\Models\User::where('is_admin', 1)->where('level3show', 1)->first();
 
-    $result2 = App\Models\User::where('is_admin', 1)->where('level2result', 1)->first();
-    $resultF = App\Models\User::where('is_admin', 1)->where('level3result', 1)->first();
-@endphp
-
-
-          
+                $result2 = App\Models\User::where('is_admin', 1)->where('level2result', 1)->first();
+                $resultF = App\Models\User::where('is_admin', 1)->where('level3result', 1)->first();
+            @endphp
 
             @if ($resultpublished->result_show == 1)
 
-            @if($resultpublished->result_show == 1 && $testuser)
-    @if($result2show)
-        @if($result2)
-            @if($resultFshow)
-                @if($resultF)
-                    <!-- level 3 result -->
-                    <section class="common-sec thankyou-page congrats-sec">
-                        <div class="container d-flex justify-center">
-                            <div class="image">
-                                <img class="thanks-image" src="{{ asset('/assets/images/congrats-certificate-bg.jpg') }}" alt="">
-                                <div class="text text-center">
-                                    <div class="text-thanks d-flex justify-center">
-                                        <img src="{{ asset('/assets/images/result-text.png') }}" alt="">
+                @if($resultpublished->result_show == 1 && $testuser)
+                    @if($result2show)
+                        @if($result2)
+                            @if($resultFshow)
+                                @if($resultF)
+                                    <!-- level 3 result -->
+                                    <section class="common-sec thankyou-page congrats-sec">
+                                        <div class="container justify-center d-flex">
+                                            <div class="image">
+                                                <img class="thanks-image" src="{{ asset('/assets/images/congrats-certificate-bg.jpg') }}" alt="">
+                                                <div class="text-center text">
+                                                    <div class="justify-center text-thanks d-flex">
+                                                        <img src="{{ asset('/assets/images/result-text.png') }}" alt="">
+                                                    </div>
+                                                    <div class="title">Please click below to view your level 3 result</div>
+                                                    <div class="links">
+                                                        <a class="common-btn red small" href="{{ url('register-team') }}">View Result</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <!-- end level 3 result -->
+                                @else
+                                    <!-- level 3 show -->
+                                    <section class="common-sec levels-sec quiz-main-page">
+                                        <div class="container justify-between d-flex">
+                                            <div class="quiz-type-sec levels-item">
+                                                <div class="item">
+                                                    <div class="icon">
+                                                        <img src="{{ asset('/assets/images/icon-level3.png') }}" alt="">
+                                                    </div>
+                                                    <div class="detail">
+                                                        <div class="title">Physical Prototype and Sales Presentation</div>
+                                                        <div class="duration">
+                                                            <span><b>Mode :</b> Offline</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="quiz-body">
+                                                <div class="heading">Level 3</div>
+                                                <div class="description">
+                                                    <p>
+                                                        Welcome to the Physical Prototype and Sales Presentation! Please carefully read and
+                                                        adhere to the following guidelines to ensure a smooth and fair testing experience.
+                                                    </p>
+                                                    <div class="detail-sec">
+                                                        <div class="subtitle">Guidelines</div>
+                                                        <ol class="mt-3 mb-6 common-list">
+                                                            <li>Only the team lead has the authority to upload the prototype.</li>
+                                                            <li>The prototype can only be updated once until the final submission date.</li>
+                                                            <li>The prototype must be submitted in one of the following formats: PDF, PPT, PNG or JPG.
+                                                            </li>
+                                                        </ol>
+                                                        <div class="subtitle"> Good luck, and do your best!</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <!-- end level 3 show -->
+                                @endif
+                            @else
+                                <!-- level 2 result -->
+                                <section class="common-sec thankyou-page congrats-sec">
+                                    <div class="container justify-center d-flex">
+                                        <div class="image">
+                                            <img class="thanks-image" src="{{ asset('/assets/images/congrats-certificate-bg.jpg') }}" alt="">
+                                            <div class="text-center text">
+                                                <div class="justify-center text-thanks d-flex">
+                                                    <img src="{{ asset('/assets/images/result-text.png') }}" alt="">
+                                                </div>
+                                                <div class="title">Please click below to view your level 2 result</div>
+                                                <div class="links">
+                                                    <a class="common-btn red small" href="{{ url('register-team') }}">View Result</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="title">Please click below to view your level 3 result</div>
-                                    <div class="links">
-                                        <a class="common-btn red small" href="{{ url('register-team') }}">View Result</a>
+                                </section>
+                                <!-- end level 2 result -->
+                            @endif
+                        @else
+                            <!-- level 2 show -->
+                            <section class="common-sec levels-sec quiz-main-page">
+                                <div class="container justify-between d-flex">
+                                    <div class="quiz-type-sec levels-item">
+                                        <div class="item">
+                                            <div class="icon">
+                                                <img src="{{ asset('/assets/images/icon-level2.png') }}" alt="">
+                                            </div>
+                                            <div class="detail">
+                                                <div class="title">Digital Prototype Round</div>
+                                                <div class="duration">
+                                                    <span><b>Mode :</b> Online</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="quiz-body">
+                                        <div class="heading">Level 2</div>
+                                        <div class="description">
+                                            <p>
+                                                Welcome to the Digital Prototype Round! Please carefully read and
+                                                adhere to the following guidelines to ensure a smooth and fair testing experience.
+                                            </p>
+                                            <div class="detail-sec">
+                                                <div class="subtitle">Guidelines</div>
+                                                <ol class="mt-3 mb-6 common-list">
+                                                    <li>The student who initiates the creation of the team will automatically become the team
+                                                        lead.</li>
+                                                    <li>A team can only be created once, and its composition cannot be altered after creation.
+                                                    </li>
+                                                    <li>Only the team lead has the authority to upload the prototype.</li>
+                                                    <li>The prototype can only be updated once until the final submission date.</li>
+                                                    <li>The prototype must be submitted in one of the following formats: PDF, PPT, or MOV.</li>
+                                                </ol>
+                                                <div class="subtitle"> Good luck, and do your best!</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- end level 3 result -->
-                @else
-                    <!-- level 3 show -->
-                    <section class="common-sec levels-sec quiz-main-page">
-                        <div class="container d-flex justify-between">
-                            <div class="quiz-type-sec levels-item">
-                                <div class="item">
-                                    <div class="icon">
-                                        <img src="{{ asset('/assets/images/icon-level3.png') }}" alt="">
-                                    </div>
-                                    <div class="detail">
-                                        <div class="title">Physical Prototype and Sales Presentation</div>
-                                        <div class="duration">
-                                            <span><b>Mode :</b> Offline</span>
+                            </section>
+                            <!-- end level 2 show -->
+                        @endif
+                    @else
+                        <!-- result 1 -->
+                        <section class="common-sec thankyou-page congrats-sec">
+                            <div class="container justify-center d-flex">
+                                <div class="image">
+                                    <img class="thanks-image" src="{{ asset('/assets/images/congrats-certificate-bg.jpg') }}" alt="">
+                                    <div class="text-center text">
+                                        <div class="justify-center text-thanks d-flex">
+                                            <img src="{{ asset('/assets/images/result-text.png') }}" alt="">
+                                        </div>
+                                        <div class="title">Please click below to view your level 1 result</div>
+                                        <div class="links">
+                                            <a class="common-btn red small" href="{{ url('myresults') }}">View Result</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </section>
+                        <!-- end result 1 -->
+                    @endif
+                @else
+                    <!-- Quiz closed -->
+                    <section class="common-sec levels-sec quiz-main-page">
+                        <div class="container justify-between d-flex">
                             <div class="quiz-body">
-                                <div class="heading">Level 3</div>
-                                <div class="description">
-                                    <p>
-                                        Welcome to the Physical Prototype and Sales Presentation! Please carefully read and
-                                        adhere to the following guidelines to ensure a smooth and fair testing experience.
-                                    </p>
-                                    <div class="detail-sec">
-                                        <div class="subtitle">Guidelines</div>
-                                        <ol class="common-list mt-3 mb-6">
-                                            <li>Only the team lead has the authority to upload the prototype.</li>
-                                            <li>The prototype can only be updated once until the final submission date.</li>
-                                            <li>The prototype must be submitted in one of the following formats: PDF, PPT, PNG or JPG.
-                                            </li>
-                                        </ol>
-                                        <div class="subtitle"> Good luck, and do your best!</div>
-                                    </div>
-                                </div>
+                                <div class="items-center justify-center min-h-full heading d-flex">The quiz has been closed.</div>
                             </div>
                         </div>
                     </section>
-                    <!-- end level 3 show -->
+                    <!-- end quiz closed -->
                 @endif
-            @else
-            
-                <!-- level 2 result -->
-                <section class="common-sec thankyou-page congrats-sec">
-                    <div class="container d-flex justify-center">
-                        <div class="image">
-                            <img class="thanks-image" src="{{ asset('/assets/images/congrats-certificate-bg.jpg') }}" alt="">
-                            <div class="text text-center">
-                                <div class="text-thanks d-flex justify-center">
-                                    <img src="{{ asset('/assets/images/result-text.png') }}" alt="">
-                                </div>
-                                <div class="title">Please click below to view your level 2 result</div>
-                                <div class="links">
-                                    <a class="common-btn red small" href="{{ url('register-team') }}">View Result</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- end level 2 result -->
-            @endif
-        @else
-            <!-- level 2 show -->
-            <section class="common-sec levels-sec quiz-main-page">
-                <div class="container d-flex justify-between">
-                    <div class="quiz-type-sec levels-item">
-                        <div class="item">
-                            <div class="icon">
-                                <img src="{{ asset('/assets/images/icon-level2.png') }}" alt="">
-                            </div>
-                            <div class="detail">
-                                <div class="title">Digital Prototype Round</div>
-                                <div class="duration">
-                                    <span><b>Mode :</b> Online</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="quiz-body">
-                        <div class="heading">Level 2</div>
-                        <div class="description">
-                            <p>
-                                Welcome to the Digital Prototype Round! Please carefully read and
-                                adhere to the following guidelines to ensure a smooth and fair testing experience.
-                            </p>
-                            <div class="detail-sec">
-                                <div class="subtitle">Guidelines</div>
-                                <ol class="common-list mt-3 mb-6">
-                                    <li>The student who initiates the creation of the team will automatically become the team
-                                        lead.</li>
-                                    <li>A team can only be created once, and its composition cannot be altered after creation.
-                                    </li>
-                                    <li>Only the team lead has the authority to upload the prototype.</li>
-                                    <li>The prototype can only be updated once until the final submission date.</li>
-                                    <li>The prototype must be submitted in one of the following formats: PDF, PPT, or MOV.</li>
-                                </ol>
-                                <div class="subtitle"> Good luck, and do your best!</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- end level 2 show -->
-        @endif
-    @else
-        <!-- result 1 -->
-        <section class="common-sec thankyou-page congrats-sec">
-            <div class="container d-flex justify-center">
-                <div class="image">
-                    <img class="thanks-image" src="{{ asset('/assets/images/congrats-certificate-bg.jpg') }}" alt="">
-                    <div class="text text-center">
-                        <div class="text-thanks d-flex justify-center">
-                            <img src="{{ asset('/assets/images/result-text.png') }}" alt="">
-                        </div>
-                        <div class="title">Please click below to view your level 1 result</div>
-                        <div class="links">
-                            <a class="common-btn red small" href="{{ url('myresults') }}">View Result</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- end result 1 -->
-    @endif
-@else
-    <!-- Quiz closed -->
-    <section class="common-sec levels-sec quiz-main-page">
-        <div class="container d-flex justify-between">
-            <div class="quiz-body">
-                <div class="heading min-h-full d-flex justify-center items-center">The quiz has been closed.</div>
-            </div>
-        </div>
-    </section>
-    <!-- end quiz closed -->
-@endif
-          <!-- #region-->
+            <!-- #region-->
             @elseif($testuser && $resultpublished->result_show != 1)
 
                 <section class="common-sec congrats-sec">
@@ -575,7 +571,7 @@
 
             @else
                 <section class="common-sec levels-sec quiz-main-page">
-                    <div class="container d-flex justify-between">
+                    <div class="container justify-between d-flex">
                         <div class="quiz-type-sec levels-item">
                             <div class="item">
                                 <div class="icon">
@@ -633,11 +629,11 @@
                                 @endphp
 
                                 @if($showq)
-                                    <div class="heading min-h-full d-flex justify-center items-center"><strong>Quiz Date:</strong>
+                                    <div class="items-center justify-center min-h-full heading d-flex"><strong>Quiz Date:</strong>
                                         To be announced soon.</div>
                                 @else
                                     <!-- Optional message if there are no quizzes -->
-                                    <div class="heading min-h-full d-flex justify-center items-center">The quiz has been closed.</div>
+                                    <div class="items-center justify-center min-h-full heading d-flex">The quiz has been closed.</div>
                                 @endif
                             @endforelse
                         </div>
@@ -664,7 +660,7 @@
                 </div>
             </div>
         </section>
-        
+
     @endauth
 </x-app-layout>
 

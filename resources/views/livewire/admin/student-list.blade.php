@@ -31,7 +31,7 @@
                         </form>
                         <button class="items-center common-btn admin-btn text d-flex" type="submit">
                             <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                            <a href="{{url('byd/student.csv')}}" download><span>Download CSV</span></a>
+                            <a href="{{url('byd/student_sample.csv')}}" download><span>Download CSV</span></a>
                         </button>
                     </div>
                 </div>
@@ -45,7 +45,11 @@
                     </div>
                 </div>
                 <div id="success-message" style="display: none;">CSV uploaded and emails sent successfully.</div>
-
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="mt-3 mb-6 filter-options form-style">
                     <select class="w-100" wire:model="quiz_id" name="quiz">
                         <option value="1">All</option>
@@ -60,10 +64,11 @@
                             <tr>
                                 <th width="100">ID</th>
                                 <th width="300">Name</th>
+                                <th width="300">Login Id</th>
                                 <th width="400">Email</th>
                                 <th width="150">Phone</th>
                                 <th width="150">Status</th>
-                                <th align="center" width="100">ID Card</th>
+                                <th align="center" width="100">Action</th>
                             </tr>
                         </thead>
 
@@ -76,6 +81,7 @@
                             <tr>
                             <td>{{ $serial++ }}</td>
                                 <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->loginId }}</td>
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->phone }}</td>
                                 <td>
@@ -114,6 +120,33 @@
 
                                             @endif
                                         </div>
+                                    </div>
+                                    <a data-fancybox href="#dialog-content-detail{{ $admin->id }}">
+                                        <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="">
+                                    </a>
+                                    <div class="verify-sec" id="dialog-content-detail{{ $admin->id }}">
+                                        <form action="{{ route('updateUserPassword') }}" method="POST">
+                                            @csrf
+                                            <div class="justify-center d-flex">
+                                                <strong>Reset User Password</strong>
+
+                                                <input type="hidden" class="block w-full mt-1" value="{{ $admin->id }}" name="user_id">
+                                                <div class="form-style">
+                                                    <label class="block text-sm font-medium text-gray-700" for="loginId">Login ID</label>
+                                                    <input type="text" class="block w-full mt-1"  value="{{ $admin->loginId }}" readonly>
+                                                </div>
+
+                                                <div class="form-style">
+                                                    <label class="block text-sm font-medium text-gray-700" for="password">New Password</label>
+                                                    <input type="text" class="block w-full mt-1" name="password" required>
+                                                </div>
+
+                                                <div class="justify-center mt-6 d-flex w-100 links">
+                                                    <button type="submit" class="common-btn admin-btn green">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
                                     </div>
                                 </td>
 
@@ -221,22 +254,32 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     }
                 })
-                .then(response => response.json())
-                .then(data => {
-
-                    //location.reload();
+                .then(async (response) => {
                     document.getElementById('loader').style.display = 'none';
-                    //document.getElementById('success-message').style.display = 'block';
-                    form.reset();
-                    window.location.reload();
 
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        // Handle validation or server errors
+                        throw new Error(data.message || 'An error occurred');
+                    }
+
+                    // Success
+                    alert(data.message || 'Upload successful!');
+                    form.reset(); // Optional
+                    window.location.reload(); // Optional
                 })
                 .catch(error => {
                     document.getElementById('loader').style.display = 'none';
-                    window.location.reload();
-                    //console.error('Error:', error);
-                    // alert('An error occurred while uploading the CSV.');
+                    alert(error.message || 'An unexpected error occurred');
                 });
         });
     });
+    </script>
+    <script>
+        function openModal(id) {
+            setTimeout(() => {
+                Fancybox.show([{ src: "#dialog-content-detail" + id, type: "inline" }]);
+            }, 300); // Delay to allow Livewire to finish
+        }
     </script>

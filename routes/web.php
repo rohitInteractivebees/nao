@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/verify-admin/{id}', [StudentList::class, 'verifyAdmin']);
     Route::get('student/create', StudentForm::class)->name('student.create');
     Route::post('/upload-csv', [StudentList::class, 'uploadCsv'])->name('upload.csv');
+    Route::post('/update_user_password', [StudentList::class, 'updatePassword'])->name('updateUserPassword');
     Route::get('results/{test}', [ResultController::class, 'show'])->name('results.show');
     Route::get('/get-user-details', [TeamForm::class, 'getUserDetails'])->name('getUserDetails');
     Route::get('leaderboard', Leaderboard::class)->name('leaderboard');
@@ -114,6 +115,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/download-student', [CertificateController::class, 'downloadUsers'])->name('download.student');
         Route::get('studentlistadmin', StudentListAdmin::class)->name('studentlistadmin');
+        Route::post('/student-upload-csv', [StudentListAdmin::class, 'uploadCsv'])->name('student.upload.csv');
         Route::post('/update-quiz-status', [UpdateQuizStatus::class, 'updateQuizStatus']);
         Route::post('/update-level2-status', [UpdateQuizStatus::class, 'updateLevel2Status']);
         Route::post('/update-level3-status', [UpdateQuizStatus::class, 'updateLevel3Status']);

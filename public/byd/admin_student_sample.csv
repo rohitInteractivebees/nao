@@ -1,0 +1,5 @@
+s.no,school_code,student_name,class_id,session_year,parent_name,parent_email,phone,state,city,login_id,password
+1,AS2,one admin,1,2024-2025,one parent admin,oneparentadmin@email.com,9898986532,Delhi,New Delhi,oneadmin123,12345678
+2,AS2,two admin,1,2024-2025,Two parent admin,twoparentadmin@email.com,5687854899,Delhi,New Delhi,twoadmin123,12345678
+3,SPS3,three admin,1,2024-2025,Mohit Kumar admin,deepakadmin@example.com,9955778899,Delhi,New Delhi,threeadmin123,12345678
+4,SPS3,four name admin,1,2024-2025,Jack  admin,sunnyadmin@email.com,9856874052,Delhi,New Delhi,fouradmin123,12345678

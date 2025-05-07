@@ -3,6 +3,31 @@
         <div class="container1">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white">
+                    <div class="items-end justify-center filter-data d-flex sm:justify-between">
+                        <div class="left">
+                            {{-- <a href="{{ route('student.create') }}" class="common-btn short">Create Student</a> --}}
+                        </div>
+                        <div class="items-end justify-center right d-flex sm:justify-end">
+                            <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form">
+                                @csrf
+                                <div class="items-end justify-center half-view d-flex gap sm:justify-end">
+                                    <div class="form-style">
+                                        <input type="file" name="csv_file">
+                                    </div>
+                                    <div class="links">
+                                        <button class="items-center common-btn admin-btn text d-flex" type="submit">
+                                            <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                                            <span>Upload CSV</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <button class="items-center common-btn admin-btn text d-flex" type="submit">
+                                <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                                <a href="{{url('byd/admin_student_sample.csv')}}" download><span>Download CSV</span></a>
+                            </button>
+                        </div>
+                    </div>
                     @if(auth()->user()->is_admin)
                         <div class="items-end justify-center w-100 gap d-flex sm:justify-between">
                             <div class="form-style sm:w-1/2">
@@ -24,7 +49,20 @@
                         </div>
 
                     @endif
-
+                    <div class="loader-sec" id="loader" style="display: none;">
+                        <div class="inner">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div id="success-message" style="display: none;">CSV uploaded and emails sent successfully.</div>
+                    @if (session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
@@ -292,5 +330,42 @@
             });
         });
 
+
+        document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('csv-upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let form = event.target;
+            let formData = new FormData(form);
+
+            document.getElementById('loader').style.display = 'flex';
+
+            fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(async (response) => {
+                    document.getElementById('loader').style.display = 'none';
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        // Handle validation or server errors
+                        throw new Error(data.message || 'An error occurred');
+                    }
+
+                    // Success
+                    alert(data.message || 'Upload successful!');
+                    form.reset(); // Optional
+                    window.location.reload(); // Optional
+                })
+                .catch(error => {
+                    document.getElementById('loader').style.display = 'none';
+                    alert(error.message || 'An unexpected error occurred');
+                });
+        });
+    });
     </script>
 </div>

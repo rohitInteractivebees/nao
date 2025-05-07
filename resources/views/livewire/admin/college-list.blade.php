@@ -248,22 +248,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(async (response) => {
+                    document.getElementById('loader').style.display = 'none';
 
-            //location.reload();
-            document.getElementById('loader').style.display = 'none';
-            //document.getElementById('success-message').style.display = 'block';
-            form.reset();
-            window.location.reload();
+                    const data = await response.json();
 
-        })
-        .catch(error => {
-            document.getElementById('loader').style.display = 'none';
-            window.location.reload();
-            //console.error('Error:', error);
-            // alert('An error occurred while uploading the CSV.');
-        });
+                    if (!response.ok) {
+                        // Handle validation or server errors
+                        throw new Error(data.message || 'An error occurred');
+                    }
+
+                    // Success
+                    alert(data.message || 'Upload successful!');
+                    //form.reset(); // Optional
+                    //window.location.reload(); // Optional
+                })
+                .catch(error => {
+                    document.getElementById('loader').style.display = 'none';
+                    alert(error.message || 'An unexpected error occurred');
+                });
     });
 });
 </script>

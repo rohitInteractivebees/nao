@@ -1,11 +1,16 @@
 <section class="result-list-page">
     <div class="container">
-        <div x-data="{ secondsLeft: {{ config('quiz.secondsPerQuestion') }} }" x-init="setInterval(() => {
-    if (secondsLeft > 1) { secondsLeft--; } else {
-        secondsLeft = {{ config('quiz.secondsPerQuestion') }};
-        $wire.nextQuestion();
-    }
-}, 1000);">
+        @php
+            $totalSeconds = $quiz->duration * 60;
+        @endphp
+       <div x-data="{ secondsLeft: {{ $totalSeconds }} }"
+       x-init="setInterval(() => {
+           if (secondsLeft > 0) {
+               secondsLeft--;
+           } else {
+               $wire.submit(); // Call a Livewire method when time runs out
+           }
+       }, 1000);">
             <div class="items-end justify-between result-summary d-flex">
                 <div class="heading short">Level 1 <span>Question {{ $currentQuestionIndex + 1 }} of {{ $this->questionsCount }}:</div>
                 <div class="result-sumary-test">

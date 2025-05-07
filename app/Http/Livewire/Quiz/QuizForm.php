@@ -13,6 +13,7 @@ use App\Models\Question;
 use Illuminate\Support\Str;
 use App\Mail\QuizResultMail;
 use App\Mail\QuizPublishMail;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\QuizResultInstituteMail;
@@ -27,16 +28,24 @@ class QuizForm extends Component
     public $total_question;
     public array $questionOptions = [];
 
-    protected $rules = [
-        'quiz.title' => 'required|string',
-        'quiz.description' => 'nullable|string',
-        'quiz.duration' => 'required|integer',
-        'quiz.start_date' => 'required',
-        'quiz.end_date' => 'required|after_or_equal:start_date',
-        'quiz.result_date' => 'required|after_or_equal:end_date',
-        'quiz.class_ids' => 'required|integer|unique:quizzes,class_ids',
-        'quiz.total_question' => 'required|integer|min:1',
-    ];
+
+    protected function rules()
+    {
+        return [
+            'quiz.title' => 'required|string',
+            'quiz.description' => 'nullable|string',
+            'quiz.duration' => 'required|integer',
+            'quiz.start_date' => 'required',
+            'quiz.end_date' => 'required|after_or_equal:start_date',
+            'quiz.result_date' => 'required|after_or_equal:end_date',
+            'quiz.class_ids' => [
+                'required',
+                'integer',
+                Rule::unique('quizzes', 'class_ids')->ignore($this->quiz->id),
+            ],
+            'quiz.total_question' => 'required|integer|min:1',
+        ];
+    }
 
     public function mount(Quiz $quiz)
     {

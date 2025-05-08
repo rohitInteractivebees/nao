@@ -1,0 +1,5 @@
+s.no,student_name,class_id,session_year,parent_name,parent_email,phone,state,city,login_id,password
+1,one,1,2024-2025,one parent,oneparent@email.com,7897897988,Delhi,New Delhi,one123,12345678
+2,two,2,2024-2025,Two parent,twoparent@email.com,9988774498,Delhi,New Delhi,two123,12345678
+3,three,3,2024-2025,Mohit Kumar,deepak@example.com,8899775565,Delhi,New Delhi,three123,12345678
+4,four name,4,2024-2025,Jack ,sunny@email.com,9988669655,Delhi,New Delhi,four123,12345678

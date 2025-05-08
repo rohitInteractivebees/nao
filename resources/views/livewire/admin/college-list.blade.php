@@ -9,7 +9,35 @@
                             Create School
                         </a>
                     </div> --}}
-
+                    <div class="items-end justify-center right d-flex sm:justify-end">
+                        <form action="{{ route('school.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form">
+                            @csrf
+                            <div class="items-end justify-center half-view d-flex gap sm:justify-end">
+                                <div class="form-style">
+                                    <input type="file" name="csv_file" required>
+                                </div>
+                                <div class="links">
+                                    <button class="items-center common-btn admin-btn text d-flex" type="submit">
+                                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                                        <span>Upload CSV</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <button class="items-center common-btn admin-btn text d-flex" type="submit">
+                            <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                            <a href="{{url('byd/school_sample.csv')}}" download><span>Download CSV</span></a>
+                        </button>
+                    </div>
+                    <div class="loader-sec" id="loader" style="display: none;">
+                        <div class="inner">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div id="success-message" style="display: none;">CSV uploaded and emails sent successfully.</div>
                     <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
@@ -163,50 +191,86 @@
     }
 </style>
 <script>
-    document.addEventListener('click', function(event) {
-        if (event.target.classList.contains('verify-button')) {
-            const button = event.target;
-            const adminId = button.dataset.id;
-            const loaderanm = document.getElementById('loaders');
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('verify-button')) {
+        const button = event.target;
+        const adminId = button.dataset.id;
+        const loaderanm = document.getElementById('loaders');
 
-            loaderanm?.classList.add("active");
+        loaderanm?.classList.add("active");
 
+        const verifySchoolUrl = "{{ url('/verify-school/__ID__') }}".replace('__ID__', adminId);
 
-           const verifySchoolUrl = "{{ url('/verify-school/__ID__') }}".replace('__ID__', adminId);
-
-
-fetch(verifySchoolUrl, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    },
-    body: JSON.stringify({
-        id: adminId,
-        verify: 1
-    })
-})
-            .then(response => response.json())
-            .then(data => {
-                loaderanm?.classList.remove("active");
-
-                if (data.success) {
-                    button.classList.remove('yellow');
-                    button.classList.add('green', 'no-pointer');
-                    button.textContent = 'Verified';
-                    button.disabled = true;
-                } else {
-                    alert('Verification failed!');
-                }
+        fetch(verifySchoolUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                id: adminId,
+                verify: 1
             })
-            .catch(error => {
-                loaderanm?.classList.remove("active");
-                console.error('Error:', error);
-                alert('An error occurred!');
-            });
-        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            loaderanm?.classList.remove("active");
+
+            if (data.success) {
+                button.classList.remove('yellow');
+                button.classList.add('green', 'no-pointer');
+                button.textContent = 'Verified';
+                button.disabled = true;
+            } else {
+                alert('Verification failed!');
+            }
+        })
+        .catch(error => {
+            loaderanm?.classList.remove("active");
+            console.error('Error:', error);
+            alert('An error occurred!');
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('csv-upload-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let form = event.target;
+        let formData = new FormData(form);
+
+        document.getElementById('loader').style.display = 'flex';
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(async (response) => {
+                    document.getElementById('loader').style.display = 'none';
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        // Handle validation or server errors
+                        throw new Error(data.message || 'An error occurred');
+                    }
+
+                    // Success
+                    alert(data.message || 'Upload successful!');
+                    //form.reset(); // Optional
+                    //window.location.reload(); // Optional
+                })
+                .catch(error => {
+                    document.getElementById('loader').style.display = 'none';
+                    alert(error.message || 'An unexpected error occurred');
+                });
     });
-    </script>
+});
+</script>
+
 
 
 

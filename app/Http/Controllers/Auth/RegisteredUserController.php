@@ -119,17 +119,20 @@ class RegisteredUserController extends Controller
             $encodedClassname = json_encode([(string) $inputClassname]);
         }
 
-        $lastUser = User::where('reg_no', 'LIKE', 'USER_%')
+
+        $schoolData = Instute::find($request->school);
+        $schoolCode = $schoolData->code;
+
+        $lastUser = User::where('reg_no', 'LIKE', $schoolCode . '_%')
         ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
         ->first();
 
         $lastNumber = 0;
         if ($lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)) {
-            $lastNumber = (int) $matches[1];
+        $lastNumber = (int) $matches[1];
         }
 
-        $newRegNo = 'USER_' . ($lastNumber + 1);
-
+        $newRegNo = $schoolCode . '_' . ($lastNumber + 1);
 
         $user = User::create([
             'name' => $request->student_name,
@@ -146,12 +149,18 @@ class RegisteredUserController extends Controller
             'reg_no' => $newRegNo,
         ]);
 
+        $loginId = $schoolCode . $user->id;
+
+        $user->loginId = $loginId;
+        $user->save();
+
         event(new Registered($user));
 
         // Auth::login($user);
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect('/thankyou/');
+        session()->flash('password', $request->password);
+        return redirect('/thankyou/'.$user->id);
     }
     public function school_store(Request $request): RedirectResponse
     {
@@ -175,21 +184,11 @@ class RegisteredUserController extends Controller
 
         $encodedClassname = json_encode(array_map('strval', (array) $inputClassname));
 
-        $lastUser = User::where('reg_no', 'LIKE', 'SCHOOL_%')
-        ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
-        ->first();
-
-        $lastNumber = 0;
-        if ($lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)) {
-            $lastNumber = (int) $matches[1];
-        }
-
-        $newRegNo = 'SCHOOL_' . ($lastNumber + 1);
-
         $schoolName = trim($request->school);
         // Create the institute
         $institute = Instute::create([
             'name' => $schoolName,
+            'status' => 1,
         ]);
 
         // Generate code: first letter of each word + ID
@@ -206,6 +205,9 @@ class RegisteredUserController extends Controller
 
         $institute_id = $institute->id;
 
+        $newRegNo = $code;
+        $loginId = $code.rand(1000,9999);
+
         $user = User::create([
             'name' => $request->principal_name,
             'parent_name' => $request->spoc_name,
@@ -220,9 +222,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'is_college' => 1,
             'reg_no' => $newRegNo,
+            'loginId' => $loginId,
+            'is_verified' => 1,
         ]);
         //Mail::to($request->spoc_email)->send(new InstituteLoginMail($request->spoc_name,$request->spoc_email,$request->password));
-
+        session()->flash('password', $request->password);
         return redirect('/thankyou/'.$user->id);
     }
 

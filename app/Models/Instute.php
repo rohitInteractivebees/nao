@@ -12,6 +12,7 @@ class Instute extends Model
     protected $table = 'instutes';
     protected $fillable = [
         'name',
-       
+        'status',
+
     ];
 }

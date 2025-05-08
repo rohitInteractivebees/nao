@@ -2,30 +2,20 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\User;
-use App\Models\Instute;
 use Livewire\Component;
 use App\Models\Classess;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Hash;
 
-class CollegeList extends Component
+class ClassList extends Component
 {
-    public function delete(User $admin)
-    {
-        abort_if(!auth()->user()->is_admin, Response::HTTP_FORBIDDEN, 403);
-
-        $admin->delete();
-    }
-
     public function render(): View
     {
-        $admins = User::where('is_college',1)->paginate();
+        $classes = Classess::all();
 
-        return view('livewire.admin.college-list', [
-            'admins' => $admins
+        return view('livewire.admin.class-list', [
+            'classes' => $classes
         ]);
     }
 
@@ -59,18 +49,9 @@ class CollegeList extends Component
         $csvData = array_map('str_getcsv', file($path));
 
         if (empty($csvData) || count($csvData) < 2) {
-            return response()->json([
-                'success' => false,
-                'message' => 'CSV file is empty or improperly formatted.'
-            ]);
+            return redirect()->back()->with('error', 'CSV file is empty or improperly formatted.');
         }
-        $headerData = $csvData[0];
-        if(!($headerData[1] == 'school_name') || !($headerData[2] == 'principal_name') || !($headerData[3] == 'mobile') || !($headerData[4] == 'country') || !($headerData[5] == 'state') || !($headerData[6] == 'city') || !($headerData[7] == 'spoc_name') || !($headerData[8] == 'spoc_email') || !($headerData[9] == 'spoc_mobile') || !($headerData[10] == 'login_id') || !($headerData[11] == 'password')){
-            return response()->json([
-                'success' => false,
-                'message' => 'CSV file is improperly formatted.'
-            ]);
-        }
+
         $classIds = Classess::pluck('id')->toArray();
         $encodedClassIds = json_encode(array_map('strval', $classIds));
 
@@ -136,10 +117,7 @@ class CollegeList extends Component
             // Mail::to($spocEmail)->send(new WelcomeEmail($schoolName, $spocEmail, $spocName));
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'CSV uploaded and schools created successfully.'
-        ]);
+        return redirect()->back()->with('success', 'CSV uploaded and users created successfully.');
     }
 
 }

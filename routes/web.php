@@ -21,23 +21,19 @@ use App\Http\Livewire\Admin\InstuteList;
 use App\Http\Livewire\Admin\CollegeForm;
 use App\Http\Livewire\Admin\CollegeList;
 use App\Http\Livewire\Admin\StudentList;
+use App\Http\Livewire\Admin\ClassList;
 use App\Http\Livewire\Admin\TeamForm;
 use App\Http\Livewire\Counter\Counter;
 use App\Http\Livewire\Admin\StudentForm;
-
-
-
 use App\Http\Livewire\Admin\SubmissonList;
 use App\Http\Livewire\Admin\PrototypeList;
 use App\Http\Livewire\Admin\StudentSubmisson;
-
 use App\Http\Livewire\Admin\PhysciallySubmissonList;
 use App\Http\Livewire\Admin\PhysicalyList;
 use App\Http\Livewire\Admin\StudentPhysciallySubmisson;
-
 use App\Http\Livewire\Admin\StudentListAdmin;
 use App\Http\Controllers\UpdateQuizStatus;
-
+use App\Http\Controllers\CertificateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,12 +47,9 @@ use App\Http\Controllers\UpdateQuizStatus;
 
 // public routes
 
-use App\Http\Controllers\CertificateController;
+
 
 Route::get('/download-certificate/{test}', [CertificateController::class, 'download'])->name('download.certificate');
-
-
-
 
 Route::view('about', 'content.about');
 Route::view('about_competition', 'content.about_competition');
@@ -79,19 +72,12 @@ Route::middleware('throttle:60,1')->group(function () {
 Route::view('not-found','404.blade.php');
 
 // protected routes
-	Route::middleware('auth')->group(function () {
-
-
-
+Route::middleware('auth')->group(function () {
     Route::get('prototypelist', PrototypeList::class)->name('prototypelist');
-
     Route::get('physciallylist', PhysicalyList::class)->name('physciallylist');
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-
     Route::get('/profile/info', [ProfileController::class, 'editinfo'])->name('profile.editinfo');
     Route::get('/profile/password', [ProfileController::class, 'editpassword'])->name('profile.editpassword');
-
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/register-team', TeamRegistration::class)->name('register-team');
@@ -103,93 +89,63 @@ Route::view('not-found','404.blade.php');
     Route::get('team/create', TeamForm::class)->name('team.create');
     Route::get('myresults', ResultList::class)->name('myresults');
     Route::get('student', StudentList::class)->name('student');
-
     Route::post('/verify-admin/{id}', [StudentList::class, 'verifyAdmin']);
-
     Route::get('student/create', StudentForm::class)->name('student.create');
     Route::post('/upload-csv', [StudentList::class, 'uploadCsv'])->name('upload.csv');
-
+    Route::post('/update_user_password', [StudentList::class, 'updatePassword'])->name('updateUserPassword');
     Route::get('results/{test}', [ResultController::class, 'show'])->name('results.show');
     Route::get('/get-user-details', [TeamForm::class, 'getUserDetails'])->name('getUserDetails');
     Route::get('leaderboard', Leaderboard::class)->name('leaderboard');
-
     Route::get('submissonlist', SubmissonList::class)->name('submissonlist');
     Route::post('/approve-team/{id}', [SubmissonList::class, 'approveTeam']);
     Route::post('/notapprove-team/{id}', [SubmissonList::class, 'notapproveTeam']);
-
-
     Route::get('submisson', StudentSubmisson::class)->name('submisson');
     Route::get('submisson/{prototype}/edit', StudentSubmisson::class)->name('submisson.edit');
     Route::post('/upload-prototype', [StudentSubmisson::class, 'uploadprototype'])->name('upload.prototype');
-
-
-
-
-
-
-
     Route::get('physciallysubmissonlist', PhysciallySubmissonList::class)->name('physciallysubmissonlist');
     Route::post('/finalapprove-team/{id}', [PhysciallySubmissonList::class, 'finalapproveTeam']);
     Route::post('/finalnotapprove-team/{id}', [PhysciallySubmissonList::class, 'finalnotapproveTeam']);
     Route::post('/finalnotapprove-team1/{id}', [PhysciallySubmissonList::class, 'finalnotapproveTeam1']);
-
-
     Route::get('student-physcially-submisson', StudentPhysciallySubmisson::class)->name('student-physcially-submisson');
     Route::get('student-physcially-submisson/{physicaly}/edit', StudentPhysciallySubmisson::class)->name('student-physcially-submisson.edit');
    // Route::post('/upload-physciallysubmisson', StudentPhysciallySubmisson::class)->name('upload.physciallysubmisson');
-
 
     // Admin routes
     Route::middleware('isAdmin')->group(function () {
 
         Route::get('/download-student', [CertificateController::class, 'downloadUsers'])->name('download.student');
-
         Route::get('studentlistadmin', StudentListAdmin::class)->name('studentlistadmin');
-
+        Route::post('/student-upload-csv', [StudentListAdmin::class, 'uploadCsv'])->name('student.upload.csv');
         Route::post('/update-quiz-status', [UpdateQuizStatus::class, 'updateQuizStatus']);
-      Route::post('/update-level2-status', [UpdateQuizStatus::class, 'updateLevel2Status']);
-      Route::post('/update-level3-status', [UpdateQuizStatus::class, 'updateLevel3Status']);
-
-
-
+        Route::post('/update-level2-status', [UpdateQuizStatus::class, 'updateLevel2Status']);
+        Route::post('/update-level3-status', [UpdateQuizStatus::class, 'updateLevel3Status']);
         Route::post('/publish-level2-result', [PrototypeList::class, 'publishLevel2Result'])->name('publish.level2.result');
         Route::post('/unpublish-level2-result', [PrototypeList::class, 'unpublishLevel2Result'])->name('unpublish.level2.result');
-
         Route::post('/publish-level3-result', [PhysicalyList::class, 'publishLevel3Result'])->name('publish.level3.result');
         Route::post('/unpublish-level3-result', [PhysicalyList::class, 'unpublishLevel3Result'])->name('unpublish.level3.result');
-
-
-
-    Route::get('questions', QuestionList::class)->name('questions');
-    Route::get('questions/create', QuestionForm::class)->name('question.create');
-    Route::get('questions/{question}', QuestionForm::class)->name('question.edit');
-    Route::get('quizzes', QuizList::class)->name('quizzes');
-    Route::get('quizzes/create', QuizForm::class)->name('quiz.create');
-    Route::get('quizzes/{quiz}/edit', QuizForm::class)->name('quiz.edit');
-    Route::get('admins', AdminList::class)->name('admins');
-    Route::get('admins/create', AdminForm::class)->name('admin.create');
-    Route::get('institute/{instute}/delete', [InstuteList::class,'delete'])->name('institute.delete');
-    Route::get('institute', InstuteList::class)->name('institute');
-
-    Route::get('institute/create', InstuteForm::class)->name('institute.create');
-    Route::get('institute/{instute}/edit', InstuteForm::class)->name('institute.edit');
-
-
-    Route::get('school_login', CollegeList::class)->name('institute_login');
-    Route::post('/verify-school/{id}', [CollegeList::class, 'verifySchool'])->name('verify.school');
-    Route::get('institute_login/create', CollegeForm::class)->name('institute_login.create');
-
-    Route::get('institute_login/{user}/edit', CollegeForm::class)->name('institute_login.edit');
-
-    Route::get('tests', TestList::class)->name('tests');
-
-
-	 Route::get('/phase-submission-3', PhaseSubmission::class)->name('submissions3');
-    Route::get('/phase-submission-3/create', PhaseSubmissionForm::class)->name('submissions3.create');
-
+        Route::get('questions', QuestionList::class)->name('questions');
+        Route::get('questions/create', QuestionForm::class)->name('question.create');
+        Route::get('questions/{question}', QuestionForm::class)->name('question.edit');
+        Route::get('quizzes', QuizList::class)->name('quizzes');
+        Route::get('quizzes/create', QuizForm::class)->name('quiz.create');
+        Route::get('quizzes/{quiz}/edit', QuizForm::class)->name('quiz.edit');
+        Route::post('/quizzes/{quiz}/copy', [QuizForm::class, 'copy'])->name('quizzes.copy');
+        Route::get('admins', AdminList::class)->name('admins');
+        Route::get('admins/create', AdminForm::class)->name('admin.create');
+        Route::get('institute/{instute}/delete', [InstuteList::class,'delete'])->name('institute.delete');
+        Route::get('institute', InstuteList::class)->name('institute');
+        Route::get('institute/create', InstuteForm::class)->name('institute.create');
+        Route::get('institute/{instute}/edit', InstuteForm::class)->name('institute.edit');
+        Route::get('school_login', CollegeList::class)->name('institute_login');
+        Route::post('/school-upload-csv', [CollegeList::class, 'uploadCsv'])->name('school.upload.csv');
+        Route::post('/verify-school/{id}', [CollegeList::class, 'verifySchool'])->name('verify.school');
+        Route::get('institute_login/create', CollegeForm::class)->name('institute_login.create');
+        Route::get('institute_login/{user}/edit', CollegeForm::class)->name('institute_login.edit');
+        Route::get('tests', TestList::class)->name('tests');
+        Route::get('/phase-submission-3', PhaseSubmission::class)->name('submissions3');
+        Route::get('/phase-submission-3/create', PhaseSubmissionForm::class)->name('submissions3.create');
     });
-
-
+    Route::get('student-list', ClassList::class)->name('class.list');
 });
 
 

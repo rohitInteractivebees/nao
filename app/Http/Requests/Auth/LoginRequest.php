@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'user_id' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -40,16 +40,27 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember')))
+        if (! Auth::attempt([
+                'loginId' => $this->input('user_id'),
+                'password' => $this->input('password'),
+            ], $this->boolean('remember')))
         {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                //'email' => trans('auth.failed'),
-               'email' => 'Invalid login credentials',
+                'user_id' => 'Invalid login credentials',
             ]);
         }
+
+        // if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember')))
+        // {
+        //     RateLimiter::hit($this->throttleKey());
+
+        //     throw ValidationException::withMessages([
+        //         //'email' => trans('auth.failed'),
+        //        'email' => 'Invalid login credentials',
+        //     ]);
+        // }
 
         $user = Auth::user();
         if ($user->is_verified != 1) {
@@ -57,11 +68,11 @@ class LoginRequest extends FormRequest
             if($user->is_college == 1)
             {
                 throw ValidationException::withMessages([
-                    'email' => 'Your account is not verified by Admin.',
+                    'user_id' => 'Your account is not verified by Admin.',
                 ]);
             }else{
                 throw ValidationException::withMessages([
-                    'email' => 'Your account is not verified by School.',
+                    'user_id' => 'Your account is not verified by School.',
                 ]);
             }
         }
@@ -85,7 +96,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'user_id' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -97,6 +108,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('user_id')).'|'.$this->ip());
     }
 }

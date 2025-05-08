@@ -41,7 +41,8 @@ class User extends Authenticatable
         'city',
         'spoc_mobile',
         'country',
-        'reg_no'
+        'reg_no',
+        'loginId'
 
 
 

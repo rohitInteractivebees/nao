@@ -19,7 +19,7 @@
                         </th>
                         <th width="200">
                             Date
-                        </th>                        
+                        </th>
                         <th align="center" width="100">
                             Action
                         </th>
@@ -33,12 +33,12 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 divide-solid">
                     @foreach($tests as $test)
-                        @if($test->quiz->result_show == 1)
+                        @if(\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($test->quiz->result_date)))
                             <tr>
                                 <td>{{ $test->quiz->title }}</td>
                                 <td>{{ $test->quiz->description }}</td>
-                                <td>{{ $test->result . '/' . 20 }}</td>
-                                <td>{{ sprintf('%.2f', $test->time_spent / 60) }} minutes</td>
+                                <td>{{ $test->result . '/' . $test->quiz->questions->sum('marks'); }}</td>
+                                <td>{{ gmdate('H:i:s', $test->time_spent) }}</td>
                                 <td>{{ $test->created_at->setTimezone('Asia/Kolkata')->format('d/m/Y h:i A') }}</td>
                                 <td align="center">
                                     <a href="{{ route('results.show', $test) }}">
@@ -59,7 +59,7 @@
                             </tr>
                         @else
                             <tr>
-                                <td colspan="8" class="px-6 py-4 text-center leading-5 text-gray-900 whitespace-no-wrap">
+                                <td colspan="8" class="px-6 py-4 leading-5 text-center text-gray-900 whitespace-no-wrap">
                                     Coming soon.
                                 </td>
                             </tr>

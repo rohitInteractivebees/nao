@@ -1,46 +1,46 @@
 <x-app-layout>
     <section class="common-sec result-list-page">
         <div class="container">
-            <div class="result-summary d-flex justify-between items-end">
+            <div class="items-end justify-between result-summary d-flex">
                 <div class="heading short">Results <span>Level 1</div>
                 <div class="result-sumary-test">
-                    <ul class="d-flex justify-between">
+                    <ul class="justify-between d-flex">
                         <li>
                             <span>Date : </span> {{ $test->created_at->setTimezone('Asia/Kolkata')->format('d/m/Y h:i A') }}
 
                         </li>
-                        <li><span>Correct Answered : </span> {{ $test->result }} / {{ $questions_count }}</li>
+                        <li><span>Correct Answered : </span> {{ $test->result }} / {{ $total_questions_count }}</li>
                         <li><span>Time Taken : </span> @if ($test->time_spent)
-                            {{ sprintf('%.2f', $test->time_spent / 60) }}
-                            minutes
+                            {{ gmdate('H:i:s', $test->time_spent) }}
+                            
                             @endif
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <!--<table class="mt-4 table w-full table-view">
+            <!--<table class="table w-full mt-4 table-view">
                 <tbody class="bg-white">
                     @if (auth()->user()?->is_admin)
                     <tr class="w-28">
-                        <th class="border border-solid bg-gray-100 px-6 py-3 text-left text-sm font-semibold uppercase text-slate-600">
+                        <th class="px-6 py-3 text-sm font-semibold text-left uppercase bg-gray-100 border border-solid text-slate-600">
                             User</th>
-                        <td class="border border-solid px-6 py-3">{{ $test->user->name ?? '' }}
+                        <td class="px-6 py-3 border border-solid">{{ $test->user->name ?? '' }}
                             ({{ $test->user->email ?? '' }})</td>
                     </tr>
                     @endif
                     <tr class="w-28">
-                        <th class="border border-solid bg-gray-100 px-6 py-3 text-left text-sm font-semibold uppercase text-slate-600">
+                        <th class="px-6 py-3 text-sm font-semibold text-left uppercase bg-gray-100 border border-solid text-slate-600">
                             Date</th>
-                        <td class="border border-solid px-6 py-3">
+                        <td class="px-6 py-3 border border-solid">
                             {{ $test->created_at->format('D m/Y, h:m A') ?? '' }}
                         </td>
                     </tr>
                     <tr class="w-28">
-                        <th class="border border-solid bg-gray-100 px-6 py-3 text-left text-sm font-semibold uppercase text-slate-600">
+                        <th class="px-6 py-3 text-sm font-semibold text-left uppercase bg-gray-100 border border-solid text-slate-600">
                             Result</th>
-                        <td class="border border-solid px-6 py-3">
-                            {{ $test->result }} / {{ $questions_count }}
+                        <td class="px-6 py-3 border border-solid">
+                            {{ $test->result }} / {{ $total_questions_count }}
                             @if ($test->time_spent)
                             (time: {{ sprintf('%.2f', $test->time_spent / 60) }}
                             minutes)
@@ -51,12 +51,12 @@
             </table>-->
             <br>
             @isset($leaderboard)
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-12">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <h6 class="text-xl font-bold">Leaderboard</h6>
 
-                        <table class="table mt-4 w-full table-view">
+                        <table class="table w-full mt-4 table-view">
                             <thead>
                                 <th class="text-left">Rank</th>
                                 <th class="text-left">Username</th>
@@ -68,8 +68,7 @@
                                     ])>
                                     <td class="w-9">{{ $loop->iteration }}</td>
                                     <td class="w-1/2">{{ $test->user->name }}</td>
-                                    <td>{{ $test->result }} / {{ $questions_count }} (time:
-                                        {{ sprintf('%.2f', $test->time_spent / 60) }} minutes)
+                                    <td>{{ $test->result }} / {{ $total_questions_count }} (time:{{ gmdate('H:i:s', $test->time_spent) }})
                                     </td>
                                 </tr>
                                 @endforeach
@@ -80,10 +79,10 @@
             </div>
             @endisset
             <br>
-            <div class="result-question-answer">                
-                <ul class="d-flex justify-between">
+            <div class="result-question-answer">
+                <ul class="justify-between d-flex">
                     @foreach ($results as $result)
-                    <li class="outer d-flex justify-between">
+                    <li class="justify-between outer d-flex">
                         <div class="count">{{ $loop->iteration }}</div>
                         <div class="detail">
                             <div class="question">{!! nl2br($result->question->text) !!}</div>
@@ -93,9 +92,9 @@
                                         'font-bold' => $option->correct == 1,
                                         ])>
                                         {{ $option->text }}
-                                        @if ($option->correct == 1)                                       
+                                        @if ($option->correct == 1)
                                         @endif
-                                        @if ($result->option_id == $option->id)                                        
+                                        @if ($result->option_id == $option->id)
                                         @endif
                                     </li>
                                     @endforeach
@@ -105,14 +104,14 @@
                             </ul>
                         </div>
                     </li>
-                    @if(!$loop->last)                
+                    @if(!$loop->last)
                 @endif
                 @endforeach
                 </ul>
-                
-             
 
-                
+
+
+
             </div>
         </div>
     </section>

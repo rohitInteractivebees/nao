@@ -24,7 +24,15 @@
 
                         </li>
                         <li>
-                            <span>Time Left: </span> <em x-text="secondsLeft" class="font-bold"></em>
+                            <span>Time Left:</span>
+                            <em
+                                x-text="
+                                    String(Math.floor(secondsLeft / 3600)).padStart(2, '0') + ':' +
+                                    String(Math.floor((secondsLeft % 3600) / 60)).padStart(2, '0') + ':' +
+                                    String(secondsLeft % 60).padStart(2, '0')
+                                "
+                                class="font-bold"
+                            ></em>
                         </li>
 
                     </ul>
@@ -58,7 +66,7 @@
             <div class="justify-center mt-6 links d-flex">
                 @if ($currentQuestionIndex < $this->questionsCount - 1)
                     <div class="mt-4">
-                        <x-secondary-button class="red" x-on:click="secondsLeft = {{ config('quiz.secondsPerQuestion') }}; $wire.nextQuestion();">
+                        <x-secondary-button class="red" x-on:click="$wire.nextQuestion();">
                             Next question
                         </x-secondary-button>
                     </div>

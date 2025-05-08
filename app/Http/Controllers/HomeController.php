@@ -43,15 +43,29 @@ class HomeController extends Controller
 
     public function show(Quiz $quiz)
     {
-        // $test = Test::where('user_id',auth()->user()->id)->first();
-        // //dd($test);
-        // if(!$test)
-        // {
-          return view('front.quizzes.show', compact('quiz'));
-        // }
-        // else{
-        //     return redirect()->back()->with('message', 'Allready Done');
+        $test = Test::where('user_id', auth()->id())->where('quiz_id', $quiz->id)->first();
 
-        // }
+        if ($test) {
+            return redirect()->route('home')->with('message', 'You have already attempted this quiz.');
+        }
+
+        if (auth()->check() && !auth()->user()->is_admin && is_null(auth()->user()->is_college)) {
+            $userClasses = json_decode(auth()->user()->class ?? '[]', true); // e.g., [1, 2]
+
+            if (!empty($userClasses) && !in_array($quiz->class_ids, $userClasses)) {
+                return redirect()->route('home')->with('message', 'This quiz is not assigned to your class.');
+            }
+
+            if ($quiz->status != 1 || !\Carbon\Carbon::now()->between(\Carbon\Carbon::parse($quiz->start_date),\Carbon\Carbon::parse($quiz->end_date)
+                )
+            ) {
+                return redirect()->route('home')->with('message', 'This quiz is not currently available.');
+            }
+
+            return view('front.quizzes.show', compact('quiz'));
+        }
+
+        return redirect()->route('home');
     }
+
 }

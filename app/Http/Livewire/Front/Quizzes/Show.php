@@ -32,7 +32,6 @@ class Show extends Component
             ->inRandomOrder()
             ->whereRelation('quizzes', 'id', $this->quiz->id)
             ->with('options')
-            ->take(20)
             ->get();
 
         $this->currentQuestion = $this->questions[$this->currentQuestionIndex];
@@ -72,10 +71,10 @@ class Show extends Component
 
         foreach ($this->answersOfQuestions as $key => $optionId) {
 
-            
+
             if (!empty($optionId) && Option::find($optionId)->correct) {
-                
-                $result++;
+
+                $result += $this->questions[$key]->marks;
                 Answer::create([
                     'user_id' => auth()->id(),
                     'test_id' => $test->id,
@@ -89,7 +88,7 @@ class Show extends Component
                 if (!empty($optionId))
                 {
                     Answer::create([
-                    
+
                         'user_id' => auth()->id(),
                         'test_id' => $test->id,
                         'question_id' => $this->questions[$key]->id,
@@ -99,16 +98,16 @@ class Show extends Component
                 }
                 else{
                     Answer::create([
-                    
+
                         'user_id' => auth()->id(),
                         'test_id' => $test->id,
                         'question_id' => $this->questions[$key]->id,
-                       
-                        
+
+
                     ]);
                 }
 
-               
+
 
 
 
@@ -118,9 +117,9 @@ class Show extends Component
         $test->update([
             'result' => $result
         ]);
-        
+
         return to_route('quiz.congratulation', ['test' => $test]);
-        
+
         //return to_route('results.show', ['test' => $test]);
     }
 

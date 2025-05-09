@@ -1,6 +1,6 @@
 <x-app-layout>
     <section class="common-sec login-page profile-edit">
-        <div class="container d-flex justify-end">
+        <div class="container justify-end d-flex">
             <ul class="links">
                 <li class="active">
                     <a href="{{url('profile')}}">Profile Information</a>
@@ -11,7 +11,7 @@
             </ul>
             <div class="right overview">
                 <div class="inner" id="info">
-                    <div class="text-sec text-center">
+                    <div class="text-center text-sec">
                         <div class="heading">Profile Information</div>
                         <p>Update your account's profile information</p>
                     </div>
@@ -20,14 +20,19 @@
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
-        <div class="half-view d-flex justify-between">
+        <div class="justify-between half-view d-flex">
             <div class="form-style">
                 <x-input-label for="name" :value="__('Name')" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+                <x-text-input id="name" name="name" type="text" class="block w-full mt-1" :value="old('name', $user->name)" required autofocus autocomplete="name" />
                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
             </div>
 
@@ -37,7 +42,7 @@
             @if(auth()->user()->is_admin != 1)
             <div class="form-style">
                 <x-input-label for="institute" :value="__('School')" />
-                <select wire:model.defer="institute" id="institute" name="institute" class="mt-1 block w-full" required>
+                <select wire:model.defer="institute" id="institute" name="institute" class="block w-full mt-1" required>
                     <!-- <option value="" disabled>Select your institute</option> -->
 
                     <option value="{{ $institutes->id }}" {{ old('institute', $institutes->id) == $institutes->id ? 'selected' : '' }}>{{ $institutes->name }}</option>
@@ -49,10 +54,10 @@
 
             @if(auth()->user()->is_college != 1 && auth()->user()->is_admin != 1)
 
-            <div class="form-style d-flex justify-between" style="row-gap: 30px;">
+            {{-- <div class="justify-between form-style d-flex" style="row-gap: 30px;">
                 <div id="other-stream-upper" style="margin-top: 0;" class="w-100">
                     <x-input-label for="streams" :value="__('Streams')" />
-                    <select id="streams" class="block mt-1 w-full" name="streams" onchange="toggleOtherField(this)">
+                    <select id="streams" class="block w-full mt-1" name="streams" onchange="toggleOtherField(this)">
                         <option value="">Select your engineering department</option>
                         <option value="Aerospace Engineering" {{ old('streams', $user->streams) == 'Aerospace Engineering' ? 'selected' : '' }}>Aerospace Engineering</option>
                         <option value="Agricultural Engineering" {{ old('streams', $user->streams) == 'Agricultural Engineering' ? 'selected' : '' }}>Agricultural Engineering</option>
@@ -74,35 +79,35 @@
 
                 <div id="other-stream" style="display: none; margin-top: 0;" class="form-style">
                     <x-input-label for="other_stream" :value="__('Other Stream')" />
-                    <input id="other_stream" type="text" class="block mt-1 w-full" name="other_stream" value="{{ old('other_stream', $user->other_stream) }}" />
+                    <input id="other_stream" type="text" class="block w-full mt-1" name="other_stream" value="{{ old('other_stream', $user->other_stream) }}" />
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="form-style">
                 <x-input-label for="session_year" :value="__('Session year')" />
-                <x-text-input id="session_year" name="session_year" type="text" class="mt-1 block w-full" :value="old('session_year', $user->session_year)" />
+                <x-text-input id="session_year" name="session_year" type="text" class="block w-full mt-1" :value="old('session_year', $user->session_year)" />
                 <x-input-error class="mt-2" :messages="$errors->get('session_year')" />
             </div>
             @endif
 
             <div class="form-style">
                 <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" readonly autocomplete="username" />
+                <x-text-input id="email" name="email" type="email" class="block w-full mt-1" :value="old('email', $user->email)" readonly autocomplete="username" />
                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
                 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2 text-gray-800">
+                    <p class="mt-2 text-sm text-gray-800">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button form="send-verification" class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                    <p class="mt-2 font-medium text-sm text-green-600">
+                    <p class="mt-2 text-sm font-medium text-green-600">
                         {{ __('A new verification link has been sent to your email address.') }}
                     </p>
                     @endif
@@ -111,10 +116,10 @@
             </div>
             <div class="form-style">
                 <x-input-label for="phone" :value="__('Phone')" />
-                <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $user->phone)" maxlength="10" oninput="validatePhoneInput(this)" required autofocus autocomplete="phone" />
+                <x-text-input id="phone" name="phone" type="text" class="block w-full mt-1" :value="old('phone', $user->phone)" maxlength="10" oninput="validatePhoneInput(this)" required autofocus autocomplete="phone" />
                 <x-input-error class="mt-2" :messages="$errors->get('phone')" />
             </div>
-            <div class="flex items-center justify-center mt-8 gap-4 w-100">
+            <div class="flex items-center justify-center gap-4 mt-8 w-100">
                 <x-primary-button>{{ __('Update Profile') }}</x-primary-button>
 
                 @if (session('status') === 'profile-updated')
@@ -125,7 +130,7 @@
     </form>
 </section>
                 </div>
-               
+
             </div>
         </div>
     </section>
@@ -143,11 +148,11 @@
         }
     }
 </script>
-<script>    
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         var select = document.getElementById('streams');
-        var otherField = document.getElementById('other-stream');    
-        var otherFieldUpper = document.getElementById('other-stream-upper');   
+        var otherField = document.getElementById('other-stream');
+        var otherFieldUpper = document.getElementById('other-stream-upper');
         var otherStreamInput = document.getElementById('other_stream');
 
         if (select.value === 'other') {

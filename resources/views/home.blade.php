@@ -91,7 +91,7 @@
             <section class="common-sec collage-dashboared">
                 <div class="container">
                     <div class="heading short">Dashboard</div>
-                    <div class="justify-end mb-4 toggle-buttons d-flex">
+                    {{-- <div class="justify-end mb-4 toggle-buttons d-flex">
 
                         @php
                             $result2 = App\Models\User::where('is_admin', 1)->where('level2show', 1)->first();
@@ -122,7 +122,7 @@
                                 <span data-fancybox data-src="#quiz-blade3" class="quiz-btn">&nbsp;</span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="dashboared-items d-flex">
                         <div class="items-center justify-between item d-flex">
                             <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>

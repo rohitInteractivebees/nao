@@ -21,16 +21,28 @@
                                     $userId = (string) Auth::user()->id;
                                     $teamy = App\Models\Teams::whereJsonContains('teamMembers', $userId)->first();
                                     $myrslt = App\Models\Test::where('user_id', Auth::user()->id)->first();
-                                    $resultpublish = App\Models\Quiz::where('id', 2)->first();
+                                    $resultpublish = App\Models\Quiz::whereHas('questions')
+                                    ->withCount('questions')
+                                    ->when(auth()->check() && !auth()->user()->is_admin && is_null(auth()->user()->is_college), function ($query) {
+                                        $userClasses = json_decode(auth()->user()->class ?? '[]', true); // e.g., [1, 2]
+
+                                        if (!empty($userClasses)) {
+                                            $query->whereIn('class_ids', $userClasses);
+                                        }
+
+                                        $query->where('status', 1);
+                                    })
+                                    ->limit(1)
+                                    ->first();
                                 @endphp
 
-                                @if(@$resultpublish->result_show == 1)
+                                @if($resultpublish && \Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($resultpublish->result_date)))
                                     @if(auth()->user()->is_college != 1 && auth()->user()->is_admin != 1 && $myrslt)
-                                        <li><a href="{{ route('myresults') }}">My Result </a></li>
+                                        <li><a href="{{ route('myresults') }}">My Result</a></li>
                                     @endif
                                 @endif
 
-                                @php
+                                {{-- @php
                                     $result = App\Models\User::where('is_admin', 1)->where('level2show', 1)->first();;
                                     $resultF = App\Models\User::where('is_admin', 1)->where('level3show', 1)->first();
                                     $resultUser = App\Models\Test::where('user_id',auth()->user()->id)->first();
@@ -44,7 +56,7 @@
                                 @endif
                                 @if( $resultF && $resultUser && auth()->user()->is_college != 1 && auth()->user()->is_admin != 1)
                                     <li><a href="{{ route('physciallylist') }}">Physical Prototype and Sales Presentation</a></li>
-                                @endif
+                                @endif --}}
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <li>
@@ -57,7 +69,7 @@
                         </li>
 
                         @if(auth()->user()->is_college == 1 )
-                            @if($result)
+                            @if(@$result)
                                 <li><a href="{{ route('leaderboard') }}">Leaderboard </a></li>
 
                             @endif

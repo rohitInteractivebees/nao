@@ -69,7 +69,7 @@
                         </li>
 
                         @if(auth()->user()->is_college == 1 )
-                            @if($result)
+                            @if(@$result)
                                 <li><a href="{{ route('leaderboard') }}">Leaderboard </a></li>
 
                             @endif

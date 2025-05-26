@@ -216,7 +216,4 @@ $(document).click(function(e) {
         panel.find('.success-list').addClass('hidden'); // Hide all groups within this tab
         panel.find('.success-list[data-group="' + group + '"]').removeClass('hidden'); // Show selected group
     }
-
-
-  
 });

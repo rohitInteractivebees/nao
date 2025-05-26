@@ -140,7 +140,11 @@
                             </ul>
                         </li>
                         <li class="">
+<<<<<<< HEAD
                             <a href="javarscript:void(0);" class="flex items-center">Media
+=======
+                            <a href="#about-nao" class="flex items-center">Media
+>>>>>>> 4523e0c9d6de1e22d809dcb192bbff3799454fd1
                                 <svg class="ml-2 w-4 h-4 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                 </svg>

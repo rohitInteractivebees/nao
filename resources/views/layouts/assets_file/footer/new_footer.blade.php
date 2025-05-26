@@ -8,12 +8,21 @@
             </div>
             <div class="item">
                 <div class="social-icons flex gap-2">
+<<<<<<< HEAD
                     <a href="https://www.facebook.com/AutomotiveSkillsDevelopmentCouncil" target="_blank"><img src="{{ asset('/images//fb.svg') }}"></a>
                     <a href="https://twitter.com/SkillsASDC" target="_blank"><img src="{{ asset('/images//tw.svg') }}"></a>
                     <a href="https://www.youtube.com/channel/UCHEuklRdNjFO6d73wfM8l8w?view_as=subscriber" target="_blank"><img src="{{ asset('/images//yt.svg') }}"></a>
                     <a href="https://www.instagram.com/asdc_india/" target="_blank"><img src="{{ asset('/images//insta.svg') }}"></a>
                     <a href="https://www.linkedin.com/company/asdc-in/" target="_blank"><img src="{{ asset('/images//linkdin.svg') }}"></a>
                     <a href="https://www.threads.net/@asdc_india" target="_blank"><img src="{{ asset('/images//dribble.svg') }}"></a>
+=======
+                    <a href=""><img src="{{ asset('/images//fb.svg') }}"></a>
+                    <a href=""><img src="{{ asset('/images//tw.svg') }}"></a>
+                    <a href=""><img src="{{ asset('/images//yt.svg') }}"></a>
+                    <a href=""><img src="{{ asset('/images//insta.svg') }}"></a>
+                    <a href=""><img src="{{ asset('/images//linkdin.svg') }}"></a>
+                    <a href=""><img src="{{ asset('/images//dribble.svg') }}"></a>
+>>>>>>> 4523e0c9d6de1e22d809dcb192bbff3799454fd1
                 </div>
             </div>
         </div>

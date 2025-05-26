@@ -62,6 +62,10 @@
                                 
                                 Click <a href="{{ url('sampleCsv/'.$pdf) }}" download target="_blank">here </a> to download sample paper
                             </div>
+                            <div class="description">
+                                
+                                Click <a href="{{ url('sampleCsv/sample_paper.pdf') }}" download target="_blank">here </a> to download sample paper
+                            </div>
                         @endif
                     @endif
                     

@@ -63,9 +63,15 @@
                                 <tr>
                                     <th width="100">Sr.No</th>
                                     <th width="300">School Name</th>
+<<<<<<< HEAD
                                     <th width="300">Student Name</th>
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>
+=======
+                                    <th width="300">Principal Name</th>
+                                    <th width="400">Principal Email</th>
+                                    <th width="150">Principal Phone</th>
+>>>>>>> 4523e0c9d6de1e22d809dcb192bbff3799454fd1
                                     <th width="150">Registration Date</th>
                                     <!--<th width="150">Remark</th>-->
                                     <!--<th align="center" width="100">ID Card</th>-->

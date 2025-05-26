@@ -56,8 +56,14 @@ class CollegeList extends Component
 
         $file = $request->file('csv_file');
         $path = $file->getRealPath();
-        $csvData = array_map('str_getcsv', file($path));
-
+        
+        $csvData = array_filter(array_map('str_getcsv', file($path)), function ($row) {
+            // Remove rows where all values are empty or contain only whitespace
+            return array_filter($row, function ($value) {
+                return trim($value) !== '';
+            });
+        });
+        
         if (empty($csvData) || count($csvData) < 2) {
             return response()->json([
                 'success' => false,
@@ -65,7 +71,7 @@ class CollegeList extends Component
             ]);
         }
         $headerData = $csvData[0];
-        if(!($headerData[1] == 'school_name') || !($headerData[2] == 'principal_name') || !($headerData[3] == 'mobile') || !($headerData[4] == 'country') || !($headerData[5] == 'state') || !($headerData[6] == 'city') || !($headerData[7] == 'spoc_name') || !($headerData[8] == 'spoc_email') || !($headerData[9] == 'spoc_mobile') || !($headerData[10] == 'login_id') || !($headerData[11] == 'password')){
+        if(!($headerData[1] == 'school_name') || !($headerData[2] == 'principal_name') || !($headerData[3] == 'principal_mobile') || !($headerData[4] == 'principal_email') || !($headerData[5] == 'country') || !($headerData[6] == 'state') || !($headerData[7] == 'city') || !($headerData[8] == 'spoc_name') || !($headerData[9] == 'spoc_email') || !($headerData[10] == 'spoc_mobile') || !($headerData[11] == 'principal_country_code') || !($headerData[12] == 'spoc_country_code') || !($headerData[13] == 'pincode')){
             return response()->json([
                 'success' => false,
                 'message' => 'CSV file is improperly formatted.'
@@ -78,31 +84,25 @@ class CollegeList extends Component
             if ($key === 0) continue; // Skip header
 
             // Ensure minimum column count
-            if (count($row) < 12) continue;
+            if (count($row) < 14) continue;
 
             [
-                $index, $schoolName, $principalName, $mobile, $country,
-                $state, $city, $spocName, $spocEmail, $spocMobile,
-                $loginId, $password
+                $index, $schoolName, $principalName, $mobile, $email, $country,
+                $state, $city, $spocName, $spocEmail, $spocMobile, $principalCountryCode, $spocCountryCode, $pincode
             ] = array_map('trim', $row);
-
             // Check if already exists
-            $exists = User::where('email', $spocEmail)->exists() ||
+            $exists = User::where('email', $email)->exists() ||
                     User::where('phone', $mobile)->exists() ||
-                    User::where('spoc_mobile', $spocMobile)->exists() ||
-                    Instute::where('name', $schoolName)->exists() ||
-                    User::where('loginId', $loginId)->exists();
-
+                    Instute::where('name', $schoolName)->exists();
             if ($exists) {
                 continue; // Skip duplicate entry
             }
-
+            
             // Create institute
             $institute = Instute::create([
                 'name' => $schoolName,
                 'status' => 1,
             ]);
-
             // Generate institute code: initials + ID
             $initials = collect(explode(' ', $schoolName))
                 ->filter()
@@ -117,7 +117,7 @@ class CollegeList extends Component
             User::create([
                 'name' => $principalName,
                 'parent_name' => $spocName,
-                'email' => $spocEmail,
+                'email' => $email,
                 'institute' => $institute->id,
                 'class' => $encodedClassIds,
                 'state' => $state,
@@ -125,11 +125,17 @@ class CollegeList extends Component
                 'phone' => $mobile,
                 'spoc_mobile' => $spocMobile,
                 'country' => $country,
-                'password' => Hash::make($password),
+                //'password' => Hash::make($request->password),
+                'password' => Hash::make($mobile),
                 'is_college' => 1,
                 'reg_no' => $code,
-                'loginId' => $loginId,
+                //'loginId' => $loginId,
+                'loginId' => $email,
                 'is_verified' => 1,
+                'spoc_email' => $spocEmail,
+                'country_code' => $principalCountryCode,
+                'spoc_country_code' => $spocCountryCode,
+                'pincode' => $pincode
             ]);
 
             // Optional: send email

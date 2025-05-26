@@ -1,54 +1,48 @@
 <div>
     <div class="common-sec1">
-        <div class="container1">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white">
-                    <div class="items-end justify-center filter-data d-flex sm:justify-between">
-                        <div class="left">
-                            {{-- <a href="{{ route('student.create') }}" class="common-btn short">Create Student</a> --}}
+        <div class="container">
+            <div class="md:flex justify-between items-end">
+                <div class="item">
+                    <div class="sub-title mb-0">Student List</div>
+                </div>
+                <div class="item">
+                    <div class="items-end justify-center right d-flex sm:justify-end gap-3">
+                        @if(auth()->user()->is_admin)
+                        <div class=" filter-options form-style">
+                            <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
+                                <option value="0">All School</option>
+                                @foreach(App\Models\Instute::all() as $college)
+                                    <option value="{{ $college->id }}">{{ $college->name }}</option>
+                                @endforeach
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
-                        <div class="items-end justify-center right d-flex sm:justify-end">
-                            <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form">
-                                @csrf
-                                <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                                    <div class="form-style">
-                                        <input type="file" name="csv_file">
-                                    </div>
-                                    <div class="links">
-                                        <button class="items-center common-btn admin-btn text d-flex" type="submit">
-                                            <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                                            <span>Upload CSV</span>
-                                        </button>
-                                    </div>
+                        @endif
+                        <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
+                            @csrf
+                            <div class="items-end justify-center half-view d-flex gap sm:justify-end">
+                                <div class="form-style">
+                                    <input type="file" name="csv_file" required>
                                 </div>
-                            </form>
-                            <button class="items-center common-btn admin-btn text d-flex" type="submit">
-                                <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                                <a href="{{url('byd/admin_student_sample.csv')}}" download><span>Download CSV</span></a>
-                            </button>
-                        </div>
+                                <div class="links">
+                                    <button class="items-center common-btn admin-btn d-flex" type="submit">
+                                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                                        <span>Upload CSV</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
+                            <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                            <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
+                        </button>
+                       
                     </div>
-                    @if(auth()->user()->is_admin)
-                        <div class="items-end justify-center w-100 gap d-flex sm:justify-between">
-                            <div class="form-style sm:w-1/2">
-                                <label class="block text-sm font-medium text-gray-700" for="quiz">School</label>
-                                <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
-                                    <option value="0">All School</option>
-                                    @foreach(App\Models\Instute::all() as $college)
-                                        <option value="{{ $college->id }}">{{ $college->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-style sm:w-1/2">
-
-                                <a href="#" class="table-btn">Download Excel</a>
-                                <!--<a href="{{url('download-student')}}" class="table-btn">Download Excel</a>-->
-                            </div>
-
-                        </div>
-
-                    @endif
+                </div>
+            </div>
+            <div class="mx-auto max-w-7xl">
+                <div class="overflow-hidden bg-white">
+                    
                     <div class="loader-sec" id="loader" style="display: none;">
                         <div class="inner">
                             <span class="dot"></span>
@@ -67,15 +61,14 @@
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th width="100">ID</th>
+                                    <th width="100">Sr.No</th>
                                     <th width="300">School Name</th>
-                                    <th width="300">Name</th>
-                                    <th width="400">Email</th>
-                                    <th width="150">Phone</th>
+                                    <th width="300">Student Name</th>
+                                    <th width="400">Parent Email</th>
+                                    <th width="150">Parent Phone</th>
                                     <th width="150">Registration Date</th>
-                                    <th width="150">Status</th>
-                                    <th width="150">Remark</th>
-                                    <th align="center" width="100">ID Card</th>
+                                    <!--<th width="150">Remark</th>-->
+                                    <!--<th align="center" width="100">ID Card</th>-->
                                 </tr>
                             </thead>
                             @php
@@ -87,32 +80,25 @@
                                                                 <tr>
                                                                     <td>{{ $serial++ }}</td>
                                                                     @php
-                                                                        $inst = App\Models\Instute::find(@$student->institute);
+                                                                        if($student->institute != 'Other')
+                                                                        {
+                                                                            $instituteName = App\Models\Instute::where('id', $student->institute)->value('name');
+                                                                            
+                                                                        }else{
+                                                                            $instituteName = $student->institute.' ('.$student->school_name.')';
+                                                                        }    
                                                                     @endphp
-                                                                    <td>{{ @$inst->name }}</td>
+                                                                    <td>{{ $instituteName }}</td>
                                                                     <td>{{ $student->name }}</td>
                                                                     <td>{{ $student->email }}</td>
-                                                                    <td>{{ $student->phone }}</td>
-                                                                    <td> {{ $student->created_at->format('d-m-Y h:i a') }}</td>
+                                                                     <td>+{{ $student->country_code.' '.$student->phone }}</td>
+                                                                    <td> {{ $student->created_at->format('d-m-Y') }}</td>
 
 
-                                                                    <td>
-
-@if($student->is_verified == null)
-<button type="button" class="table-btn yellow no-hov no-pointer">Verify</button>
-
-@elseif($student->is_verified == 1)
-<button type="button" class="table-btn green no-hov no-pointer">Verified</button>
-
-@else
-<button type="button" class="table-btn red no-hov no-pointer">Not Verified</button>
-@endif
-
-                                                                    </td>
-                                                                    <td>
-                                                                        {{$student->remark}}
-                                                                    </td>
-                                                                    <td align="center">
+                                                                    <!--<td>-->
+                                                                    <!--    {{$student->remark}}-->
+                                                                    <!--</td>-->
+                                                                    <!--<td align="center">-->
                                                                         <!--@if($student->idcard)-->
                                                                         <!--    <a data-fancybox href="#dialog-content{{ $student->id }}">-->
                                                                         <!--        <img src="{{ asset('/assets/images/icon-view.png') }}" alt="">-->
@@ -149,7 +135,7 @@
 
                                                                         <!--    </div>-->
                                                                         <!--</div>-->
-                                                                    </td>
+                                                                    <!--</td>-->
                                                                 </tr>
                                 @empty
                                     <tr>

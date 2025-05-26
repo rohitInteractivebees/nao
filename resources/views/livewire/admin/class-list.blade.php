@@ -1,4 +1,4 @@
-<div>
+<div class="common-sec1">
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white">
@@ -8,10 +8,22 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        ID
+                                        Sr.No
                                     </th>
                                     <th>
                                        Name
+                                    </th>
+                                    <th>
+                                       Group
+                                    </th>
+                                    <th>
+                                       Total Students
+                                    </th>
+                                    <th>
+                                       Quiz Attempts
+                                    </th>
+                                    <th>
+                                       Pending Attempts
                                     </th>
                                 </tr>
                             </thead>
@@ -22,6 +34,18 @@
                                         <td>{{ $classes_name->id }}</td>
                                         <td>
                                             {{ $classes_name->name }}
+                                        </td>
+                                        <td>
+                                            {{ $classes_name->group }}
+                                        </td>
+                                        <td>
+                                            {{ $classes_name->user_count }}
+                                        </td>
+                                        <td>
+                                            {{ $classes_name->quiz_attempts }}
+                                        </td>
+                                        <td>
+                                            {{ $classes_name->user_count - $classes_name->quiz_attempts }}
                                         </td>
                                     </tr>
                                 @empty

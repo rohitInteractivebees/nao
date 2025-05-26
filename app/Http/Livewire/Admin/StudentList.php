@@ -14,40 +14,56 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
+use Livewire\WithPagination;
 class StudentList extends Component
 {
-    public  $quiz_id = 3;
+    use WithPagination;
 
-    public function render(): View
+   
+    public $quiz_id = 1;
+    public $class_id = '';
+
+     // Optional: Set default values
+    public function mount()
     {
+        $this->quiz_id = request()->query('quiz_id', $this->quiz_id);
+        $this->class_id = request()->query('class_id', $this->class_id);
+    }
 
+    public function updatingClassId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingQuizId()
+    {
+        $this->resetPage();
+    }
+    public function render()
+    {
         $is_login = auth()->user();
-         // dd($is_login);
+
         if ($is_login && $is_login->is_college == 1) {
             $id = $is_login->institute;
 
-            //dd($this->quiz_id);
-            //$student = User::where('institute', $id)->where('id', '!=', $is_login->id)->paginate(10);
+            $query = User::where('institute', $id)->where('id', '!=', $is_login->id);
 
-            if ($this->quiz_id == 1) {
-                $student = User::where('institute', $id)
-                    ->where('id', '!=', $is_login->id)
-                    ->where(function ($query) {
-                    $query->where('is_verified', 0)
-                        ->orWhereNull('is_verified');
-                    })
-                ->paginate(10);
+            if ($this->quiz_id == 2) {
+                $query->where('is_verified', 1);
+            } elseif ($this->quiz_id == 3) {
+                $query->where(function ($q) {
+                    $q->where('is_verified', 0)->orWhereNull('is_verified');
+                });
             }
-            else if($this->quiz_id == 2)
+            if($this->class_id != '')
             {
-                $student = User::where('institute', $id)->where('id', '!=', $is_login->id)->where('is_verified', 1)->paginate(10);
-            }
-            else{
-                $student = User::where('institute', $id)->where('id', '!=', $is_login->id)->paginate(10);
-            }
+                $query->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
+            }    
+            $student = $query->paginate(10);
+            $classes = Classess::orderBy('id','asc')->get();
             return view('livewire.admin.student-list', [
                 'student' => $student,
+                'classes' => $classes
             ]);
         } else {
             Auth::logout();
@@ -60,7 +76,14 @@ class StudentList extends Component
         ]);
         $file = $request->file('csv_file');
         $path = $file->getRealPath();
-        $csvData = array_map('str_getcsv', file($path));
+        //$csvData = array_map('str_getcsv', file($path));
+        $csvData = array_filter(array_map('str_getcsv', file($path)), function ($row) {
+            // Remove rows where all values are empty or contain only whitespace
+            return array_filter($row, function ($value) {
+                return trim($value) !== '';
+            });
+        });
+        
         if (empty($csvData) || count($csvData) < 2) {
 
             return response()->json([
@@ -69,7 +92,7 @@ class StudentList extends Component
             ]);
         }
         $headerData = $csvData[0];
-        if(!($headerData[1] == 'student_name') || !($headerData[2] == 'class_id') || !($headerData[3] == 'session_year') || !($headerData[4] == 'parent_name') || !($headerData[5] == 'parent_email') || !($headerData[6] == 'phone') || !($headerData[7] == 'state') || !($headerData[8] == 'city') || !($headerData[9] == 'login_id') || !($headerData[10] == 'password')){
+        if(!($headerData[1] == 'student_name') || !($headerData[2] == 'class') || !($headerData[3] == 'session_year') || !($headerData[4] == 'parent_name') || !($headerData[5] == 'parent_email') || !($headerData[6] == 'parent_country_code') || !($headerData[7] == 'parent_phone') || !($headerData[8] == 'country') || !($headerData[9] == 'state') || !($headerData[10] == 'city') || !($headerData[11] == 'pincode')){
 
             return response()->json([
                 'success' => false,
@@ -78,25 +101,24 @@ class StudentList extends Component
         }
         $is_login = auth()->user();
         $id = $is_login->institute;
-
         foreach ($csvData as $key => $row) {
             if ($key === 0) continue; // Skip header
             // Ensure minimum column count
-            if (count($row) < 11) continue;
+            if (count($row) < 12) continue;
 
             [
-                $index, $studentName, $classId, $sessionYear, $parentName, $parentEmail, $phone,
-                $state, $city, $loginId, $password
+                $index, $studentName, $class, $sessionYear, $parentName, $parentEmail, $parentCountryCode, $phone, $country,$state, $city, $pincode
             ] = array_map('trim', $row);
-
+            
+            // Convert class to integer (in case it's a string like "6")
+            $classId = (int) $class - 5;
             // Check if already exists
             $emailExists = User::where('email', $parentEmail)->exists();
             $phoneExists = User::where('phone', $phone)->exists();
-            $loginIdExists = User::where('loginId', $loginId)->exists();
+            //$loginIdExists = User::where('loginId', $loginId)->exists();
             $classExists = Classess::where('id', $classId)->exists();
-            //dd($emailExists,$phoneExists,$loginIdExists,$classExists);
 
-            if ($emailExists || $phoneExists || $loginIdExists || !$classExists) {
+            if ($emailExists || $phoneExists || !$classExists) {
                 continue; // Skip if duplicate or invalid class ID
             }
             //dd('test');
@@ -120,6 +142,7 @@ class StudentList extends Component
             }
 
             $newRegNo = $schoolCode . '_' . ($lastNumber + 1);
+           
             // Create user
             User::create([
                 'name' => $studentName,
@@ -127,14 +150,19 @@ class StudentList extends Component
                 'email' => $parentEmail,
                 'institute' => $id,
                 'class' => $encodedClassname,
+                'country' => $country,
                 'state' =>$state,
                 'city' =>$city,
                 'session_year' => $sessionYear,
                 'phone' => $phone,
-                'password' => Hash::make($password),
+                //'password' => Hash::make($request->password),
+                'password' => Hash::make($phone),
                 'reg_no' => $newRegNo,
-                'loginId' => $loginId,
+                //'loginId' => $loginId,
+                'loginId' => $parentEmail,
                 'is_verified' => 1,
+                'country_code' => $parentCountryCode,
+                'pincode' => $pincode,
             ]);
 
             // Optional: send email

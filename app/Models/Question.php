@@ -11,12 +11,14 @@ class Question extends Model
     use HasFactory;
 
     protected $fillable = [
-        'question_text',
+        'text',
         'code_snippet',
         'answer_explanation',
         'more_info_link',
         'image_path',
         'marks',
+        'level',
+        'class_ids'
     ];
 
     public function options(): HasMany

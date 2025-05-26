@@ -16,7 +16,7 @@
                             <thead>
                                 <tr>
                                     <th width="100">
-                                        ID
+                                        Sr.No
                                     </th>
                                     <th width="900">
                                         Name
@@ -28,10 +28,10 @@
                                         Register Link
                                     </th>
                                     <th width="900">
-                                        Status
+                                        Total Student
                                     </th>
-                                    <th width="100" align="center">
-                                        Action
+                                    <th width="900">
+                                        Participant Student
                                     </th>
                                 </tr>
                             </thead>
@@ -52,19 +52,17 @@
                                             {{ $baseUrl . '/' . $admin->code }}
                                         </td>
                                         <td>
-                                            @if($admin->status == 0)
-                                                <button type="button" class="table-btn red no-hov no-pointer">Not Verified</button>
-                                            @elseif($admin->status == 1)
-                                                <button type="button" class="table-btn green no-hov no-pointer">Verified</button>
-                                            @endif
+                                            @php
+                                                $studenclg = App\Models\User::where('institute', $admin->id)->where('is_college', null)->get();
+                                            @endphp
+                                            {{count($studenclg)}}
                                         </td>
                                         <td>
-                                        <a href="{{ route('institute.edit',  $admin->id ) }}">
-                                            <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="">
-                                        </a>
-                                            {{-- <a href="{{ route('institute.delete',  $admin->id ) }}">
-                                                <img src="{{ asset('/assets/images/icon-delete.png') }}" alt="">
-                                            </a> --}}
+                                            @php
+                                                $partstudentCount = App\Models\Test::whereIn('user_id', $studenclg->pluck('id'))->distinct('user_id')->count('user_id');
+                                            @endphp
+
+                                            {{ $partstudentCount }}
                                         </td>
                                     </tr>
                                 @empty

@@ -31,12 +31,12 @@ class PasswordResetLinkController extends Controller
         ]);
 
         // Find user by email
-        $user = User::where('email', $request->email)->first();
-        // Check if user exists and has access
-        if (! $user || (! $user->is_admin && ! $user->is_college)) {
-            return back()->withInput($request->only('email'))
-                        ->withErrors(['email' => 'This user does not have access to reset password.']);
-        }
+        // $user = User::where('email', $request->email)->first();
+        // // Check if user exists and has access
+        // if (! $user || (! $user->is_admin && ! $user->is_college)) {
+        //     return back()->withInput($request->only('email'))
+        //                 ->withErrors(['email' => 'This user does not have access to reset password.']);
+        // }
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we

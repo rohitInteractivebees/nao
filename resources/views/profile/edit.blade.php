@@ -11,8 +11,8 @@
             </ul>
             <div class="right overview">
                 <div class="inner" id="info">
-                    <div class="text-sec text-center">
-                        <div class="heading">Profile Information</div>
+                    <div class="text-sec text-center mb-0">
+                        <div class="common-title">Profile <span>Information</span></div>
                         <p>Update your account's profile information</p>
                     </div>
                     @include('profile.partials.update-profile-information-form')

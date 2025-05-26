@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::get('register/{code?}', [RegisteredUserController::class, 'create'])
                 ->name('register');
+    Route::post('/send-otp', [RegisteredUserController::class, 'sendOtp'])->name('send.otp');
     Route::get('school_register', [RegisteredUserController::class, 'school_create'])
                 ->name('school_register');
+    Route::post('/send-otp-school', [RegisteredUserController::class, 'sendOtpSchool'])->name('send.otp.school');
 
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register.store');;
     Route::post('school_register', [RegisteredUserController::class, 'school_store']);

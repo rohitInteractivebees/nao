@@ -18,7 +18,7 @@ class TeamRegistration extends Component
     public $collegeId;
 
     protected $rules = [
-        'teamName' => 'required|string|ends_with:BYD',
+        'teamName' => 'required|string',
         'teamLead' => 'required|exists:students,id',
         'mentorName' => 'required|string',
         'mentorDetails' => 'nullable|string',

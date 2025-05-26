@@ -42,8 +42,8 @@ return [
     |
     */
 
-    //'debug' => (bool)  false,
-    'debug' => (bool)  true,
+    'debug' => true,
+    //'debug' => (bool)  true,
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
 
     /*
     |--------------------------------------------------------------------------

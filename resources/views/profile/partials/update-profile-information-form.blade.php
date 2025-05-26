@@ -1,4 +1,10 @@
 <x-app-layout>
+    <style>
+        span.select2.select2-container.select2-container--default{
+            border: 0.1rem solid #ccc !important;
+            border-right: 0 !important;
+        }
+    </style>
     <section class="common-sec login-page profile-edit">
         <div class="container justify-end d-flex">
             <ul class="links">
@@ -11,8 +17,8 @@
             </ul>
             <div class="right overview">
                 <div class="inner" id="info">
-                    <div class="text-center text-sec">
-                        <div class="heading">Profile Information</div>
+                    <div class="text-center text-sec mb-0">
+                        <div class="common-title">Profile <span>Information </span></div>
                         <p>Update your account's profile information</p>
                     </div>
                     <section>
@@ -26,68 +32,60 @@
         </div>
     @endif
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="">
         @csrf
         @method('patch')
         <div class="justify-between half-view d-flex">
             <div class="form-style">
                 <x-input-label for="name" :value="__('Name')" />
-                <x-text-input id="name" name="name" type="text" class="block w-full mt-1" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+                <x-text-input id="name" name="name" type="text" class="block w-full mt-1" :value="old('name', $user->name)" required readonly autofocus autocomplete="name" />
                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
             </div>
 
             @php
-            $institutes = App\Models\Instute::where('id',$user->institute)->first();
+                $institutes = App\Models\Instute::where('id',$user->institute)->first();
+                if($user->institute == 'Other')
+                {
+                    $institutes = (object)[
+                        'id' => $user->institute,
+                        'name' => $user->school_name
+                    ];
+                }
+                $countries = Illuminate\Support\Facades\DB::table('countries')
+                            ->orderByRaw("CASE WHEN shortname = 'IN' THEN 0 ELSE 1 END")
+                            ->orderBy('id', 'asc')
+                            ->get();
             @endphp
             @if(auth()->user()->is_admin != 1)
             <div class="form-style">
                 <x-input-label for="institute" :value="__('School')" />
                 <select wire:model.defer="institute" id="institute" name="institute" class="block w-full mt-1" required>
                     <!-- <option value="" disabled>Select your institute</option> -->
-
-                    <option value="{{ $institutes->id }}" {{ old('institute', $institutes->id) == $institutes->id ? 'selected' : '' }}>{{ $institutes->name }}</option>
-
+                        <option value="{{ $institutes->id }}" {{ old('institute', $institutes->id) == $institutes->id ? 'selected' : '' }}>{{ $institutes->name }}</option>
                 </select>
                 <x-input-error class="mt-2" :messages="$errors->get('institute')" />
             </div>
             @endif
 
             @if(auth()->user()->is_college != 1 && auth()->user()->is_admin != 1)
-
-            {{-- <div class="justify-between form-style d-flex" style="row-gap: 30px;">
-                <div id="other-stream-upper" style="margin-top: 0;" class="w-100">
-                    <x-input-label for="streams" :value="__('Streams')" />
-                    <select id="streams" class="block w-full mt-1" name="streams" onchange="toggleOtherField(this)">
-                        <option value="">Select your engineering department</option>
-                        <option value="Aerospace Engineering" {{ old('streams', $user->streams) == 'Aerospace Engineering' ? 'selected' : '' }}>Aerospace Engineering</option>
-                        <option value="Agricultural Engineering" {{ old('streams', $user->streams) == 'Agricultural Engineering' ? 'selected' : '' }}>Agricultural Engineering</option>
-                        <option value="Biomedical Engineering" {{ old('streams', $user->streams) == 'Biomedical Engineering' ? 'selected' : '' }}>Biomedical Engineering</option>
-                        <option value="Chemical Engineering" {{ old('streams', $user->streams) == 'Chemical Engineering' ? 'selected' : '' }}>Chemical Engineering</option>
-                        <option value="Civil Engineering" {{ old('streams', $user->streams) == 'Civil Engineering' ? 'selected' : '' }}>Civil Engineering</option>
-                        <option value="Computer Engineering" {{ old('streams', $user->streams) == 'Computer Engineering' ? 'selected' : '' }}>Computer Engineering</option>
-                        <option value="Electrical Engineering" {{ old('streams', $user->streams) == 'Electrical Engineering' ? 'selected' : '' }}>Electrical Engineering</option>
-                        <option value="Environmental Engineering" {{ old('streams', $user->streams) == 'Environmental Engineering' ? 'selected' : '' }}>Environmental Engineering</option>
-                        <option value="Industrial Engineering" {{ old('streams', $user->streams) == 'Industrial Engineering' ? 'selected' : '' }}>Industrial Engineering</option>
-                        <option value="Materials Engineering" {{ old('streams', $user->streams) == 'Materials Engineering' ? 'selected' : '' }}>Materials Engineering</option>
-                        <option value="Mechanical Engineering" {{ old('streams', $user->streams) == 'Mechanical Engineering' ? 'selected' : '' }}>Mechanical Engineering</option>
-                        <option value="Software Engineering" {{ old('streams', $user->streams) == 'Software Engineering' ? 'selected' : '' }}>Software Engineering</option>
-                        <option value="other" {{ old('streams', $user->streams) == 'other' ? 'selected' : '' }}>Other</option>
-
-                    </select>
-                    <x-input-error class="mt-2" :messages="$errors->get('streams')" />
-                </div>
-
-                <div id="other-stream" style="display: none; margin-top: 0;" class="form-style">
-                    <x-input-label for="other_stream" :value="__('Other Stream')" />
-                    <input id="other_stream" type="text" class="block w-full mt-1" name="other_stream" value="{{ old('other_stream', $user->other_stream) }}" />
-                </div>
-            </div> --}}
-
-
+                @php
+                    $classIds = json_decode(auth()->user()->class, true);
+                    $class = '';
+            
+                    if (!empty($classIds)) {
+                        $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('name')->toArray();
+                        $class = implode(', ', $classNames);
+                    }
+                @endphp
             <div class="form-style">
                 <x-input-label for="session_year" :value="__('Session year')" />
-                <x-text-input id="session_year" name="session_year" type="text" class="block w-full mt-1" :value="old('session_year', $user->session_year)" />
+                <x-text-input id="session_year" name="session_year" type="text" readonly class="block w-full mt-1" :value="old('session_year', $user->session_year)" />
                 <x-input-error class="mt-2" :messages="$errors->get('session_year')" />
+            </div>
+            <div class="form-style">
+                <x-input-label for="class" :value="__('Class')" />
+                <x-text-input id="class" name="class" type="text" readonly class="block w-full mt-1" :value="old('class', $class)" />
+                <x-input-error class="mt-2" :messages="$errors->get('class')" />
             </div>
             @endif
 
@@ -116,16 +114,33 @@
             </div>
             <div class="form-style">
                 <x-input-label for="phone" :value="__('Phone')" />
-                <x-text-input id="phone" name="phone" type="text" class="block w-full mt-1" :value="old('phone', $user->phone)" maxlength="10" oninput="validatePhoneInput(this)" required autofocus autocomplete="phone" />
+                <div class="flex pincode-div">
+                    <select name="country_code" id="country_code" class="form-control select2">
+                        @foreach($countries as $country)
+                            <option value="{{ $country->phonecode }}"
+                                {{ (old('country_code') ?? $user->country_code ?? 91) == $country->phonecode ? 'selected' : '' }}>
+                                +{{ $country->phonecode }} ({{ $country->shortname }})
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-text-input id="phone" name="phone" type="text" readonly class="block w-full" :value="old('phone', $user->phone)" maxlength="10" oninput="validatePhoneInput(this)" required autofocus autocomplete="phone" />
+                </div>
                 <x-input-error class="mt-2" :messages="$errors->get('phone')" />
             </div>
-            <div class="flex items-center justify-center gap-4 mt-8 w-100">
-                <x-primary-button>{{ __('Update Profile') }}</x-primary-button>
+            @if(auth()->user()->is_college == 1)
+                <div class="form-style">
+                    <x-input-label :value="__('Registration Link')" />
+                    <x-text-input type="text" class="block w-full mt-1" :value="url('/register') . '/' . $user->reg_no" readonly />
+                </div>
+            @endif
+            
+            <!--<div class="flex items-center justify-center gap-4 mt-8 w-100">-->
+            <!--    <x-primary-button class="common-btn short">{{ __('Update Profile') }}</x-primary-button>-->
 
-                @if (session('status') === 'profile-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Saved.') }}</p>
-                @endif
-            </div>
+            <!--    @if (session('status') === 'profile-updated')-->
+            <!--    <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Saved.') }}</p>-->
+            <!--    @endif-->
+            <!--</div>-->
         </div>
     </form>
 </section>

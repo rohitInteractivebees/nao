@@ -16,16 +16,18 @@ class StudentListAdmin extends Component
 {
     use WithPagination;
 
-    public int $quiz_id1 = 0;
+    public $quiz_id1 = 0;
 
     protected $updatesQueryString = ['quiz_id1'];
 
-    public function updatedQuizId1()
+    public function mount()
     {
-        // Reset pagination when the filter changes
+        $this->quiz_id1 = request()->query('quiz_id1', $this->quiz_id1);
+    }
+    public function updatingQuizId1()
+    {
         $this->resetPage();
     }
-
     public function delete(User $admin)
     {
         abort_if(!auth()->user()->is_admin, Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -44,8 +46,12 @@ class StudentListAdmin extends Component
                                    ->orWhereNull('is_college');
                          });
 
-            if ($this->quiz_id1 > 0) {
+            if ($this->quiz_id1 == 'Other') {
                 $query->where('institute', $this->quiz_id1);
+            }else {
+                if ($this->quiz_id1 > 0) {
+                    $query->where('institute', $this->quiz_id1);
+                }
             }
 
             $students = $query->paginate(10);
@@ -65,7 +71,13 @@ class StudentListAdmin extends Component
         ]);
         $file = $request->file('csv_file');
         $path = $file->getRealPath();
-        $csvData = array_map('str_getcsv', file($path));
+        //$csvData = array_map('str_getcsv', file($path));
+        $csvData = array_filter(array_map('str_getcsv', file($path)), function ($row) {
+            // Remove rows where all values are empty or contain only whitespace
+            return array_filter($row, function ($value) {
+                return trim($value) !== '';
+            });
+        });
         if (empty($csvData) || count($csvData) < 2) {
             return response()->json([
                 'success' => false,
@@ -73,31 +85,33 @@ class StudentListAdmin extends Component
             ]);
         }
         $headerData = $csvData[0];
-        if(!($headerData[1] == 'school_code') || !($headerData[2] == 'student_name') || !($headerData[3] == 'class_id') || !($headerData[4] == 'session_year') || !($headerData[5] == 'parent_name') || !($headerData[6] == 'parent_email') || !($headerData[7] == 'phone') || !($headerData[8] == 'state') || !($headerData[9] == 'city') || !($headerData[10] == 'login_id') || !($headerData[11] == 'password')){
-            return response()->json([
-                'success' => false,
-                'message' => 'CSV file is improperly formatted.'
-            ]);
+        if(!($headerData[1] == 'school_code') || !($headerData[2] == 'student_name') || !($headerData[3] == 'class') || !($headerData[4] == 'session_year') || !($headerData[5] == 'parent_name') || !($headerData[6] == 'parent_email') || !($headerData[7] == 'parent_country_code') || !($headerData[8] == 'parent_phone') || !($headerData[9] == 'country') || !($headerData[10] == 'state') || !($headerData[11] == 'city') || !($headerData[12] == 'pincode')){
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => 'CSV file is improperly formatted.'
+                ]);
         }
         foreach ($csvData as $key => $row) {
             if ($key === 0) continue; // Skip header
             // Ensure minimum column count
-            if (count($row) < 12) continue;
+            if (count($row) < 13) continue;
 
             [
-                $index,$schoolCode, $studentName, $classId, $sessionYear, $parentName, $parentEmail, $phone,
-                $state, $city, $loginId, $password
+                $index, $schoolCode, $studentName, $class, $sessionYear, $parentName, $parentEmail, $parentCountryCode, $phone, $country,$state, $city, $pincode
             ] = array_map('trim', $row);
-
+            
+            $classId = (int) $class - 5;
+            
             // Check if already exists
             $emailExists = User::where('email', $parentEmail)->exists();
             $phoneExists = User::where('phone', $phone)->exists();
-            $loginIdExists = User::where('loginId', $loginId)->exists();
+            //$loginIdExists = User::where('loginId', $loginId)->exists();
             $classExists = Classess::where('id', $classId)->exists();
             $schoolExists = Instute::where('code', $schoolCode)->exists();
             //dd($emailExists,$phoneExists,$loginIdExists,$classExists);
 
-            if ($emailExists || $phoneExists || $loginIdExists || !$classExists || !$schoolExists) {
+            if ($emailExists || $phoneExists || !$classExists || !$schoolExists) {
                 continue; // Skip if duplicate or invalid class ID
             }
             //dd('test');
@@ -127,14 +141,18 @@ class StudentListAdmin extends Component
                 'email' => $parentEmail,
                 'institute' => $schoolData->id,
                 'class' => $encodedClassname,
+                'country' => $country,
                 'state' =>$state,
                 'city' =>$city,
                 'session_year' => $sessionYear,
                 'phone' => $phone,
-                'password' => Hash::make($password),
+                //'password' => Hash::make($request->password),
+                'password' => Hash::make($phone),
                 'reg_no' => $newRegNo,
-                'loginId' => $loginId,
+                'loginId' => $parentEmail,
                 'is_verified' => 1,
+                'country_code' => $parentCountryCode,
+                'pincode' => $pincode,
             ]);
 
             // Optional: send email

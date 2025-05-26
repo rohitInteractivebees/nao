@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\Classess;
+use App\Models\User;
+use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\View\View;
@@ -13,11 +15,39 @@ class ClassList extends Component
     public function render(): View
     {
         $classes = Classess::all();
-
+    
+        // Get total quiz attempts per user
+        $totalAttempts = \App\Models\Test::selectRaw('user_id, COUNT(*) as total_tests')
+            ->groupBy('user_id')
+            ->pluck('total_tests', 'user_id'); // returns [user_id => total_tests]
+    
+        foreach ($classes as $class) {
+            // Get users of the current class (non-admin, non-college)
+            $userall = \App\Models\User::where('is_admin', 0)
+                ->where(function ($query) {
+                    $query->where('is_college', '!=', 1)
+                          ->orWhereNull('is_college');
+                })
+                ->whereRaw('JSON_CONTAINS(class, \'\"' . $class->id . '\"\')');
+            if(auth()->user()->is_admin == 0)
+            {
+                $userall->where('institute',auth()->user()->institute)->where('id','!=',auth()->user()->id);
+            }
+            $users = $userall->get();
+            // Set user count
+            $class->user_count = $users->count();
+    
+            // Calculate total quiz attempts for users in this class
+            $class->quiz_attempts = $users->sum(function ($user) use ($totalAttempts) {
+                return $totalAttempts[$user->id] ?? 0;
+            });
+        }
+    
         return view('livewire.admin.class-list', [
             'classes' => $classes
         ]);
     }
+
 
     public function verifySchool(Request $request, $id)
     {

@@ -103,7 +103,7 @@
         </li>
         <li class="d-flex">
             <a class="common-btn admin-btn d-flex items-center"  href="{{ url($admin->file) }}" download target="_blank">
-                <span class="reverse-pos"><img src="https://byd-innovate-a-thon.asdc.org.in/assets/images/icon-upload.png" alt=""></span>
+                <span class="reverse-pos"><img src="{{ url('/assets/images/icon-upload.png') }}" alt=""></span>
                 <span>File Download</span>
             </a>
         </li>

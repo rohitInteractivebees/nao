@@ -1,4 +1,4 @@
-<div class="common-sec">
+<div class="common-sec common-sec1">
     <div class="container">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden">
@@ -20,18 +20,15 @@
                             <thead>
                                 <tr>
                                     <th width="100">
-                                        ID
+                                        Sr.No
                                     </th>
                                     <th width="200">
                                         Title
                                     </th>
                                     <th width="100">
-                                        Class
+                                        Group
                                     </th>
-                                    <th width="250">
-                                        Description
-                                    </th>
-                                    <th width="150">
+                                     <th width="150">
                                         Questions Count
                                     </th>
                                     <th width="150">
@@ -63,13 +60,7 @@
                                             {{ $quiz->title }}
                                         </td>
                                         <td>
-                                            @php
-                                                $class = \App\Models\Classess::find($quiz->class_ids);
-                                            @endphp
-                                             {{ $class?->name ?? 'N/A' }}
-                                        </td>
-                                        <td>
-                                            {{ $quiz->description }}
+                                             {{ 'Group '.$quiz->class_ids }}
                                         </td>
                                         <td>
                                             {{ $quiz->questions_count }}
@@ -105,9 +96,9 @@
                                             <a href="{{ route('quiz.edit', $quiz) }}">
                                                 <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="">
                                             </a>
-                                            <button wire:click="copy({{ $quiz->id }})">
-                                                    <img src="{{ asset('/assets/images/icon-copy.png') }}" alt="Copy">
-                                            </button>
+                                            <!--<button wire:click="copy({{ $quiz->id }})">-->
+                                            <!--        <img src="{{ asset('/assets/images/icon-copy.png') }}" alt="Copy">-->
+                                            <!--</button>-->
 
                                             <!-- <button wire:click="delete({{ $quiz->id }})">
                                                 <img src="{{ asset('/assets/images/icon-delete.png') }}" alt="">

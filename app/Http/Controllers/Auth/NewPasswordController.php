@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Notifications\PasswordResetSuccess;
 
 class NewPasswordController extends Controller
 {
@@ -45,8 +46,11 @@ class NewPasswordController extends Controller
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),
                 ])->save();
-
+                
                 event(new PasswordReset($user));
+                
+                // Send the custom email
+                $user->notify(new PasswordResetSuccess());
             }
         );
 

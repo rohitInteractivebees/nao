@@ -1,4 +1,4 @@
- <section class="common-sec collage-dashboared">
+ <section class="common-sec collage-dashboared common-sec1">
      <div class="container">
          <div class="filter-data d-flex justify-between items-center">
              <div class="left">

@@ -30,7 +30,7 @@ class InstuteForm extends Component
 
         $this->instute->save();
 
-        session()->flash('message', $this->editing ? 'Institute updated successfully.' : 'Institute created successfully.');
+        session()->flash('message', $this->editing ? 'School updated successfully.' : 'School created successfully.');
 
         return redirect()->route('institute');
     }

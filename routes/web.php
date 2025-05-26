@@ -48,6 +48,10 @@ use App\Http\Controllers\CertificateController;
 // public routes
 
 
+Route::get('/otp', function(){
+    return view('emails.otp_temp');
+});
+
 
 Route::get('/download-certificate/{test}', [CertificateController::class, 'download'])->name('download.certificate');
 
@@ -58,11 +62,18 @@ Route::view('guidelines', 'content.guidelines');
 Route::view('institutes', 'content.institutes');
 Route::view('rewards', 'content.rewards');
 Route::view('terms_and_conditions', 'content.terms_and_conditions');
-Route::view('thankyou/{id?}', 'content.thankyou');
+
+Route::middleware('guest')->group(function () {
+    Route::view('thankyou/{id?}', 'content.thankyou')->name('thankyou');
+   // Route::view('testimonial', 'content.testimonial')->name('testimonial');
+    Route::view('gallery', 'content.gallery')->name('gallery');
+    Route::view('notice', 'content.notice')->name('notice');
+    Route::view('privacy-policy', 'content.privacy_policy')->name('privacy_policy');
+    Route::view('press-release', 'content.press_release')->name('press_release');
+    Route::get('testimonial', [HomeController::class, 'testimonial_form'])->name('testimonial');
+    Route::post('testimonial_submit', [HomeController::class, 'testimonial_store'])->name('testimonial.store');
+});    
 Route::view('congratulation', 'content.congratulation')->name('quiz.congratulation');
-Route::view('privacy-policy', 'content.privacy_policy');
-
-
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -116,6 +127,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/download-student', [CertificateController::class, 'downloadUsers'])->name('download.student');
         Route::get('studentlistadmin', StudentListAdmin::class)->name('studentlistadmin');
         Route::post('/student-upload-csv', [StudentListAdmin::class, 'uploadCsv'])->name('student.upload.csv');
+        Route::post('/question-upload-csv', [QuestionList::class, 'uploadCsv'])->name('question.upload.csv');
         Route::post('/update-quiz-status', [UpdateQuizStatus::class, 'updateQuizStatus']);
         Route::post('/update-level2-status', [UpdateQuizStatus::class, 'updateLevel2Status']);
         Route::post('/update-level3-status', [UpdateQuizStatus::class, 'updateLevel3Status']);
@@ -132,10 +144,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/quizzes/{quiz}/copy', [QuizForm::class, 'copy'])->name('quizzes.copy');
         Route::get('admins', AdminList::class)->name('admins');
         Route::get('admins/create', AdminForm::class)->name('admin.create');
-        Route::get('institute/{instute}/delete', [InstuteList::class,'delete'])->name('institute.delete');
-        Route::get('institute', InstuteList::class)->name('institute');
-        Route::get('institute/create', InstuteForm::class)->name('institute.create');
-        Route::get('institute/{instute}/edit', InstuteForm::class)->name('institute.edit');
+        Route::get('school/{instute}/delete', [InstuteList::class,'delete'])->name('institute.delete');
+        Route::get('school', InstuteList::class)->name('institute');
+        Route::get('school/create', InstuteForm::class)->name('institute.create');
+        Route::get('school/{instute}/edit', InstuteForm::class)->name('institute.edit');
         Route::get('school_login', CollegeList::class)->name('institute_login');
         Route::post('/school-upload-csv', [CollegeList::class, 'uploadCsv'])->name('school.upload.csv');
         Route::post('/verify-school/{id}', [CollegeList::class, 'verifySchool'])->name('verify.school');

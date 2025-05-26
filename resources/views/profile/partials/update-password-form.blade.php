@@ -12,13 +12,19 @@
             <div class="right overview">
                 
                 <div class="inner" id="update">
-                    <div class="text-sec text-center">
-                        <div class="heading">Update Information</div>
+                    <div class="text-sec text-center mb-0">
+                        <div class="common-title">Update <span>Information</span></div>
                         <p>Update your account's profile information</p>
                     </div>
                     <section>
-
-<form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+                        
+                        
+       @if (session('status') === 'password-updated')
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">
+              Password updated successfully.
+            </div>
+            @endif
+<form method="post" action="{{ route('password.update') }}" class="">
     @csrf
     @method('put')
     <div class="half-view d-flex justify-between">
@@ -41,11 +47,11 @@
         </div>
 
         <div class="flex items-center justify-center mt-8 gap-4 w-100">
-            <x-primary-button>{{ __('Update Password') }}</x-primary-button>
+            <x-primary-button class="common-btn short">{{ __('Update Password') }}</x-primary-button>
 
-            @if (session('status') === 'password-updated')
-            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Saved.') }}</p>
-            @endif
+            <!--@if (session('status') === 'password-updated')-->
+            <!--<p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Saved.') }}</p>-->
+            <!--@endif-->
         </div>
     </div>
 </form>    

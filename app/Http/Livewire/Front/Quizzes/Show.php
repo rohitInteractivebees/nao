@@ -27,13 +27,30 @@ class Show extends Component
     public function mount()
     {
         $this->startTimeInSeconds = now()->timestamp;
-
-        $this->questions = Question::query()
-            ->inRandomOrder()
-            ->whereRelation('quizzes', 'id', $this->quiz->id)
-            ->with('options')
-            ->get();
-
+        
+        $levels = [1, 2, 3];
+        $this->questions = new \Illuminate\Database\Eloquent\Collection();
+        
+        foreach ($levels as $level) {
+            $questionsForLevel = Question::whereHas('quizzes', function ($query) use ($level) {
+                    $query->where('quiz_id', $this->quiz->id)
+                          ->where('question_level', $level);
+                })
+                ->with('options')
+                ->inRandomOrder()
+                ->limit(10)
+                ->get();
+        
+            $this->questions = $this->questions->merge($questionsForLevel);
+        }
+        $this->questions = $this->questions->shuffle();
+        
+        // $this->questions = Question::query()
+        //     ->inRandomOrder()
+        //     ->whereRelation('quizzes', 'id', $this->quiz->id)
+        //     ->with('options')
+        //     ->get();
+        // dd($this->questions);
         $this->currentQuestion = $this->questions[$this->currentQuestionIndex];
 
         for ($questionIndex = 0; $questionIndex < $this->questionsCount; $questionIndex++) {

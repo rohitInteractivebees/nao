@@ -8,7 +8,6 @@ use App\Models\Test;
 use App\Models\User;
 use App\Models\Instute;
 use Livewire\Component;
-use App\Models\Classess;
 use App\Models\Question;
 use Illuminate\Support\Str;
 use App\Mail\QuizResultMail;
@@ -21,43 +20,36 @@ use App\Mail\QuizResultInstituteMail;
 class QuizForm extends Component
 {
     public Quiz $quiz;
-    public array $questions = [];
+    public $questions = [];
     public bool $editing = false;
-    public $classes = [];
     public $class_ids;
-    public $total_question;
     public array $questionOptions = [];
+    public array $groups = [];
+    public $selectedGroup = null;
 
 
     protected function rules()
     {
         return [
             'quiz.title' => 'required|string',
-            'quiz.description' => 'nullable|string',
-            'quiz.duration' => 'required|integer',
             'quiz.start_date' => 'required',
             'quiz.end_date' => 'required|after_or_equal:start_date',
             'quiz.result_date' => 'required|after_or_equal:end_date',
-            'quiz.class_ids' => [
+            'selectedGroup' => [
                 'required',
-                'integer',
+                Rule::in([1, 2, 3]),
                 Rule::unique('quizzes', 'class_ids')->ignore($this->quiz->id),
             ],
-            'quiz.total_question' => 'required|integer|min:1',
+            
         ];
     }
 
     public function mount(Quiz $quiz)
     {
-         // Load all classes
-         $this->classes = Classess::all();
+        $this->groups = [1,2,3];
         $this->quiz = $quiz;
-
-
-        $this->class_ids = $quiz->class_ids;
-        $this->total_question = $quiz->total_question;
-
         if ($this->quiz->exists) {
+            $this->selectedGroup = $quiz->class_ids;
             $this->editing = true;
             $this->questions = $this->quiz->questions()->pluck('id')->toArray();
         }
@@ -67,39 +59,34 @@ class QuizForm extends Component
     {
         $this->validate();
         // Only select 30 random questions on creation
-        $this->initListsForFields();
-        $questionIds = array_keys($this->questionOptions);
-        if (count($questionIds) > 0) {
-            $randomKeys = count($questionIds) > $this->quiz->total_question
-                ? array_rand($questionIds, $this->quiz->total_question)
-                : $questionIds;
-
-            $this->questions = is_array($randomKeys) ? $randomKeys : [$randomKeys];
-        }
-        if(count($this->questions) == $this->quiz->total_question && $this->quiz->total_question > 0)
-        {
+        $this->questions = Question::where('class_ids', $this->selectedGroup)->get();
+        if (count($this->questions) > 0) {
+            
+            $classIds = $this->selectedGroup;
             $this->quiz->slug = Str::slug($this->quiz->title);
             $this->quiz->status = 1;
+            $this->quiz->class_ids = $classIds;
+            $this->quiz->duration = 30;
+            $this->quiz->total_question = 120;
             $this->quiz->save();
-            $this->quiz->questions()->sync($this->questions);
+            
+            $syncData = [];
+
+            foreach ($this->questions as $question) {
+                // Assume each question is an object or array with id and level
+                // Adjust accordingly if it's structured differently
+                $questionId = is_array($question) ? $question['id'] : $question->id;
+                $questionLevel = is_array($question) ? $question['level'] : $question->level;
+            
+                $syncData[$questionId] = ['question_level' => $questionLevel];
+            }
+            
+            // Sync with pivot data
+            $this->quiz->questions()->sync($syncData);
             return to_route('quizzes');
         }else {
             session()->flash('message', 'Not enough questions in the question bank.');
             return;
-        }
-
-
-    }
-
-    protected function initListsForFields()
-    {
-        if($this->quiz->class_ids != null)
-        {
-            $this->questionOptions = Question::where(function ($query) {
-                foreach ((array) $this->quiz->class_ids as $classId) {
-                    $query->orWhereJsonContains('class_ids', (string) $classId);
-                }
-            })->pluck('text', 'id')->toArray();
         }
     }
 

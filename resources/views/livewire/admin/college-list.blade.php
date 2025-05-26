@@ -1,6 +1,36 @@
 <div>
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="pb-12">
+        <div class="container">
+            <div class="md:flex justify-between items-end mb-5">
+                <div class="item">
+                    <div class="sub-title mb-0">School Login</div>
+                </div>
+                <div class="item">
+                    <div class="items-end justify-center right d-flex sm:justify-end gap-3">
+                        <form action="{{ route('school.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
+                            @csrf
+                            <div class="items-end justify-center half-view d-flex gap sm:justify-end">
+                                <div class="form-style">
+                                    <input type="file" name="csv_file" required>
+                                </div>
+                                <div class="links">
+                                    <button class="items-center common-btn admin-btn d-flex" type="submit">
+                                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                                        <span>Upload CSV</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
+                            <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                            <a href="{{url('sampleCsv/School_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
+                        </button>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto max-w-7xl">
             <div class="overflow-hidden bg-white">
                 <div class="">
                     {{-- <div class="mb-4">
@@ -9,26 +39,6 @@
                             Create School
                         </a>
                     </div> --}}
-                    <div class="items-end justify-center right d-flex sm:justify-end">
-                        <form action="{{ route('school.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form">
-                            @csrf
-                            <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                                <div class="form-style">
-                                    <input type="file" name="csv_file" required>
-                                </div>
-                                <div class="links">
-                                    <button class="items-center common-btn admin-btn text d-flex" type="submit">
-                                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                                        <span>Upload CSV</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <button class="items-center common-btn admin-btn text d-flex" type="submit">
-                            <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                            <a href="{{url('byd/school_sample.csv')}}" download><span>Download CSV</span></a>
-                        </button>
-                    </div>
                     <div class="loader-sec" id="loader" style="display: none;">
                         <div class="inner">
                             <span class="dot"></span>
@@ -43,26 +53,21 @@
                             <thead>
                                 <tr>
                                     <th width="100">
-                                        ID
+                                        Sr.No
                                     </th>
                                     <th width="200">
                                        Principal Name
                                     </th>
                                     <th width="300">
-                                        Email
+                                        Principal Email
                                     </th>
                                     <th width="300">
-                                        Mobile
+                                        Principal Mobile
                                     </th>
                                     <th width="400">
                                         School
                                     </th>
-                                    <th width="400">
-                                        Status
-                                    </th>
-                                    {{-- <th width="100" align="center">
-                                        Action
-                                    </th> --}}
+                                   
                                 </tr>
                             </thead>
 
@@ -76,9 +81,7 @@
                                         <td>
                                             {{ $admin->email }}
                                         </td>
-                                        <td>
-                                            {{ $admin->phone }}
-                                        </td>
+                                         <td>+{{ $admin->country_code.' '.$admin->phone }}</td>
                                         @php
                                             $inst =  App\Models\Instute::find($admin->institute);
                                         @endphp
@@ -86,25 +89,8 @@
                                         <td>
                                             {{ @$inst->name }}
                                         </td>
-                                        <td>
-                                            @if($admin->is_verified == null)
-                                            <button type="button" class="table-btn yellow verify-button" data-id="{{ $admin->id }}">Verify</button>
-
-                                            @elseif($admin->is_verified == 1)
-                                            <button type="button" class="table-btn green no-hov no-pointer">Verified</button>
-
-                                            @else
-                                            <button type="button" class="table-btn red no-hov no-pointer">Not Verified</button>
-                                            @endif
-                                        </td>
-                                        {{-- <td align="center">
-                                        <a href="{{ route('institute_login.edit',  $admin->id ) }}">
-                                            <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="">
-                                        </a>
-                                            <button wire:click="delete({{ $admin->id }})">
-                                                <img src="{{ asset('/assets/images/icon-delete.png') }}" alt="">
-                                            </button>
-                                        </td> --}}
+                                        
+                                        
                                     </tr>
                                 @empty
                                     <tr>
@@ -260,8 +246,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Success
                     alert(data.message || 'Upload successful!');
-                    //form.reset(); // Optional
-                    //window.location.reload(); // Optional
+                    form.reset(); // Optional
+                    window.location.reload(); // Optional
                 })
                 .catch(error => {
                     document.getElementById('loader').style.display = 'none';

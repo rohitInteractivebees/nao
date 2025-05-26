@@ -35,7 +35,7 @@ class TeamForm extends Component
         $id = $is_login->id;
 
         Teams::create([
-            'name' => 'BYD ' . $this->name,
+            'name' => $this->name,
             'college_id' => $college,
             'teamlead_id' => $id,
             'mentorname' => $this->mentorName,

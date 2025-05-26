@@ -405,7 +405,7 @@ p {
 .about-sec .right ul li:nth-of-type(2)::before {
   position: absolute;
   content: "";
-  background: url("../images/about-byd-image.webp") no-repeat 0 0;
+  background: url("../images/about-image.webp") no-repeat 0 0;
   width: 522px;
   height: 522px;
   z-index: -1;

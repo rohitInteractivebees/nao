@@ -40,7 +40,7 @@
 
                 $totalNotverystudent = $total - $totalverystudent;
 
-                $totalclg = App\Models\Instute::get();
+                $totalclg = App\Models\Instute::get()->take(10);
 
                 $sno = 1;
 
@@ -48,121 +48,50 @@
                 $oldEndDateLevel3 = auth()->user()->level3enddate;
 
                 $currentDate = \Carbon\Carbon::now()->format('Y-m-d');
+                $total_school = App\Models\Instute::count();
             @endphp
 
-            <div id="quiz-blade1" style="display: none;">
-                <div class="text-center">
-                    <p><b>Are you sure to publish Quiz?</b></p>
-                    <div class="justify-center mt-6 buttons-sec d-flex gap w-100 links">
-                        <button type="button" class="common-btn admin-btn green" onclick="updateStatus('quiz', 1)">Yes</button>
-                        <button type="button" class="common-btn admin-btn red" onclick="updateStatus('quiz', 0)">NO</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="quiz-blade2" style="display: none;">
-                <div class="text-center">
-                    <p><b>Are you sure to publish level 2?</b></p>
-                    <div class="text-left form-style" style="width: 80%;margin: 0 auto;">
-                        <label class="block text-sm font-medium text-gray-700" for="name">Select Submission End Date</label>
-                        <input type="date" id="end-date-level2" name="end-date-level2" class="form-control w-100"  value="{{ $oldEndDateLevel2 ?? '' }}" min="{{ $currentDate }}">
-                    </div>
-                    <div class="justify-center mt-6 buttons-sec d-flex gap w-100 links">
-                        <button type="button" class="common-btn admin-btn green" onclick="updateStatus('level2', 1)">Yes</button>
-                        <button type="button" class="common-btn admin-btn red" onclick="updateStatus('level2', 0)">No</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="quiz-blade3" style="display: none;">
-                <div class="text-center">
-                    <p><b>Are you sure to publish level 3?</b></p>
-                    <div class="text-left form-style" style="width: 80%;margin: 0 auto;">
-                        <label class="block text-sm font-medium text-gray-700" for="name">Select Submission End Date</label>
-                        <input type="date" id="end-date-level3" name="end-date-level3" class="form-control w-100"  value="{{ $oldEndDateLevel3 ?? '' }}" min="{{ $currentDate }}">
-                    </div>
-                    <div class="justify-center mt-6 buttons-sec d-flex gap w-100 links">
-                        <button type="button" class="common-btn admin-btn green" onclick="updateStatus('level3', 1)">Yes</button>
-                        <button type="button" class="common-btn admin-btn red" onclick="updateStatus('level3', 0)">No</button>
-                    </div>
-                </div>
-            </div>
-
-            <section class="common-sec collage-dashboared">
+            <section class="common-sec collage-dashboared common-sec1">
                 <div class="container">
-                    <div class="heading short">Dashboard</div>
-                    {{-- <div class="justify-end mb-4 toggle-buttons d-flex">
-
-                        @php
-                            $result2 = App\Models\User::where('is_admin', 1)->where('level2show', 1)->first();
-                            $result3 = App\Models\User::where('is_admin', 1)->where('level3show', 1)->first();
-                            $result1 = App\Models\Quiz::where('published', 1)->first();
-                        @endphp
-                        <div class="items-center item-btn d-flex">
-                            <span>Publish Quiz</span>
-                            @if($result1)
-                                <span data-fancybox data-src="#quiz-blade1" class="quiz-btn active">&nbsp;</span>
-                            @else
-                                <span data-fancybox data-src="#quiz-blade1" class="quiz-btn">&nbsp;</span>
-                            @endif
-                        </div>
-                        <div class="items-center item-btn d-flex">
-                            <span>Publish Level 2</span>
-                            @if($result2)
-                                <span data-fancybox data-src="#quiz-blade2" class="quiz-btn active">&nbsp;</span>
-                            @else
-                                <span data-fancybox data-src="#quiz-blade2" class="quiz-btn">&nbsp;</span>
-                            @endif
-                        </div>
-                        <div class="items-center item-btn d-flex">
-                            <span>Publish Level 3</span>
-                            @if($result3)
-                                <span data-fancybox data-src="#quiz-blade3" class="quiz-btn active">&nbsp;</span>
-                            @else
-                                <span data-fancybox data-src="#quiz-blade3" class="quiz-btn">&nbsp;</span>
-                            @endif
-                        </div>
-                    </div> --}}
-                    <div class="dashboared-items d-flex">
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Total Participants</div>
-                                <div class="total">{{$total}} Students</div>
+                    <div class="md:flex justify-between">
+                        <div class="item md:w-1/4">
+                            <div class="sub-title"><span class="text-black">Admin Dashboard</span></div>
+                            </div>
+                            <div class="item md:w-3/4">
+                                <div class="dashboared-items d-flex md:justify-end md:gap-4">
+                                    <div class="items-center justify-between item d-flex">
+                                        <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
+                                        <div class="text">
+                                            <div class="title">School Participants</div>
+                                            <div class="total">{{$total_school}} Schools</div>
+                                        </div>
+                                    </div>
+                                    <div class="items-center justify-between item d-flex">
+                                        <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
+                                        <div class="text">
+                                            <div class="title">Total Participants</div>
+                                            <div class="total">{{$total}} Students</div>
+                                        </div>
+                                    </div>
+                                    <div class="items-center justify-between item d-flex">
+                                        <span class="icon"><img src="{{ asset('/assets/images/icon-quiz-attempts.png') }}" alt=""></span>
+                                        <div class="text">
+                                            <div class="title">Quiz Attempts</div>
+                                            <div class="total">{{$totalpar}} Students</div>
+                                        </div>
+                                    </div>
+                                    <div class="items-center justify-between item d-flex">
+                                        <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
+                                        <div class="text">
+                                            <div class="title">Pending Attempts</div>
+                                            <div class="total">{{$total - $totalpar}} Students</div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
-
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Total Verified Participants</div>
-                                <div class="total">{{$totalverystudent}} Students</div>
-                            </div>
-                        </div>
-
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Total Not Verified Participants</div>
-                                <div class="total">{{$totalNotverystudent}} Students</div>
-                            </div>
-                        </div>
-
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-quiz-attempts.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Quiz Attempts</div>
-                                <div class="total">{{$totalpar}} Students</div>
-                            </div>
-                        </div>
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-time-taken.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Min. Time Taken</div>
-                                <div class="total">{{sprintf('%.2f', @$mintime->time_spent / 60)}} Min</div>
-                            </div>
-                        </div>
+                        
                     </div>
+                    
                     <!-- <div class="items-center justify-between filter-data d-flex">
                         <div class="items-end justify-center right w-100 d-flex sm:justify-between">
                             <div class="form-style">
@@ -178,10 +107,10 @@
                             <thead>
                                 <tr>
                                     <th width="200">
-                                        ID
+                                        S.No
                                     </th>
                                     <th width="440">
-                                        Institute Name
+                                        School Name
                                     </th>
                                     <th width="220">
                                         Total Student
@@ -231,6 +160,11 @@
                             </tbody>
                         </table>
                     </div>
+                    @if(count($totalclg) > 9)
+                        <div class="justify-center mt-6 links d-flex">
+                            <a class="common-btn short" href="/school">View All</a>
+                        </div>
+                    @endif
                 </div>
             </section>
 
@@ -291,63 +225,71 @@
             @endphp
 
 
-            <section class="common-sec collage-dashboared">
-                <div class="container">
-                    <div class="heading short">Dashboard</div>
-                    <div class="dashboared-items d-flex">
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Total Participants</div>
-                                <div class="total">{{$total}} Students</div>
-                            </div>
-                        </div>
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-quiz-attempts.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Quiz Attempts</div>
-                                <div class="total">{{$totalpar}} Students</div>
-                            </div>
-                        </div>
-                        <div class="items-center justify-between item d-flex">
-                            <span class="icon"><img src="{{ asset('/assets/images/icon-time-taken.png') }}" alt=""></span>
-                            <div class="text">
-                                <div class="title">Min. Time Taken</div>
-                                <div class="total">{{sprintf('%.2f', @$mintime->time_spent / 60)}} Min</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items-center justify-between filter-data d-flex">
+<!--School Dashboard Start here-->
 
-                        <div class="right d-flex">
-                            {{-- <a class="items-center common-btn admin-btn d-flex" href="{{url('/student/create')}}">
-                                <span><img src="{{ asset('/assets/images/icon-addmore.png') }}" alt=""></span>
-                                <span>Add New</span>
-                            </a> --}}
-                            <a class="items-center common-btn admin-btn d-flex" href="{{url('student')}}">
-                                <span><img src="{{ asset('/assets/images/icon-addmore.png') }}" alt=""></span>
-                                <span>Bulk Upload</span>
-                            </a>
+            <section class="common-sec collage-dashboared common-sec1">
+                <div class="container">
+                    <div class="md:flex justify-between">
+                        <div class="item md:w-1/4">
+                            <div class="sub-title"><span class="text-black">School Dashboard</span></div>
+                            <div class="items-center justify-between filter-data d-flex">
+                                <div class="right d-flex">
+                                    {{-- <a class="items-center common-btn admin-btn d-flex" href="{{url('/student/create')}}">
+                                        <span><img src="{{ asset('/assets/images/icon-addmore.png') }}" alt=""></span>
+                                        <span>Add New</span>
+                                    </a> --}}
+                                    <a class="items-center common-btn admin-btn d-flex" href="{{url('student')}}">
+                                        <span><img src="{{ asset('/assets/images/icon-addmore.png') }}" alt=""></span>
+                                        <span>Bulk Upload</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
+                        <div class="item md:w-3/4">
+                            <div class="dashboared-items d-flex md:justify-end md:gap-4">
+                                <div class="items-center justify-between item d-flex">
+                                    <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
+                                    <div class="text">
+                                        <div class="title">Total Participants</div>
+                                        <div class="total">{{$total}} Students</div>
+                                    </div>
+                                </div>
+                                <div class="items-center justify-between item d-flex">
+                                    <span class="icon"><img src="{{ asset('/assets/images/icon-quiz-attempts.png') }}" alt=""></span>
+                                    <div class="text">
+                                        <div class="title">Quiz Attempts</div>
+                                        <div class="total">{{$totalpar}} Students</div>
+                                    </div>
+                                </div>
+                                <div class="items-center justify-between item d-flex">
+                                    <span class="icon"><img src="{{ asset('/assets/images/icon-participants.png') }}" alt=""></span>
+                                    <div class="text">
+                                        <div class="title">Pending Attempts</div>
+                                        <div class="total">{{$total - $totalpar}} Students</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="mt-6 table-sec-outer">
                         <table class="table-sec">
                             <thead>
                                 <tr>
                                     <th width="200">
-                                        ID
+                                        Sr.No
                                     </th>
                                     <th width="440">
                                         Student Name
                                     </th>
                                     <th width="440">
-                                        Login Id
+                                        Class
                                     </th>
                                     <th width="220">
-                                        Email ID
+                                        Parent Email
                                     </th>
                                     <th width="160">
-                                        Phone No.
+                                        Parent Phone
                                     </th>
 
                                 </tr>
@@ -362,14 +304,13 @@
                                             {{$stu->name}}
                                         </td>
                                         <td>
-                                            {{$stu->loginId}}
+                                            {{ \App\Models\Classess::whereIn('id', json_decode($stu->class))->pluck('name')->join(', ') }}
                                         </td>
                                         <td>
                                             {{$stu->email}}
                                         </td>
-                                        <td>
-                                            {{$stu->phone}}
-                                        </td>
+                                         <td>+{{ $stu->country_code.' '.$stu->phone }}</td>
+                                        
 
                                     </tr>
                                     @php            $sno1++; @endphp
@@ -389,8 +330,15 @@
         @else
 
             @php
+                $classIds = json_decode(auth()->user()->class, true);
+                $matchedGroup = '';
+            
+                if (!empty($classIds)) {
+                    $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
+                    $matchedGroup = implode(', ', $classNames);
+                }
                 $testuser = App\Models\Test::where('user_id', auth()->user()->id)->first();
-                $resultpublished = App\Models\Quiz::where('id', 2)->first();
+                $resultpublished = App\Models\Quiz::where('class_ids', $matchedGroup)->first();
 
                 $result2show = App\Models\User::where('is_admin', 1)->where('level2show', 1)->first();
                 $resultFshow = App\Models\User::where('is_admin', 1)->where('level3show', 1)->first();
@@ -399,9 +347,9 @@
                 $resultF = App\Models\User::where('is_admin', 1)->where('level3result', 1)->first();
             @endphp
 
-            @if ($resultpublished->result_show == 1)
+            @if (@$resultpublished->result_show == 1)
 
-                @if($resultpublished->result_show == 1 && $testuser)
+                @if(@$resultpublished->result_show == 1 && $testuser)
                     @if($result2show)
                         @if($result2)
                             @if($resultFshow)
@@ -549,8 +497,8 @@
                     @endif
                 @else
                     <!-- Quiz closed -->
-                    <section class="common-sec levels-sec quiz-main-page">
-                        <div class="container justify-between d-flex">
+                    <section class="common-sec levels-sec quiz-main-page common-sec1 d-flex items-center flex-wrap">
+                        <div class="container justify-center d-flex">
                             <div class="quiz-body">
                                 <div class="items-center justify-center min-h-full heading d-flex">The quiz has been closed.</div>
                             </div>
@@ -559,7 +507,7 @@
                     <!-- end quiz closed -->
                 @endif
             <!-- #region-->
-            @elseif($testuser && $resultpublished->result_show != 1)
+            @elseif($testuser && @$resultpublished->result_show != 1)
 
                 <section class="common-sec congrats-sec">
                     <div class="container">
@@ -570,8 +518,9 @@
                 </section>
 
             @else
-                <section class="common-sec levels-sec quiz-main-page">
-                    @if($liveQuiz != null && $liveQuiz != '')
+                <section class="common-sec levels-sec quiz-main-page common-sec1">
+                    
+                    @if(!empty($liveQuiz) && count($liveQuiz) > 0 && $liveQuiz != null && $liveQuiz != '')
                     <div class="container justify-between d-flex">
                         <div class="quiz-type-sec levels-item">
                             <div class="item">
@@ -591,9 +540,20 @@
                         </div>
                         <div class="quiz-body">
                             @foreach($liveQuiz as $quiz)
-                                @if (Carbon\Carbon::now()->between(Carbon\Carbon::parse($quiz->start_date), Carbon\Carbon::parse($quiz->end_date)))
-
-                                    <div class="heading">Level 1</div>
+                                @php
+                                    $now = \Carbon\Carbon::now();
+                                    $start = \Carbon\Carbon::parse($quiz->start_date);
+                                    $end = \Carbon\Carbon::parse($quiz->end_date);
+                                @endphp
+                                @if ($end->isPast())
+                                    <div class="items-center justify-center min-h-full heading d-flex">
+                                        <div class="sub-title mb-0">
+                                            The quiz has been closed.
+                                        </div>
+                                        
+                                    </div>
+                                @else
+                                    <div class="common-title">Level 1</div>
                                     <div class="description">
                                         <p>
                                             Welcome to the <span class="uppercase">NAO</span>! Please carefully read and
@@ -604,7 +564,7 @@
                                             <ul class="d-flex">
                                                 <li>
                                                     <p>Number of Questions</p>
-                                                    <div class="count">{{ $quiz->questions_count }}</div>
+                                                    <div class="count">30</div>
                                                 </li>
                                                 <li>
                                                     <p>Total Time</p>
@@ -615,51 +575,52 @@
                                                 </li>
                                             </ul>
 
-                                            @if (Carbon\Carbon::now()->gte(Carbon\Carbon::parse($quiz->start_date)))
+                                           @if (Carbon\Carbon::now()->between(Carbon\Carbon::parse($quiz->start_date), Carbon\Carbon::parse($quiz->end_date)))
                                                 <div class="subtitle"> Good luck, and do your best!</div>
                                                 <div class="links">
-                                                    <a class="common-btn red white-hov" href="{{ route('quiz.show', $quiz->slug) }}">Start
+                                                    <a class="common-btn red short" href="{{ route('quiz.show', $quiz->slug) }}">Start
                                                         Now</a>
                                                 </div>
                                             @endif
 
                                         </div>
                                     </div>
-                                @else
-                                    <div class="items-center justify-center min-h-full heading d-flex">The quiz has been closed.</div>
                                 @endif
                             @endforeach
                         </div>
                     </div>
                     @else
-                        <div class="container justify-between d-flex">
+                    <div class="common-sec1 d-flex items-center flex-wrap">
+                        <div class="container d-flex justify-center">
                             <div class="quiz-body">
-                                <div class="items-center justify-center min-h-full heading d-flex"><strong>Quiz Date:</strong>To be announced soon.</div>
+                                <div class="items-center justify-center min-h-full sub-title d-flex gap-2"><strong class="common-title mb-0">Quiz <span>Date:</span> </strong> Will commence from 23rd May to 31st July 2025</div>
                             </div>
                         </div>
+                    </div>    
                     @endif
                 </section>
             @endif
 
         @endif
     @else
-        <section class="banner-sec">
-            <div class="item w-100">
-                <img class="desktop w-100" src="{{ asset('/assets/images/login-bg-asdc.jpg') }}" style="height:700px;" alt="">
-                <img class="mobile w-100" src="{{ asset('/assets/images/login-bg-asdc.jpg') }}" alt="">
-                <div class="container">
-                    <div class="text">
-                        <img src="{{ asset('/assets/images/nao-logo.png') }}" width="360" />
-                        <div class="heading">
-                            National Automobile Olympiad 2025
-                        </div>
-                        <div class="links">
-                            <a class="common-btn red white-hov" href="{{ route('login') }}">Participate Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @include('layouts.guest_content')
+        <!--<section class="banner-sec">-->
+        <!--    <div class="item w-100">-->
+        <!--        <img class="desktop w-100" src="{{ asset('/assets/images/login-bg-asdc.jpg') }}" style="height:700px;" alt="">-->
+        <!--        <img class="mobile w-100" src="{{ asset('/assets/images/login-bg-asdc.jpg') }}" alt="">-->
+        <!--        <div class="container">-->
+        <!--            <div class="text">-->
+        <!--                <img src="{{ asset('/assets/images/nao-logo.png') }}" width="360" />-->
+        <!--                <div class="heading">-->
+        <!--                    National Automobile Olympiad 2025-->
+        <!--                </div>-->
+        <!--                <div class="links">-->
+        <!--                    <a class="common-btn red white-hov" href="{{ route('login') }}">Participate Now</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</section>-->
 
     @endauth
 </x-app-layout>

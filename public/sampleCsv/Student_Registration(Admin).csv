@@ -1,0 +1,3 @@
+s.no,school_code,student_name,class,session_year,parent_name,parent_email,parent_country_code,parent_phone,country,state,city,pincode
+1,AS2,Dummy Studentnew,6,2024-2025,Dummy Parent,Parent222@email.com,91,9999999111,India,Himachal Pradesh,Solan,123456
+2,JNV1,Dummy Studentnew,7,2024-2025,Dummy Parent,parent333@email.com,91,8888888111,India,Kerala,Kozhikode,123456

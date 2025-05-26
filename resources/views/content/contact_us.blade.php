@@ -35,7 +35,7 @@
                     <li class="email">
                         <div class="heading short">Email</div>
                         <div class="description">
-                            <a href="mailto:byd@gmail.com">byd@gmail.com</a>
+                            <a href="mailto:nep@asdc.org.in">nep@asdc.org.in</a>
                         </div>
                     </li>
                 </ul>

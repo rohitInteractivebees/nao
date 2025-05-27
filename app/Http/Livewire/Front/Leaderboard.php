@@ -15,7 +15,7 @@ class Leaderboard extends Component
 {
     public Collection $quizzes;
 
-    public int $quiz_id = 0;
+    public $quiz_id = 0;
 
     public function mount()
     {
@@ -74,7 +74,7 @@ class Leaderboard extends Component
                 ->with(['user' => function ($query) {
                     $query->select('id', 'name','class','email');
                 }, 'quiz' => function ($query) {
-                    $query->select('id', 'title')
+                    $query->select('id', 'title','duration')
                         ->withCount('questions');
                 }])
                 ->when($user_ids > 0, function ($query) use ($user_ids) {

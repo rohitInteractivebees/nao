@@ -13,7 +13,7 @@ class ResultList extends Component
             ->where('user_id', auth()->id())
             ->withCount('questions')
             ->with(['quiz' => function ($query) {
-                $query->select('id', 'title', 'description','result_date','pass_fail_percent');
+                $query->select('id', 'title', 'description','result_date','pass_fail_percent','duration');
                 $query->withCount('questions');
                 $query->with(['questions' => function ($q) {
                     $q->select('questions.id', 'marks'); // only fetch required fields

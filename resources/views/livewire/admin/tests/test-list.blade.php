@@ -1,24 +1,28 @@
 <div>
        <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white">
                 <div class="form-style">
                     <label>Select School</label>
-                    <select class="p-3 w-full text-sm leading-5 mb-3 text-slate-600"
+                    <select class="w-full p-3 mb-3 text-sm leading-5 text-slate-600"
                         wire:model="quiz_id">
                         <option value="0">All School</option>
                         @foreach ($college as $quiz)
                             <option value="{{ $quiz->id }}">{{ $quiz->name }}</option>
                         @endforeach
+                        <option value="Other">Other</option>
                     </select>
-                    <table class="table mt-4 w-full table-view">
+                    <table class="table w-full mt-4 table-view">
                         <thead>
                             <tr>
                                 <th width="100">
-                                    ID
+                                    Sr.No
                                 </th>
                                 <th width="200">
-                                    User
+                                    Student Name
+                                </th>
+                                <th width="200">
+                                    Class
                                 </th>
                                 <th width="300">
                                     School
@@ -27,12 +31,12 @@
                                     Result
                                 </th>
                                 <th width="200">
-                                    IP Address
+                                    Parent Email
                                 </th>
                                 <th width="150">
                                     Time Spent
                                 </th>
-                                <th width="100" align="center">      
+                                <th width="100" align="center">
                                     Action
                                 </th>
                             </tr>
@@ -46,19 +50,28 @@
                                         {{ $test->user->name ?? 'Guest' }}
                                     </td>
                                     <td>
+                                        {{ \App\Models\Classess::whereIn('id', json_decode($test->user->class))->pluck('name')->join(', ') }}
+                                    </td>
+                                    <td>
                                     @php
-                                          $clgname = App\Models\Instute::find($test->user->institute);
+                                        if($test->user->institute != 'Other')
+                                        {
+                                            $instituteName = App\Models\Instute::where('id', $test->user->institute)->value('name');
+
+                                        }else{
+                                            $instituteName = $test->user->institute.' ('.$test->user->school_name.')';
+                                        }
                                         @endphp
-                                        {{ @$clgname->name }}
+                                        {{ $instituteName }}
                                     </td>
                                     <td>
-                                        {{ $test->result . '/' . 20 }}
+                                        {{ $test->result . '/' . $test->questions_count }}
                                     </td>
                                     <td>
-                                        {{ $test->ip_address }}
+                                        {{ $test->user->email }}
                                     </td>
                                     <td>
-                                        {{ intval($test->time_spent / 60) }}:{{ gmdate('s', $test->time_spent) }}
+                                        {{ intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
                                         minutes
                                     </td>
                                     <td align="center">
@@ -70,7 +83,7 @@
                             @empty
                                 <tr>
                                     <td colspan="8"
-                                        class="px-6 py-4 text-center leading-5 text-gray-900 whitespace-no-wrap">
+                                        class="px-6 py-4 leading-5 text-center text-gray-900 whitespace-no-wrap">
                                         No tests were found.
                                     </td>
                                 </tr>

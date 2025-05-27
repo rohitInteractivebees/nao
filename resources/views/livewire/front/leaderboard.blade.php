@@ -1,30 +1,33 @@
  <section class="common-sec collage-dashboared common-sec1">
      <div class="container">
-         <div class="filter-data d-flex justify-between items-center">
+         <div class="items-center justify-between filter-data d-flex">
              <div class="left">
-                 <div class="half-view d-flex justify-between">
+                 <div class="justify-between half-view d-flex">
                  @if(auth()->user()->is_admin == 1)
                      <div class="form-style">
-                         <label class="block font-medium text-sm text-gray-700" for="quiz">School</label>
-                         
-                         <select class="block mt-1 w-full" wire:model="quiz_id" name="quiz">
+                         <label class="block text-sm font-medium text-gray-700" for="quiz">School</label>
+
+                         <select class="block w-full mt-1" wire:model="quiz_id" name="quiz">
                              <option value="0">All School</option>
                              @foreach ($college as $quiz)
                              <option value="{{ $quiz->id }}">{{ $quiz->name }}</option>
                              @endforeach
+                             <option value="Other">Other</option>
                          </select>
-                        
+
                      </div>
                      @endif
                  </div>
              </div>
          </div>
-         <div class="table-sec-outer mt-6">
+         <div class="mt-6 table-sec-outer">
              <table class="table-sec">
                  <thead>
                      <tr>
                          <th width="100">S. No</th>
-                         <th width="300">Username</th>
+                         <th width="300">Student Name</th>
+                         <th width="300">Class</th>
+                         <th width="300">Parent Email</th>
                          @if(auth()->user()->is_admin == 1)
                             <th width="500">School</th>
                         @endif
@@ -41,24 +44,36 @@
                          <td>
                              {{ $test->user->name }}
                          </td>
+                         <td>
+                            {{ \App\Models\Classess::whereIn('id', json_decode($test->user->class))->pluck('name')->join(', ') }}
+                        </td>
+                        <td>
+                            {{ $test->user->email }}
+                        </td>
                          @if(auth()->user()->is_admin == 1)
                          <td>
-                             @php
-                             $clgname = App\Models\Instute::find($test->user->institute);
-                             @endphp
-                             {{ @$clgname->name }}
+                            @php
+                            if($test->user->institute != 'Other')
+                            {
+                                $instituteName = App\Models\Instute::where('id', $test->user->institute)->value('name');
+
+                            }else{
+                                $instituteName = $test->user->institute.' ('.$test->user->school_name.')';
+                            }
+                            @endphp
+                            {{ $instituteName }}
                          </td>
                          @endif
                          @php
-                         $qus_count = 20;
+                         $qus_count = $test->questions_count;
                          @endphp
 
                          <td>
                              {{ $test->result }} /
                              {{ $qus_count }}
                              (time:
-                             {{ sprintf('%.2f', $test->time_spent / 60) }}
-                             minutes)
+                             {{ intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
+                                        minutes)
                          </td>
                      </tr>
                      @empty

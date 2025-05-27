@@ -8,11 +8,8 @@
                         <th width="200">
                             Quiz Title
                         </th>
-                        <th width="340">
-                            Quiz Description
-                        </th>
                         <th width="120">
-                            Result
+                            Marks
                         </th>
                         <th width="160">
                             Time Spent
@@ -36,9 +33,9 @@
                         @if(\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($test->quiz->result_date)))
                             <tr>
                                 <td>{{ $test->quiz->title }}</td>
-                                <td>{{ $test->quiz->description }}</td>
-                                <td>{{ $test->result . '/' . $test->quiz->questions->sum('marks'); }}</td>
-                                <td>{{ gmdate('H:i:s', $test->time_spent) }}</td>
+                                <td>{{ $test->result . '/' . $test->questions_count; }}</td>
+                                <td>{{ intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
+                                        minutes</td>
                                 <td>{{ $test->created_at->setTimezone('Asia/Kolkata')->format('d/m/Y h:i A') }}</td>
                                 <td align="center">
                                     <a href="{{ route('results.show', $test) }}">
@@ -46,15 +43,22 @@
                                     </a>
                                 </td>
                                 <td align="center">
-                                    @php $userSelected = auth()->user()->is_selected; @endphp
-                                    @if($userSelected == 1)
-                                        <div class="table-btn green no-hov">Selected</div>
+                                    @php
+                                        $marks_percent = ($test->questions_count * $test->quiz->pass_fail_percent / 100 );
+                                    @endphp
+                                    @if($test->result >= $marks_percent)
+                                        <div class="table-btn green no-hov">Pass</div>
                                     @else
-                                        <div class="table-btn red no-hov">Not Selected</div>
+                                        <div class="table-btn red no-hov">Fail</div>
                                     @endif
                                 </td>
                                 <td align="center">
-                                    <a href="{{ route('download.certificate', $test) }}" class="table-btn blue no-hov">Download</a>
+                                    @if($test->result >= $marks_percent)
+                                        <a href="{{ route('download.certificate', $test) }}" class="table-btn blue no-hov">Download</a>
+                                    @else
+                                        N/A
+                                    @endif
+
                                 </td>
                             </tr>
                         @else

@@ -29,7 +29,7 @@
                                         Group
                                     </th>
                                      <th width="150">
-                                        Questions Count
+                                        Total Questions
                                     </th>
                                     <th width="150">
                                         Duration

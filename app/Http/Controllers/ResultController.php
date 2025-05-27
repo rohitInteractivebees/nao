@@ -36,7 +36,6 @@ class ResultController extends Controller
 
                 return view('front.quizzes.result', compact('test', 'questions_count', 'results', 'leaderboard','total_questions_count'));
             }
-
             return view('front.quizzes.result', compact('test', 'questions_count', 'results','total_questions_count'));
 
         }

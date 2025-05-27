@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Front;
 
+use Carbon\Carbon;
 use App\Models\Quiz;
 use App\Models\Test;
 use App\Models\User;
 use App\Models\Instute;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Livewire\Component;
+use Illuminate\Support\Collection;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class Leaderboard extends Component
@@ -69,22 +70,30 @@ class Leaderboard extends Component
                 $user_ids = $users->pluck('id')->toArray();
             }
 
+
             $tests = Test::query()
                 ->whereHas('user')
-                ->with(['user' => function ($query) {
-                    $query->select('id', 'name','class','email');
-                }, 'quiz' => function ($query) {
-                    $query->select('id', 'title','duration','pass_fail_percent')
-                        ->withCount('questions');
-                }])
+                ->whereHas('quiz', function ($query) {
+                    $query->where('result_date', '<', Carbon::now()); // compare full datetime
+                })
+                ->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'name', 'class', 'email');
+                    },
+                    'quiz' => function ($query) {
+                        $query->select('id', 'title', 'duration', 'pass_fail_percent', 'result_date')
+                            ->withCount('questions');
+                    }
+                ])
                 ->when($user_ids > 0, function ($query) use ($user_ids) {
                     $query->whereIn('user_id', $user_ids);
                 })
                 ->withCount('questions')
                 ->orderBy('result', 'desc')
                 ->orderBy('time_spent')
-                ->take('40')
+                ->take(40)
                 ->get();
+
 
             // Extract the user IDs from the top 40 tests
             $topUserIds = $tests->pluck('user_id')->toArray();

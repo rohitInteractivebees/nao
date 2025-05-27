@@ -11,8 +11,7 @@
                         </li>
                         <li><span>Correct Answered : </span> {{ $test->result }} / {{ $total_questions_count }}</li>
                         <li><span>Time Taken : </span> @if ($test->time_spent)
-                            {{ gmdate('H:i:s', $test->time_spent) }}
-                            
+                            {{ intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
                             @endif
                         </li>
                     </ul>

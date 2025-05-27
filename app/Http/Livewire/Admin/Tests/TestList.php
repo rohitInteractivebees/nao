@@ -13,7 +13,7 @@ class TestList extends Component
 {
     public Collection $quizzes;
 
-    public int $quiz_id = 0;
+    public $quiz_id = 0;
 
     public function mount()
     {
@@ -26,32 +26,34 @@ class TestList extends Component
 
         $user_ids = [];
 
-        if ($this->quiz_id > 0) {
+        if ($this->quiz_id == 'Other') {
             $users = User::where('institute', $this->quiz_id)->get();
-            
             $user_ids = $users->pluck('id')->toArray();
-            
+        }else if ($this->quiz_id > 0) {
+            $users = User::where('institute', $this->quiz_id)->get();
+            $user_ids = $users->pluck('id')->toArray();
         }
+
         //dd($user_ids);
         // $tests = Test::when($this->quiz_id > 0, function ($query) {
         //     $query->whereIn('user_id', $user_ids);
-            
+
         // })
         //     ->with(['user', 'quiz'])
         //     ->withCount('questions')
         //     ->latest()
         //     ->paginate();
-        
+
 
             $tests = Test::query()
             ->with(['user', 'quiz'])
+            ->withCount('questions')
             ->when($this->quiz_id > 0, function ($query) use ($user_ids) {
                 $query->whereIn('user_id', $user_ids);
             })
-           
+
             ->latest()
             ->paginate();
-    
 
 
 

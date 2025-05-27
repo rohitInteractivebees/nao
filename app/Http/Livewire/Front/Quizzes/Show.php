@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire\Front\Quizzes;
 
-use App\Models\Question;
-use App\Models\Option;
 use App\Models\Quiz;
 use App\Models\Test;
 use App\Models\Answer;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
+use App\Models\Option;
 use Livewire\Component;
+use App\Models\Question;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
 
 class Show extends Component
 {
@@ -27,10 +28,10 @@ class Show extends Component
     public function mount()
     {
         $this->startTimeInSeconds = now()->timestamp;
-        
+
         $levels = [1, 2, 3];
         $this->questions = new \Illuminate\Database\Eloquent\Collection();
-        
+
         foreach ($levels as $level) {
             $questionsForLevel = Question::whereHas('quizzes', function ($query) use ($level) {
                     $query->where('quiz_id', $this->quiz->id)
@@ -40,11 +41,11 @@ class Show extends Component
                 ->inRandomOrder()
                 ->limit(10)
                 ->get();
-        
+
             $this->questions = $this->questions->merge($questionsForLevel);
         }
         $this->questions = $this->questions->shuffle();
-        
+
         // $this->questions = Question::query()
         //     ->inRandomOrder()
         //     ->whereRelation('quizzes', 'id', $this->quiz->id)
@@ -76,70 +77,62 @@ class Show extends Component
 
     public function submit()
     {
-        $result = 0;
+        DB::beginTransaction();
 
-        $test = Test::create([
-            'user_id' => auth()->id(),
-            'quiz_id' => $this->quiz->id,
-            'result' => 0,
-            'ip_address' => request()->ip(),
-            'time_spent' => now()->timestamp - $this->startTimeInSeconds
-        ]);
+        try {
+            $result = 0;
 
-        foreach ($this->answersOfQuestions as $key => $optionId) {
+            // Prevent duplicate test entries
+            $existingTest = Test::where('user_id', auth()->id())
+                                ->where('quiz_id', $this->quiz->id)
+                                ->first();
 
+            if ($existingTest) {
+                return redirect()->route('quiz.congratulation', ['test' => $existingTest]);
+            }
 
-            if (!empty($optionId) && Option::find($optionId)->correct) {
+            // Create test entry
+            $test = Test::create([
+                'user_id' => auth()->id(),
+                'quiz_id' => $this->quiz->id,
+                'result' => 0,
+                'ip_address' => request()->ip(),
+                'time_spent' => now()->timestamp - $this->startTimeInSeconds
+            ]);
 
-                $result += $this->questions[$key]->marks;
+            // Save answers
+            foreach ($this->answersOfQuestions as $key => $optionId) {
+                $questionId = $this->questions[$key]->id;
+                $marks = $this->questions[$key]->marks;
+
+                $isCorrect = !empty($optionId) && Option::find($optionId)?->correct;
+
+                if ($isCorrect) {
+                    $result += $marks;
+                }
+
+                // Create answer only if test is created
                 Answer::create([
                     'user_id' => auth()->id(),
                     'test_id' => $test->id,
-                    'question_id' => $this->questions[$key]->id,
-                    'option_id' => $optionId,
-                    'correct' => 1
+                    'question_id' => $questionId,
+                    'option_id' => $optionId ?? null,
+                    'correct' => $isCorrect ? 1 : 0,
                 ]);
-            } else {
-
-
-                if (!empty($optionId))
-                {
-                    Answer::create([
-
-                        'user_id' => auth()->id(),
-                        'test_id' => $test->id,
-                        'question_id' => $this->questions[$key]->id,
-                        //'option_id' => $optionId,
-                        'option_id' => $optionId,
-                    ]);
-                }
-                else{
-                    Answer::create([
-
-                        'user_id' => auth()->id(),
-                        'test_id' => $test->id,
-                        'question_id' => $this->questions[$key]->id,
-
-
-                    ]);
-                }
-
-
-
-
-
             }
+
+            // Update result in test
+            $test->update(['result' => $result]);
+
+            DB::commit();
+
+            return redirect()->route('quiz.congratulation', ['test' => $test]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
         }
-
-        $test->update([
-            'result' => $result
-        ]);
-
-        return to_route('quiz.congratulation', ['test' => $test]);
-
-        //return to_route('results.show', ['test' => $test]);
     }
-
     public function render(): View
     {
         return view('livewire.front.quizzes.show');

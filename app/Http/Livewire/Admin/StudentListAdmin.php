@@ -86,7 +86,7 @@ class StudentListAdmin extends Component
         }
         $headerData = $csvData[0];
         if(!($headerData[1] == 'school_code') || !($headerData[2] == 'student_name') || !($headerData[3] == 'class') || !($headerData[4] == 'session_year') || !($headerData[5] == 'parent_name') || !($headerData[6] == 'parent_email') || !($headerData[7] == 'parent_country_code') || !($headerData[8] == 'parent_phone') || !($headerData[9] == 'country') || !($headerData[10] == 'state') || !($headerData[11] == 'city') || !($headerData[12] == 'pincode')){
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => 'CSV file is improperly formatted.'
@@ -97,12 +97,25 @@ class StudentListAdmin extends Component
             // Ensure minimum column count
             if (count($row) < 13) continue;
 
+            // Trim all fields first
+            $row = array_map('trim', $row);
+
             [
-                $index, $schoolCode, $studentName, $class, $sessionYear, $parentName, $parentEmail, $parentCountryCode, $phone, $country,$state, $city, $pincode
-            ] = array_map('trim', $row);
-            
+                $index, $schoolCode, $studentName, $class, $sessionYear, $parentName,
+                $parentEmail, $parentCountryCode, $phone, $country, $state, $city, $pincode
+            ] = $row;
+
+            // Check if any required field is blank
+            if (
+                $schoolCode === '' || $studentName === '' || $class === '' || $sessionYear === '' ||
+                $parentName === '' || $parentEmail === '' || $parentCountryCode === '' || $phone === '' ||
+                $country === '' || $state === '' || $city === '' || $pincode === ''
+            ) {
+                continue; // Skip incomplete rows
+            }
+
             $classId = (int) $class - 5;
-            
+
             // Check if already exists
             $emailExists = User::where('email', $parentEmail)->exists();
             $phoneExists = User::where('phone', $phone)->exists();

@@ -32,6 +32,9 @@
                             <th width="500">School</th>
                         @endif
                          <th width="300">Correct Answers</th>
+                         @if(auth()->user()->is_college == 1)
+                            <th width="500">Result</th>
+                        @endif
                      </tr>
                  </thead>
                  <tbody>
@@ -71,10 +74,22 @@
                          <td>
                              {{ $test->result }} /
                              {{ $qus_count }}
-                             (time:
-                             {{ intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
+                             (Time:
+                             {{ intval($test->time_spent / 60) >= $test->quiz->duration ? $test->quiz->duration : intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
                                         minutes)
                          </td>
+                         @if(auth()->user()->is_college == 1)
+                         <td>
+                                @php
+                                        $marks_percent = ($qus_count * $test->quiz->pass_fail_percent / 100 );
+                                    @endphp
+                                    @if($test->result >= $marks_percent)
+                                        <div class="table-btn green no-hov">Pass</div>
+                                    @else
+                                        <div class="table-btn red no-hov">Fail</div>
+                                    @endif
+                         </td>
+                         @endif
                      </tr>
                      @empty
                      <tr>

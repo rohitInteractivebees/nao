@@ -15,7 +15,7 @@
 @endif
 
                     @auth
-                        @if(auth()->user()->is_college != 1 && auth()->user()->is_admin != 1)
+                        @if(auth()->user()->is_admin != 1)
                             @php
                                 $classIds = json_decode(auth()->user()->class, true);
                                 $matchedGroup = '';
@@ -65,10 +65,7 @@
                             </ul>
                         </li>
                         @if(auth()->user()->is_college == 1 )
-                            @if(@$result)
-                                <li><a href="{{ route('leaderboard') }}">Leaderboard </a></li>
-
-                            @endif
+                            <li><a href="{{ route('leaderboard') }}">Leaderboard </a></li>
                             <li class="submenu"><a href="javascript:void(0)"> Manage </a>
                                 <ul class="dropdown">
                                     <li><a href="{{ route('student') }}"> Student </a></li>

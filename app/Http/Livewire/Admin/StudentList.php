@@ -19,7 +19,7 @@ class StudentList extends Component
 {
     use WithPagination;
 
-   
+
     public $quiz_id = 1;
     public $class_id = '';
 
@@ -58,7 +58,7 @@ class StudentList extends Component
             if($this->class_id != '')
             {
                 $query->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
-            }    
+            }
             $student = $query->paginate(10);
             $classes = Classess::orderBy('id','asc')->get();
             return view('livewire.admin.student-list', [
@@ -83,7 +83,7 @@ class StudentList extends Component
                 return trim($value) !== '';
             });
         });
-        
+
         if (empty($csvData) || count($csvData) < 2) {
 
             return response()->json([
@@ -106,10 +106,22 @@ class StudentList extends Component
             // Ensure minimum column count
             if (count($row) < 12) continue;
 
+            // Trim and assign variables
             [
-                $index, $studentName, $class, $sessionYear, $parentName, $parentEmail, $parentCountryCode, $phone, $country,$state, $city, $pincode
+                $index, $studentName, $class, $sessionYear, $parentName,
+                $parentEmail, $parentCountryCode, $phone, $country,
+                $state, $city, $pincode
             ] = array_map('trim', $row);
-            
+
+            // Check for any blank required fields
+            if (
+                $studentName === '' || $class === '' || $sessionYear === '' || $parentName === '' ||
+                $parentEmail === '' || $parentCountryCode === '' || $phone === '' || $country === '' ||
+                $state === '' || $city === '' || $pincode === ''
+            ) {
+                continue; // Skip this row
+            }
+
             // Convert class to integer (in case it's a string like "6")
             $classId = (int) $class - 5;
             // Check if already exists
@@ -142,7 +154,7 @@ class StudentList extends Component
             }
 
             $newRegNo = $schoolCode . '_' . ($lastNumber + 1);
-           
+
             // Create user
             User::create([
                 'name' => $studentName,

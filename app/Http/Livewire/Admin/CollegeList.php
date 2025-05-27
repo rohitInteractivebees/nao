@@ -48,6 +48,7 @@ class CollegeList extends Component
 
         return response()->json(['success' => false]);
     }
+
     public function uploadCsv(Request $request)
     {
         $request->validate([
@@ -56,14 +57,14 @@ class CollegeList extends Component
 
         $file = $request->file('csv_file');
         $path = $file->getRealPath();
-        
+
         $csvData = array_filter(array_map('str_getcsv', file($path)), function ($row) {
             // Remove rows where all values are empty or contain only whitespace
             return array_filter($row, function ($value) {
                 return trim($value) !== '';
             });
         });
-        
+
         if (empty($csvData) || count($csvData) < 2) {
             return response()->json([
                 'success' => false,
@@ -86,10 +87,23 @@ class CollegeList extends Component
             // Ensure minimum column count
             if (count($row) < 14) continue;
 
+            // Trim all values
+            $row = array_map('trim', $row);
+
             [
                 $index, $schoolName, $principalName, $mobile, $email, $country,
                 $state, $city, $spocName, $spocEmail, $spocMobile, $principalCountryCode, $spocCountryCode, $pincode
-            ] = array_map('trim', $row);
+            ] = $row;
+
+            // Check for any empty value
+            if (
+                $schoolName === '' || $principalName === '' || $mobile === '' || $email === '' ||
+                $country === '' || $state === '' || $city === '' || $spocName === '' ||
+                $spocEmail === '' || $spocMobile === '' || $principalCountryCode === '' ||
+                $spocCountryCode === '' || $pincode === ''
+            ) {
+                continue; // Skip row with any blank value
+            }
             // Check if already exists
             $exists = User::where('email', $email)->exists() ||
                     User::where('phone', $mobile)->exists() ||
@@ -97,7 +111,7 @@ class CollegeList extends Component
             if ($exists) {
                 continue; // Skip duplicate entry
             }
-            
+
             // Create institute
             $institute = Instute::create([
                 'name' => $schoolName,

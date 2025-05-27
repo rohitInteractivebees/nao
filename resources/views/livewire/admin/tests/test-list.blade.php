@@ -71,8 +71,7 @@
                                         {{ $test->user->email }}
                                     </td>
                                     <td>
-                                        {{ intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
-                                        minutes
+                                        {{ intval($test->time_spent / 60) >= $test->quiz->duration ? $test->quiz->duration : intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }} minutes
                                     </td>
                                     <td align="center">
                                         <a href="{{ route('results.show', $test) }}">

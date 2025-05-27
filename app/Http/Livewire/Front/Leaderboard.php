@@ -74,12 +74,13 @@ class Leaderboard extends Component
                 ->with(['user' => function ($query) {
                     $query->select('id', 'name','class','email');
                 }, 'quiz' => function ($query) {
-                    $query->select('id', 'title','duration')
+                    $query->select('id', 'title','duration','pass_fail_percent')
                         ->withCount('questions');
                 }])
                 ->when($user_ids > 0, function ($query) use ($user_ids) {
                     $query->whereIn('user_id', $user_ids);
                 })
+                ->withCount('questions')
                 ->orderBy('result', 'desc')
                 ->orderBy('time_spent')
                 ->take('40')

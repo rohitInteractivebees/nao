@@ -34,7 +34,7 @@
                             <tr>
                                 <td>{{ $test->quiz->title }}</td>
                                 <td>{{ $test->result . '/' . $test->questions_count; }}</td>
-                                <td>{{ intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
+                                <td>{{ intval($test->time_spent / 60) >= $test->quiz->duration ? $test->quiz->duration : intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }}
                                         minutes</td>
                                 <td>{{ $test->created_at->setTimezone('Asia/Kolkata')->format('d/m/Y h:i A') }}</td>
                                 <td align="center">

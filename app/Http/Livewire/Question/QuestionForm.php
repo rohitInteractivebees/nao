@@ -17,7 +17,7 @@ class QuestionForm extends Component
     public array $groups = [];
     public $selectedGroup = null;
     public $level = null;
-    
+
     protected $rules = [
         'question.text' => 'required|string',
         'options' => 'required|array|min:1',
@@ -26,7 +26,7 @@ class QuestionForm extends Component
         'selectedGroup' => 'required|in:1,2,3', // use keys from your $groups array
         'level' => 'required|in:1,2,3', // use keys from your $groups array
     ];
-    
+
     public function mount(Question $question): void
     {
         $this->groups = [1,2,3];
@@ -36,7 +36,7 @@ class QuestionForm extends Component
             $this->editing = true;
             $this->selectedGroup = $this->question->class_ids;
             $this->level = $this->question->level;
-            
+
             foreach ($this->question->options as $option) {
                 $this->options[] = [
                     'id' => $option->id,
@@ -85,7 +85,7 @@ class QuestionForm extends Component
         $submittedOptionIds = [];
         ksort($this->options);
         foreach ($this->options as $optionData) {
-            if($optionData['text'] != '' && $optionData['text'] !=null)
+            if(trim($optionData['text']) != '' && $optionData['text'] !=null)
             {
                 if (!empty($optionData['id']) && in_array($optionData['id'], $existingOptionIds)) {
                     // Update existing option

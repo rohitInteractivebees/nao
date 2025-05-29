@@ -1,7 +1,11 @@
 <section class="result-list-page">
     <div class="container">
         @php
-            $totalSeconds = $quiz->duration * 60;
+            if (auth()->user()->attempt_count > 2) {
+                return to_route('home'); // ✅ Use this in Livewire
+            }
+
+            $totalSeconds = $quiz->duration * 6000000;
             $entangleKey = 'answersOfQuestions.' . $currentQuestionIndex;
         @endphp
 
@@ -21,6 +25,12 @@
                     }
                 }
             }, 1000);
+            window.onbeforeunload = function (e) {
+                if (!submitDisabled) {
+                    e.preventDefault();
+                    e.returnValue = 'If you leave, all data will be lost.';
+                }
+            };
         "
         >
         <div class="items-end justify-between result-summary d-flex">
@@ -96,7 +106,7 @@
             <div class="mt-4">
                 <x-primary-button
                     class="red"
-                    x-on:click="submitDisabled = true; $wire.submit();"
+                    x-on:click="submitDisabled = true; window.onbeforeunload = null; $wire.submit();"
                     x-bind:disabled="submitDisabled"
                 >
                     Submit
@@ -105,5 +115,5 @@
         @endif
     </div>
 </div>
-
+<p>Your attempt count: {{ $attempt_count }}</p>
 </section>

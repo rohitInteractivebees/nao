@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire\Front\Quizzes;
 
 use App\Models\Question;
@@ -26,6 +25,10 @@ class Show extends Component
 
     public function mount()
     {
+        $user = auth()->user();
+
+        $user->increment('attempt_count');
+
         $this->startTimeInSeconds = now()->timestamp;
 
         $levels = [1, 2, 3];
@@ -45,12 +48,6 @@ class Show extends Component
         }
         $this->questions = $this->questions->shuffle();
 
-        // $this->questions = Question::query()
-        //     ->inRandomOrder()
-        //     ->whereRelation('quizzes', 'id', $this->quiz->id)
-        //     ->with('options')
-        //     ->get();
-        // dd($this->questions);
         $this->currentQuestion = $this->questions[$this->currentQuestionIndex];
 
         for ($questionIndex = 0; $questionIndex < $this->questionsCount; $questionIndex++) {
@@ -133,10 +130,6 @@ class Show extends Component
                     ]);
                 }
 
-
-
-
-
             }
         }
 
@@ -146,11 +139,13 @@ class Show extends Component
 
         return to_route('quiz.congratulation', ['test' => $test]);
 
-        //return to_route('results.show', ['test' => $test]);
     }
 
     public function render(): View
     {
-        return view('livewire.front.quizzes.show');
+        $user = auth()->user();
+        $attempt_count = $user->attempt_count;
+
+        return view('livewire.front.quizzes.show',compact('attempt_count'));
     }
 }

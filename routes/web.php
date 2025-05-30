@@ -72,18 +72,20 @@ Route::middleware('guest')->group(function () {
     Route::view('press-release', 'content.press_release')->name('press_release');
     Route::get('testimonial', [HomeController::class, 'testimonial_form'])->name('testimonial');
     Route::post('testimonial_submit', [HomeController::class, 'testimonial_store'])->name('testimonial.store');
-});    
+});
 Route::view('congratulation', 'content.congratulation')->name('quiz.congratulation');
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('throttle:60,1')->group(function () {
     Route::get('quiz/{quiz}', [HomeController::class, 'show'])->name('quiz.show');
+
 });
 Route::view('not-found','404.blade.php');
 
 // protected routes
 Route::middleware('auth')->group(function () {
+    Route::view('quiz-notification', 'content.quiz_notification')->name('content.quiz_notification');
     Route::get('prototypelist', PrototypeList::class)->name('prototypelist');
     Route::get('physciallylist', PhysicalyList::class)->name('physciallylist');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -105,19 +105,19 @@ class RegisteredUserController extends Controller
             'otp' => ['required', 'string', 'min:6', 'max:6', 'in:' . Session::get('otp')],
             'pincode' => ['required', 'min:4', 'max:10','regex:/^\d{4,10}$/'],
         ];
-    
+
         // Conditionally add 'exists' rule for 'school'
         if ($request->school != 'Other') {
             $rules['school'] = array_merge($rules['school'], ['integer', 'exists:instutes,id']);
         }
-    
+
         $messages = [
             'student_name.regex' => 'The student name may only contain letters.',
             'parent_name.regex' => 'The parent name may only contain letters.',
             'school_name.required_if' => 'The other school name is required when "Other School" is selected.',
             'otp.in' => 'The OTP entered is incorrect.',
         ];
-    
+
         $validator = Validator::make($request->all(), $rules, $messages);
         $validator->validate();
 
@@ -149,11 +149,11 @@ class RegisteredUserController extends Controller
             ->implode('');
 
             $schoolCode = $initials.rand(10,99);
-        }   
+        }
         $lastUser = User::where('reg_no', 'LIKE', $schoolCode . '_%')
             ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
             ->first();
-    
+
         $lastNumber = 0;
         if ($lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)) {
         $lastNumber = (int) $matches[1];
@@ -195,9 +195,9 @@ class RegisteredUserController extends Controller
 
         // return redirect(RouteServiceProvider::HOME);
         $AdminEmail = User::where('is_admin', 1)->value('email');
-        
+
         $classIds = json_decode($encodedClassname, true);
-        
+
         if (!empty($classIds)) {
             $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
             $matchedGroup = implode(', ', $classNames);
@@ -206,8 +206,8 @@ class RegisteredUserController extends Controller
         try {
             Mail::to(Session::get('parent_email'))->cc($AdminEmail)->send(new SignupMail($request->student_name,Session::get('parent_email'),$request->parent_phone,$pdf));
         } catch (Exception $e) {
-            
-        }    
+
+        }
         session()->flash('password', $request->parent_phone);
         return redirect('/thankyou/'.$user->id);
     }
@@ -227,7 +227,7 @@ class RegisteredUserController extends Controller
             'country' => ['required', 'string'],
             'otp' => ['required', 'string', 'min:6', 'max:6', 'in:' . Session::get('school_otp')],
             'pincode' => ['required', 'min:4', 'max:10','regex:/^\d{4,10}$/'],
-            
+
         ], [
             'principal_name.regex' => 'The name may only contain letters.',
             'spoc_name.regex' => 'The name may only contain letters.',
@@ -290,37 +290,37 @@ class RegisteredUserController extends Controller
         try {
             Mail::to(Session::get('principal_email'))->cc($AdminEmail)->send(new SignupMailSchool($schoolName,Session::get('principal_email'),$request->principal_mobile,$code));
         } catch (Exception $e) {
-            
-        }    
+
+        }
         session()->flash('password', $request->principal_mobile);
         return redirect('/thankyou/'.$user->id);
     }
-    
+
     public function sendOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'parent_email' => 'required|email|string|max:255|unique:users,email',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors(),
                 'message' => 'Validation failed',
             ], 422);
         }
-    
+
         // Generate OTP
         $otp = rand(100000, 999999);
-    
+
         // Store OTP in session
         Session::put('otp', $otp);
         Session::put('parent_email', $request->parent_email);
-    
+
         // Send OTP via email
         try {
             Mail::to($request->parent_email)->send(new OtpMail($otp,$request->student_name));
         } catch (Exception $e) {
-            
+
         }
         return response()->json(['message' => 'OTP sent to your email']);
     }
@@ -329,26 +329,26 @@ class RegisteredUserController extends Controller
         $validator = Validator::make($request->all(), [
             'principal_email' => 'required|email|string|max:255|unique:users,email',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors(),
                 'message' => 'Validation failed',
             ], 422);
         }
-    
+
         // Generate OTP
         $otp = rand(100000, 999999);
-    
+
         // Store OTP in session
         Session::put('school_otp', $otp);
         Session::put('principal_email', $request->principal_email);
-    
+
         // Send OTP via email
         try {
             Mail::to($request->principal_email)->send(new OtpMailSchool($otp,$request->school));
         } catch (\Exception $e) {
-            dd($e->getMessage());    
+
         }
         return response()->json(['message' => 'OTP sent to your email']);
     }

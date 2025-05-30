@@ -1,12 +1,12 @@
 <div>
     <div class="common-sec1">
         <div class="container">
-            <div class="md:flex justify-between items-end">
+            <div class="items-end justify-between md:flex">
                 <div class="item">
-                    <div class="sub-title mb-0">Student List</div>
+                    <div class="mb-0 sub-title">Student List</div>
                 </div>
                 <div class="item">
-                    <div class="items-end justify-center right d-flex sm:justify-end gap-3">
+                    <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
                         @if(auth()->user()->is_admin)
                         <div class=" filter-options form-style">
                             <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
@@ -36,13 +36,13 @@
                             <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                             <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
                         </button>
-                       
+
                     </div>
                 </div>
             </div>
             <div class="mx-auto max-w-7xl">
                 <div class="overflow-hidden bg-white">
-                    
+
                     <div class="loader-sec" id="loader" style="display: none;">
                         <div class="inner">
                             <span class="dot"></span>
@@ -83,10 +83,10 @@
                                                                         if($student->institute != 'Other')
                                                                         {
                                                                             $instituteName = App\Models\Instute::where('id', $student->institute)->value('name');
-                                                                            
+
                                                                         }else{
                                                                             $instituteName = $student->institute.' ('.$student->school_name.')';
-                                                                        }    
+                                                                        }
                                                                     @endphp
                                                                     <td>{{ $instituteName }}</td>
                                                                     <td>{{ $student->name }}</td>
@@ -326,31 +326,33 @@
             document.getElementById('loader').style.display = 'flex';
 
             fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(async (response) => {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
                     document.getElementById('loader').style.display = 'none';
 
-                    const data = await response.json();
+                    alert(data.message);
 
-                    if (!response.ok) {
-                        // Handle validation or server errors
-                        throw new Error(data.message || 'An error occurred');
+                    // Trigger download
+                    if (data.file_url) {
+                        const link = document.createElement('a');
+                        link.href = data.file_url;
+                        link.download = ''; // Let browser use default filename
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
                     }
-
-                    // Success
-                    alert(data.message || 'Upload successful!');
-                    form.reset(); // Optional
-                    window.location.reload(); // Optional
-                })
-                .catch(error => {
-                    document.getElementById('loader').style.display = 'none';
-                    alert(error.message || 'An unexpected error occurred');
-                });
+                } else {
+                    alert(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong.');
+            });
         });
     });
     </script>

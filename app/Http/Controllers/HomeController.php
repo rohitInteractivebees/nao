@@ -30,7 +30,7 @@ class HomeController extends Controller
         {
             $classIds = json_decode(auth()->user()->class, true);
             $matchedGroup = '';
-        
+
             if (!empty($classIds)) {
                 $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
                 $matchedGroup = implode(', ', $classNames);
@@ -62,7 +62,7 @@ class HomeController extends Controller
         if (auth()->check() && !auth()->user()->is_admin && is_null(auth()->user()->is_college)) {
             $classIds = json_decode(auth()->user()->class, true);
             $matchedGroup = '';
-        
+
             if (!empty($classIds)) {
                 $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
                 $matchedGroup = implode(', ', $classNames);
@@ -84,10 +84,10 @@ class HomeController extends Controller
     }
     public function testimonial_form()
     {
-        
+
         return view('content.testimonial');
     }
-    
+
     public function testimonial_store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -110,23 +110,23 @@ class HomeController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-    
+
         // Handle image upload to public/testimonial
         $imagePath = null;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $destinationPath = public_path('testimonial');
-            
+
             // Create directory if it doesn't exist
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
             }
-        
+
             $file->move($destinationPath, $fileName);
             $imagePath = 'testimonial/' . $fileName;
         }
-    
+
         // Save to database
         $testimonial =Testimonial::create([
             'name' => $request->name,
@@ -140,9 +140,9 @@ class HomeController extends Controller
         ]);
         try {
             Mail::to('nep@asdc.org.in')->send(new TestimonialMail($testimonial));
-        } catch (Exception $e) {
-            
-        }    
+        } catch (\Throwable $e) {
+
+        }
         return redirect()->back()->with('success', 'Testimonial submitted successfully.');
     }
 }

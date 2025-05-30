@@ -8,10 +8,13 @@ use Livewire\Component;
 use App\Models\Classess;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
-use Illuminate\Http\Response;
-use App\Jobs\SendWelcomeEmail;
+use Illuminate\Http\Response as HttpResponse;
+//use App\Jobs\SendWelcomeEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
+
 
 class StudentListAdmin extends Component
 {
@@ -31,7 +34,7 @@ class StudentListAdmin extends Component
     }
     public function delete(User $admin)
     {
-        abort_if(!auth()->user()->is_admin, Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(!auth()->user()->is_admin, HttpResponse::HTTP_FORBIDDEN, '403 Forbidden');
 
         $admin->delete();
     }
@@ -65,40 +68,59 @@ class StudentListAdmin extends Component
             return redirect()->route('login');
         }
     }
+
     public function uploadCsv(Request $request)
     {
         $request->validate([
             'csv_file' => 'required|mimes:csv,txt',
         ]);
+
         $file = $request->file('csv_file');
         $path = $file->getRealPath();
-        //$csvData = array_map('str_getcsv', file($path));
+
         $csvData = array_filter(array_map('str_getcsv', file($path)), function ($row) {
-            // Remove rows where all values are empty or contain only whitespace
             return array_filter($row, function ($value) {
                 return trim($value) !== '';
             });
         });
+
         if (empty($csvData) || count($csvData) < 2) {
             return response()->json([
                 'success' => false,
                 'message' => 'CSV file is empty or improperly formatted.'
             ]);
         }
-        $headerData = $csvData[0];
-        if(!($headerData[1] == 'school_code') || !($headerData[2] == 'student_name') || !($headerData[3] == 'class') || !($headerData[4] == 'session_year') || !($headerData[5] == 'parent_name') || !($headerData[6] == 'parent_email') || !($headerData[7] == 'parent_country_code') || !($headerData[8] == 'parent_phone') || !($headerData[9] == 'country') || !($headerData[10] == 'state') || !($headerData[11] == 'city') || !($headerData[12] == 'pincode')){
 
-                return response()->json([
-                    'success' => false,
-                    'message' => 'CSV file is improperly formatted.'
-                ]);
+        // Header processing
+        $headerData = $csvData[0];
+        if (
+            !isset($headerData[1]) || $headerData[1] !== 'school_code' ||
+            !isset($headerData[2]) || $headerData[2] !== 'student_name' ||
+            !isset($headerData[3]) || $headerData[3] !== 'class' ||
+            !isset($headerData[4]) || $headerData[4] !== 'session_year' ||
+            !isset($headerData[5]) || $headerData[5] !== 'parent_name' ||
+            !isset($headerData[6]) || $headerData[6] !== 'parent_email' ||
+            !isset($headerData[7]) || $headerData[7] !== 'parent_country_code' ||
+            !isset($headerData[8]) || $headerData[8] !== 'parent_phone' ||
+            !isset($headerData[9]) || $headerData[9] !== 'country' ||
+            !isset($headerData[10]) || $headerData[10] !== 'state' ||
+            !isset($headerData[11]) || $headerData[11] !== 'city' ||
+            !isset($headerData[12]) || $headerData[12] !== 'pincode'
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSV file is improperly formatted.'
+            ]);
         }
+
+        // Add loginId & password to the header
+        $newHeader = array_merge($headerData, ['loginId', 'password']);
+        $exportData = [$newHeader];
+
         foreach ($csvData as $key => $row) {
             if ($key === 0) continue; // Skip header
-            // Ensure minimum column count
-            if (count($row) < 13) continue;
 
-            // Trim all fields first
+            if (count($row) < 13) continue;
             $row = array_map('trim', $row);
 
             [
@@ -106,86 +128,91 @@ class StudentListAdmin extends Component
                 $parentEmail, $parentCountryCode, $phone, $country, $state, $city, $pincode
             ] = $row;
 
-            // Check if any required field is blank
             if (
                 $schoolCode === '' || $studentName === '' || $class === '' || $sessionYear === '' ||
-                $parentName === '' || $parentEmail === '' || $parentCountryCode === '' || $phone === '' ||
+                $parentName === '' || $parentCountryCode === '' ||
                 $country === '' || $state === '' || $city === '' || $pincode === ''
             ) {
-                continue; // Skip incomplete rows
+                continue;
             }
 
             $classId = (int) $class - 5;
 
-            // Check if already exists
-            $emailExists = User::where('email', $parentEmail)->exists();
-            $phoneExists = User::where('phone', $phone)->exists();
-            //$loginIdExists = User::where('loginId', $loginId)->exists();
+            $emailExists = $parentEmail ? User::where('email', $parentEmail)->exists() : false;
+            $phoneExists = $phone ? User::where('phone', $phone)->exists() : false;
+
             $classExists = Classess::where('id', $classId)->exists();
             $schoolExists = Instute::where('code', $schoolCode)->exists();
-            //dd($emailExists,$phoneExists,$loginIdExists,$classExists);
 
             if ($emailExists || $phoneExists || !$classExists || !$schoolExists) {
-                continue; // Skip if duplicate or invalid class ID
+                continue;
             }
-            //dd('test');
 
-            // Ensure it's an array before encoding
-            if (is_array($classId)) {
-                $encodedClassname = json_encode($classId);
-            } else {
-                $encodedClassname = json_encode([(string) $classId]);
-            }
-            $schoolData = Instute::where('code',$schoolCode)->first();
+            $schoolData = Instute::where('code', $schoolCode)->first();
             $schoolCode = $schoolData->code;
-            $lastUser = User::where('reg_no', 'LIKE', $schoolCode . '_%')
-            ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
-            ->first();
 
-            $lastNumber = 0;
-            if ($lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)) {
-            $lastNumber = (int) $matches[1];
-            }
+            $lastUser = User::where('reg_no', 'LIKE', $schoolCode . '_%')
+                ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
+                ->first();
+
+            $lastNumber = $lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)
+                ? (int) $matches[1]
+                : 0;
 
             $newRegNo = $schoolCode . '_' . ($lastNumber + 1);
-            // Create user
+
+            $lastLoginId = User::where('loginId', 'LIKE', $schoolCode . '_%')
+                ->orderByRaw("CAST(SUBSTRING_INDEX(loginId, '_', -1) AS UNSIGNED) DESC")
+                ->first();
+
+            $lastLoginNumber = $lastLoginId && preg_match('/_(\d+)$/', $lastLoginId->loginId, $matches)
+                ? (int) $matches[1]
+                : 0;
+
+            $newLoginId = $schoolCode . '_' . ($lastLoginNumber + 1);
+            $plainPassword = $newLoginId;
+
             User::create([
                 'name' => $studentName,
                 'parent_name' => $parentName,
                 'email' => $parentEmail,
                 'institute' => $schoolData->id,
-                'class' => $encodedClassname,
+                'class' => json_encode([(string) $classId]),
                 'country' => $country,
-                'state' =>$state,
-                'city' =>$city,
+                'state' => $state,
+                'city' => $city,
                 'session_year' => $sessionYear,
                 'phone' => $phone,
-                //'password' => Hash::make($request->password),
-                'password' => Hash::make($phone),
+                'password' => Hash::make($plainPassword),
                 'reg_no' => $newRegNo,
-                'loginId' => $parentEmail,
+                'loginId' => $newLoginId,
                 'is_verified' => 1,
                 'country_code' => $parentCountryCode,
                 'pincode' => $pincode,
             ]);
-            if($parentEmail != '')
-            {
-                $classIds = json_decode($encodedClassname, true);
 
-                if (!empty($classIds)) {
-                    $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
-                    $matchedGroup = implode(', ', $classNames);
-                    $pdf = 'Olympiad_Questionnaire_Group'.$matchedGroup.'.pdf';
-                }
-                SendWelcomeEmail::dispatch($studentName, $parentEmail, $phone, $pdf);
-            }
-            // Optional: send email
-            // Mail::to($spocEmail)->send(new WelcomeEmail($schoolName, $spocEmail, $spocName));
+            $exportData[] = array_merge($row, [$newLoginId, $plainPassword]);
         }
+
+        // Save the modified CSV for download
+        $fileName = 'users_with_credentials_' . time() . '.csv';
+        $tempFilePath = public_path("uploadCsv/{$fileName}");
+
+        if (!file_exists(public_path('uploadCsv'))) {
+            mkdir(public_path('uploadCsv'), 0775, true);
+        }
+
+        $file = fopen($tempFilePath, 'w');
+        foreach ($exportData as $line) {
+            fputcsv($file, $line);
+        }
+        fclose($file);
 
         return response()->json([
             'success' => true,
-            'message' => 'CSV uploaded and users created successfully.'
+            'message' => 'Upload successful!',
+            'file_url' => asset("uploadCsv/{$fileName}")
         ]);
     }
+
 }

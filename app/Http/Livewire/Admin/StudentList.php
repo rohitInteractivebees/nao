@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Livewire\WithPagination;
-use App\Jobs\SendWelcomeEmail;
+//use App\Jobs\SendWelcomeEmail;
 class StudentList extends Component
 {
     use WithPagination;
@@ -177,17 +177,17 @@ class StudentList extends Component
                 'country_code' => $parentCountryCode,
                 'pincode' => $pincode,
             ]);
-            if($parentEmail != '')
-            {
-                $classIds = json_decode($encodedClassname, true);
+            // if($parentEmail != '')
+            // {
+            //     $classIds = json_decode($encodedClassname, true);
 
-                if (!empty($classIds)) {
-                    $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
-                    $matchedGroup = implode(', ', $classNames);
-                    $pdf = 'Olympiad_Questionnaire_Group'.$matchedGroup.'.pdf';
-                }
-                SendWelcomeEmail::dispatch($studentName, $parentEmail, $phone, $pdf);
-            }
+            //     if (!empty($classIds)) {
+            //         $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
+            //         $matchedGroup = implode(', ', $classNames);
+            //         $pdf = 'Olympiad_Questionnaire_Group'.$matchedGroup.'.pdf';
+            //     }
+            //     SendWelcomeEmail::dispatch($studentName, $parentEmail, $phone, $pdf);
+            // }
             // Optional: send email
             // Mail::to($spocEmail)->send(new WelcomeEmail($schoolName, $spocEmail, $spocName));
         }

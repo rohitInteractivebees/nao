@@ -117,13 +117,22 @@ class CollegeList extends Component
                 'name' => $schoolName,
                 'status' => 1,
             ]);
-            // Generate institute code: initials + ID
-            $initials = collect(explode(' ', $schoolName))
+            // 1. Remove all special characters except letters and spaces
+            $cleanedName = preg_replace('/[^a-zA-Z\s]/', '', $schoolName);
+
+            // 2. Replace multiple spaces with a single space
+            $cleanedName = preg_replace('/\s+/', ' ', $cleanedName);
+
+            // 3. Extract initials
+            $initials = collect(explode(' ', $cleanedName))
                 ->filter()
                 ->map(fn($word) => strtoupper(substr($word, 0, 1)))
                 ->implode('');
 
+            // 4. Generate the final school code with a random 2-digit number
             $code = $initials . $institute->id;
+            // Generate institute code: initials + ID
+
             $institute->code = $code;
             $institute->save();
 

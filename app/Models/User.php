@@ -43,7 +43,8 @@ class User extends Authenticatable
         'school_name',
         'country_code',
         'spoc_country_code',
-        'pincode'
+        'pincode',
+        'attempt_count'
     ];
 
     protected $hidden = [

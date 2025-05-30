@@ -27,7 +27,7 @@ class Show extends Component
     {
         $user = auth()->user();
 
-        $user->increment('attempt_count');
+        //$user->increment('attempt_count');
 
         $this->startTimeInSeconds = now()->timestamp;
 

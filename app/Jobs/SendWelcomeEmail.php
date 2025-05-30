@@ -2,14 +2,15 @@
 
 namespace App\Jobs;
 
+use App\Models\User;
+use App\Mail\SignupMail;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use App\Mail\SignupMail;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 
 class SendWelcomeEmail implements ShouldQueue
 {
@@ -28,7 +29,8 @@ class SendWelcomeEmail implements ShouldQueue
     public function handle()
     {
         try {
-            Mail::to($this->loginId)->send(new SignupMail($this->name, $this->loginId, $this->pass, $this->pdf));
+            $AdminEmail = User::where('is_admin', 1)->value('email');
+            Mail::to($this->loginId)->cc($AdminEmail)->send(new SignupMail($this->name, $this->loginId, $this->pass, $this->pdf));
         } catch (\Exception $e) {
             Log::error('Mail sending failed: ' . $e->getMessage());
         }

@@ -119,6 +119,8 @@ class StudentList extends Component
 
         $is_login = auth()->user();
         $id = $is_login->institute;
+        $schoolData = Instute::find($id);
+        $schoolCode = $schoolData->code;
         foreach ($csvData as $key => $row) {
             if ($key === 0) continue; // Skip header
             // Ensure minimum column count
@@ -156,8 +158,7 @@ class StudentList extends Component
             } else {
                 $encodedClassname = json_encode([(string) $classId]);
             }
-            $schoolData = Instute::find($id);
-            $schoolCode = $schoolData->code;
+
 
             $lastUser = User::where('reg_no', 'LIKE', $schoolCode . '_%')
                 ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")

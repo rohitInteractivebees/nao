@@ -54,7 +54,7 @@
                                 </td>
                                 <td align="center">
                                     @if($test->result >= $marks_percent)
-                                        <a href="{{ route('download.certificate', $test) }}" class="table-btn blue no-hov">Download</a>
+                                        {{-- <a href="{{ route('download.certificate', $test) }}" class="table-btn blue no-hov">Download</a> --}}
                                     @else
                                         N/A
                                     @endif

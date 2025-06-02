@@ -215,7 +215,7 @@ class StudentList extends Component
             // Mail::to($spocEmail)->send(new WelcomeEmail($schoolName, $spocEmail, $spocName));
         }
         // Save the modified CSV for download
-        $fileName = 'Student_Registration_' . now()->format('d-m-Y_H-i') . '.csv';
+        $fileName = 'Student_Registration(School)_' . now()->format('d-m-Y_H-i-s') . '.csv';
         $tempFilePath = public_path("uploadCsv/{$fileName}");
 
         if (!file_exists(public_path('uploadCsv'))) {

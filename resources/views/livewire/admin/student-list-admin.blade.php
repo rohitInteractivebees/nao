@@ -53,10 +53,22 @@
                     </div>
                     <div id="success-message" style="display: none;">CSV uploaded and emails sent successfully.</div>
                     @if (session()->has('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+    <div class="alert alert-success" id="success-alert">
+        {{ session('success') }}
+    </div>
+
+    <script>
+        setTimeout(function () {
+            let alertBox = document.getElementById('success-alert');
+            if (alertBox) {
+                alertBox.style.transition = 'opacity 0.5s ease';
+                alertBox.style.opacity = '0';
+                setTimeout(() => alertBox.remove(), 500); // Fully remove after fade out
+            }
+        }, 3000); // 3 seconds
+    </script>
+@endif
+
                     <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
@@ -67,8 +79,7 @@
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>
                                     <th width="150">Registration Date</th>
-                                    <!--<th width="150">Remark</th>-->
-                                    <!--<th align="center" width="100">ID Card</th>-->
+                                    <th align="center" width="100">Action</th>
                                 </tr>
                             </thead>
                             @php
@@ -77,66 +88,53 @@
                             <tbody>
                                 @forelse($students as $student)
 
-                                                                <tr>
-                                                                    <td>{{ $serial++ }}</td>
-                                                                    @php
-                                                                        if($student->institute != 'Other')
-                                                                        {
-                                                                            $instituteName = App\Models\Instute::where('id', $student->institute)->value('name');
+                                    <tr>
+                                        <td>{{ $serial++ }}</td>
+                                        @php
+                                            if($student->institute != 'Other')
+                                            {
+                                                $instituteName = App\Models\Instute::where('id', $student->institute)->value('name');
 
-                                                                        }else{
-                                                                            $instituteName = $student->institute.' ('.$student->school_name.')';
-                                                                        }
-                                                                    @endphp
-                                                                    <td>{{ $instituteName }}</td>
-                                                                    <td>{{ $student->name }}</td>
-                                                                    <td>{{ $student->email }}</td>
-                                                                     <td>+{{ $student->country_code.' '.$student->phone }}</td>
-                                                                    <td> {{ $student->created_at->format('d-m-Y') }}</td>
+                                            }else{
+                                                $instituteName = $student->institute.' ('.$student->school_name.')';
+                                            }
+                                        @endphp
+                                        <td>{{ $instituteName }}</td>
+                                        <td>{{ $student->name }}</td>
+                                        <td>{{ $student->email }}</td>
+                                        <td>+{{ $student->country_code.' '.$student->phone }}</td>
+                                        <td> {{ $student->created_at->format('d-m-Y') }}</td>
+                                        <td align="center">
+                                            <a data-fancybox href="#dialog-content-detail{{ $student->id }}">
+                                                <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
+                                            </a>
+                                            <div class="verify-sec" id="dialog-content-detail{{ $student->id }}">
+                                                <div class="sub-title">Reset User Password</div>
+                                                <form action="{{ route('updateUserPassword') }}" method="POST">
+                                                    @csrf
+                                                    <div class="gap-3 d-flex">
 
+                                                        <input type="hidden" class="block w-full mt-1" value="{{ $student->id }}" name="user_id">
+                                                        <div class="form-style w-[48%]">
+                                                            <label class="block text-sm font-medium text-gray-700" for="loginId">Login ID</label>
+                                                            <input type="text" class="block w-full mt-1"  value="{{ $student->loginId }}" readonly>
+                                                        </div>
 
-                                                                    <!--<td>-->
-                                                                    <!--    {{$student->remark}}-->
-                                                                    <!--</td>-->
-                                                                    <!--<td align="center">-->
-                                                                        <!--@if($student->idcard)-->
-                                                                        <!--    <a data-fancybox href="#dialog-content{{ $student->id }}">-->
-                                                                        <!--        <img src="{{ asset('/assets/images/icon-view.png') }}" alt="">-->
-                                                                        <!--    </a>-->
-                                                                        <!--@else-->
-                                                                        <!--    <img src="{{ asset('/assets/images/icon-view-closed.png') }}" alt="">-->
-                                                                        <!--@endif-->
-                                                                        <!--<div class="verify-sec" id="dialog-content{{ $student->id }}">-->
-                                                                        <!--    <div class="justify-center d-flex">-->
-                                                                        <!--        <div class="image">-->
-                                                                        <!--            <img src="{{ url('/' . $student->idcard) }}" alt="">-->
-                                                                        <!--        </div>-->
-                                                                        <!--        <div class="justify-center mt-6 d-flex w-100 links">-->
-                                                                        <!--            <a href="{{ url('/' . $student->idcard) }}"-->
-                                                                        <!--                class="items-center common-btn admin-btn d-flex" download>-->
-                                                                        <!--                <span class="reverse-pos"><img-->
-                                                                        <!--                        src="{{ asset('/assets/images/icon-upload.png') }}"-->
-                                                                        <!--                        alt=""></span>-->
-                                                                        <!--                <span>Download ID</span>-->
-                                                                        <!--            </a>-->
-                                                                        <!--        </div>-->
+                                                        <div class="w-1/2 form-style">
+                                                            <label class="block text-sm font-medium text-gray-700" for="password">New Password</label>
+                                                            <input type="text" class="block w-full mt-1" name="password" required>
+                                                        </div>
 
-                                                                        <!--        <div class="justify-center mt-6 d-flex w-100 links">-->
-                                                                        <!--            <button type="button"-->
-                                                                        <!--                class="common-btn admin-btn green verify-button"-->
-                                                                        <!--                data-admin-id="{{ $student->id }}">Verify</button>-->
-                                                                        <!--        </div>-->
+                                                        <div class="justify-center mt-6 d-flex w-100 links">
+                                                            <button type="submit" class="w-full common-btn admin-btn green">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
 
-                                                                        <!--        <div class="justify-center mt-6 d-flex w-100 links">-->
-                                                                        <!--            <button type="button"-->
-                                                                        <!--                class="common-btn admin-btn green notverify-button"-->
-                                                                        <!--                data-admin-id="{{ $student->id }}">Not Verify</button>-->
-                                                                        <!--        </div>-->
+                                            </div>
+                                    </td>
 
-                                                                        <!--    </div>-->
-                                                                        <!--</div>-->
-                                                                    <!--</td>-->
-                                                                </tr>
+                                    </tr>
                                 @empty
                                     <tr>
                                         <td colspan="8"
@@ -331,8 +329,8 @@
             })
             .then(response => response.json())
             .then(data => {
+                document.getElementById('loader').style.display = 'none';
                 if (data.success) {
-                    document.getElementById('loader').style.display = 'none';
 
                     alert(data.message);
 
@@ -344,6 +342,7 @@
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
+                        window.location.reload();
                     }
                 } else {
                     alert(data.message || 'Something went wrong.');

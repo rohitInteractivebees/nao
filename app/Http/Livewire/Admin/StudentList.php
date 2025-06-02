@@ -92,14 +92,31 @@ class StudentList extends Component
                 'message' => 'CSV file is empty or improperly formatted.'
             ]);
         }
+        // Header processing
         $headerData = $csvData[0];
-        if(!($headerData[1] == 'student_name') || !($headerData[2] == 'class') || !($headerData[3] == 'session_year') || !($headerData[4] == 'parent_name') || !($headerData[5] == 'parent_email') || !($headerData[6] == 'parent_country_code') || !($headerData[7] == 'parent_phone') || !($headerData[8] == 'country') || !($headerData[9] == 'state') || !($headerData[10] == 'city') || !($headerData[11] == 'pincode')){
-
+        if (
+            !isset($headerData[1]) || $headerData[1] !== 'student_name' ||
+            !isset($headerData[2]) || $headerData[2] !== 'class' ||
+            !isset($headerData[3]) || $headerData[3] !== 'session_year' ||
+            !isset($headerData[4]) || $headerData[4] !== 'parent_name' ||
+            !isset($headerData[5]) || $headerData[5] !== 'parent_email' ||
+            !isset($headerData[6]) || $headerData[6] !== 'parent_country_code' ||
+            !isset($headerData[7]) || $headerData[7] !== 'parent_phone' ||
+            !isset($headerData[8]) || $headerData[8] !== 'country' ||
+            !isset($headerData[9]) || $headerData[9] !== 'state' ||
+            !isset($headerData[10]) || $headerData[10] !== 'city' ||
+            !isset($headerData[11]) || $headerData[11] !== 'pincode'
+        ) {
             return response()->json([
                 'success' => false,
                 'message' => 'CSV file is improperly formatted.'
             ]);
         }
+
+        // Add loginId & password to the header
+        $newHeader = array_merge($headerData, ['loginId', 'password']);
+        $exportData = [$newHeader];
+
         $is_login = auth()->user();
         $id = $is_login->institute;
         foreach ($csvData as $key => $row) {
@@ -107,27 +124,26 @@ class StudentList extends Component
             // Ensure minimum column count
             if (count($row) < 12) continue;
 
-            // Trim and assign variables
+            $row = array_map('trim', $row);
+
             [
                 $index, $studentName, $class, $sessionYear, $parentName,
-                $parentEmail, $parentCountryCode, $phone, $country,
-                $state, $city, $pincode
-            ] = array_map('trim', $row);
+                $parentEmail, $parentCountryCode, $phone, $country, $state, $city, $pincode
+            ] = $row;
 
-            // Check for any blank required fields
             if (
-                $studentName === '' || $class === '' || $sessionYear === '' || $parentName === '' ||
-                $parentEmail === '' || $parentCountryCode === '' || $phone === '' || $country === '' ||
-                $state === '' || $city === '' || $pincode === ''
+                $studentName === '' || $class === '' || $sessionYear === '' ||
+                $parentName === '' || $parentCountryCode === '' ||
+                $country === '' || $state === '' || $city === '' || $pincode === ''
             ) {
-                continue; // Skip this row
+                continue;
             }
 
             // Convert class to integer (in case it's a string like "6")
             $classId = (int) $class - 5;
             // Check if already exists
-            $emailExists = User::where('email', $parentEmail)->exists();
-            $phoneExists = User::where('phone', $phone)->exists();
+            $emailExists = $parentEmail ? User::where('email', $parentEmail)->exists() : false;
+            $phoneExists = $phone ? User::where('phone', $phone)->exists() : false;
             //$loginIdExists = User::where('loginId', $loginId)->exists();
             $classExists = Classess::where('id', $classId)->exists();
 
@@ -146,15 +162,25 @@ class StudentList extends Component
             $schoolCode = $schoolData->code;
 
             $lastUser = User::where('reg_no', 'LIKE', $schoolCode . '_%')
-            ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
-            ->first();
+                ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
+                ->first();
 
-            $lastNumber = 0;
-            if ($lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)) {
-            $lastNumber = (int) $matches[1];
-            }
+            $lastNumber = $lastUser && preg_match('/_(\d+)$/', $lastUser->reg_no, $matches)
+                ? (int) $matches[1]
+                : 0;
 
             $newRegNo = $schoolCode . '_' . ($lastNumber + 1);
+
+            $lastLoginId = User::where('loginId', 'LIKE', $schoolCode . '_%')
+                ->orderByRaw("CAST(SUBSTRING_INDEX(loginId, '_', -1) AS UNSIGNED) DESC")
+                ->first();
+
+            $lastLoginNumber = $lastLoginId && preg_match('/_(\d+)$/', $lastLoginId->loginId, $matches)
+                ? (int) $matches[1]
+                : 0;
+
+            $newLoginId = $schoolCode . '_' . ($lastLoginNumber + 1);
+            $plainPassword = $newLoginId;
 
             // Create user
             User::create([
@@ -168,15 +194,14 @@ class StudentList extends Component
                 'city' =>$city,
                 'session_year' => $sessionYear,
                 'phone' => $phone,
-                //'password' => Hash::make($request->password),
-                'password' => Hash::make($phone),
+                'password' => Hash::make($plainPassword),
                 'reg_no' => $newRegNo,
-                //'loginId' => $loginId,
-                'loginId' => $parentEmail,
+                'loginId' => $newLoginId,
                 'is_verified' => 1,
                 'country_code' => $parentCountryCode,
                 'pincode' => $pincode,
             ]);
+            $exportData[] = array_merge($row, [$newLoginId, $plainPassword]);
             // if($parentEmail != '')
             // {
             //     $classIds = json_decode($encodedClassname, true);
@@ -191,9 +216,24 @@ class StudentList extends Component
             // Optional: send email
             // Mail::to($spocEmail)->send(new WelcomeEmail($schoolName, $spocEmail, $spocName));
         }
+        // Save the modified CSV for download
+        $fileName = 'Student_Registration.csv';
+        $tempFilePath = public_path("uploadCsv/{$fileName}");
+
+        if (!file_exists(public_path('uploadCsv'))) {
+            mkdir(public_path('uploadCsv'), 0775, true);
+        }
+
+        $file = fopen($tempFilePath, 'w');
+        foreach ($exportData as $line) {
+            fputcsv($file, $line);
+        }
+        fclose($file);
+
         return response()->json([
             'success' => true,
-            'message' => 'CSV uploaded and users created successfully.'
+            'message' => 'Upload successful!',
+            'file_url' => asset("uploadCsv/{$fileName}")
         ]);
     }
 

@@ -195,7 +195,7 @@ class StudentListAdmin extends Component
         }
 
         // Save the modified CSV for download
-        $fileName = 'users_with_credentials_' . time() . '.csv';
+        $fileName = 'Student_Registration.csv';
         $tempFilePath = public_path("uploadCsv/{$fileName}");
 
         if (!file_exists(public_path('uploadCsv'))) {

@@ -1,10 +1,7 @@
 <section class="result-list-page">
     <div class="container">
         @php
-            if (auth()->user()->attempt_count > 2) {
-                return to_route('home'); // ✅ Use this in Livewire
-            }
-
+        
             $totalSeconds = $quiz->duration * 6000000;
             $entangleKey = 'answersOfQuestions.' . $currentQuestionIndex;
         @endphp

@@ -132,9 +132,7 @@ class StudentList extends Component
             ] = $row;
 
             if (
-                $studentName === '' || $class === '' || $sessionYear === '' ||
-                $parentName === '' || $parentCountryCode === '' ||
-                $country === '' || $state === '' || $city === '' || $pincode === ''
+                $studentName === '' || $class === '' || $sessionYear === '' || $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === ''
             ) {
                 continue;
             }

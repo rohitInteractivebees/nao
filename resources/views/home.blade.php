@@ -53,7 +53,7 @@
 
             <section class="common-sec collage-dashboared common-sec1">
                 <div class="container">
-                    <div class="md:flex justify-between">
+                    <div class="justify-between md:flex">
                         <div class="item md:w-1/4">
                             <div class="sub-title"><span class="text-black">Admin Dashboard</span></div>
                             </div>
@@ -89,9 +89,9 @@
                                     </div>
                             </div>
                         </div>
-                        
+
                     </div>
-                    
+
                     <!-- <div class="items-center justify-between filter-data d-flex">
                         <div class="items-end justify-center right w-100 d-flex sm:justify-between">
                             <div class="form-style">
@@ -229,7 +229,7 @@
 
             <section class="common-sec collage-dashboared common-sec1">
                 <div class="container">
-                    <div class="md:flex justify-between">
+                    <div class="justify-between md:flex">
                         <div class="item md:w-1/4">
                             <div class="sub-title"><span class="text-black">School Dashboard</span></div>
                             <div class="items-center justify-between filter-data d-flex">
@@ -270,7 +270,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="mt-6 table-sec-outer">
                         <table class="table-sec">
@@ -306,11 +306,17 @@
                                         <td>
                                             {{ \App\Models\Classess::whereIn('id', json_decode($stu->class))->pluck('name')->join(', ') }}
                                         </td>
+                                        <td>{{ !empty($stu->email) ? $stu->email : 'N/A' }}</td>
+
                                         <td>
-                                            {{$stu->email}}
+                                            @if($stu->country_code || $stu->phone)
+                                                +{{ trim($stu->country_code.' '.$stu->phone) }}
+                                            @else
+                                                N/A
+                                            @endif
                                         </td>
-                                         <td>+{{ $stu->country_code.' '.$stu->phone }}</td>
-                                        
+
+
 
                                     </tr>
                                     @php            $sno1++; @endphp
@@ -332,7 +338,7 @@
             @php
                 $classIds = json_decode(auth()->user()->class, true);
                 $matchedGroup = '';
-            
+
                 if (!empty($classIds)) {
                     $classNames = \App\Models\Classess::whereIn('id', $classIds)->pluck('group')->toArray();
                     $matchedGroup = implode(', ', $classNames);
@@ -497,7 +503,7 @@
                     @endif
                 @else
                     <!-- Quiz closed -->
-                    <section class="common-sec levels-sec quiz-main-page common-sec1 d-flex items-center flex-wrap">
+                    <section class="flex-wrap items-center common-sec levels-sec quiz-main-page common-sec1 d-flex">
                         <div class="container justify-center d-flex">
                             <div class="quiz-body">
                                 <div class="items-center justify-center min-h-full heading d-flex">The quiz has been closed.</div>
@@ -519,7 +525,7 @@
 
             @else
                 <section class="common-sec levels-sec quiz-main-page common-sec1">
-                    
+
                     @if(!empty($liveQuiz) && count($liveQuiz) > 0 && $liveQuiz != null && $liveQuiz != '')
                     <div class="container justify-between d-flex">
                         <div class="quiz-type-sec levels-item">
@@ -547,10 +553,10 @@
                                 @endphp
                                 @if ($end->isPast())
                                     <div class="items-center justify-center min-h-full heading d-flex">
-                                        <div class="sub-title mb-0">
+                                        <div class="mb-0 sub-title">
                                             The quiz has been closed.
                                         </div>
-                                        
+
                                     </div>
                                 @else
                                     <div class="common-title">Level 1</div>
@@ -590,13 +596,13 @@
                         </div>
                     </div>
                     @else
-                    <div class="common-sec1 d-flex items-center flex-wrap">
-                        <div class="container d-flex justify-center">
+                    <div class="flex-wrap items-center common-sec1 d-flex">
+                        <div class="container justify-center d-flex">
                             <div class="quiz-body">
-                                <div class="items-center justify-center min-h-full sub-title d-flex gap-2"><strong class="common-title mb-0">Quiz <span>Date:</span> </strong> Will commence from 23rd May to 31st July 2025</div>
+                                <div class="items-center justify-center min-h-full gap-2 sub-title d-flex"><strong class="mb-0 common-title">Quiz <span>Date:</span> </strong> Will commence from 23rd May to 31st July 2025</div>
                             </div>
                         </div>
-                    </div>    
+                    </div>
                     @endif
                 </section>
             @endif

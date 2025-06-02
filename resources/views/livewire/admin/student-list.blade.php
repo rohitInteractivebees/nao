@@ -291,6 +291,7 @@
             .catch(error => {
                 console.error('Error:', error);
                 alert('Something went wrong.');
+                document.getElementById('loader').style.display = 'none';
             });
         });
     });

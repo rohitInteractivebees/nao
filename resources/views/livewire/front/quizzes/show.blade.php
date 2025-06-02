@@ -1,7 +1,7 @@
 <section class="result-list-page">
     <div class="container">
         @php
-        
+
             $totalSeconds = $quiz->duration * 6000000;
             $entangleKey = 'answersOfQuestions.' . $currentQuestionIndex;
         @endphp
@@ -112,5 +112,4 @@
         @endif
     </div>
 </div>
-<p>Your attempt count: {{ $attempt_count }}</p>
 </section>

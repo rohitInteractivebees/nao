@@ -50,9 +50,8 @@
                          <td>
                             {{ \App\Models\Classess::whereIn('id', json_decode($test->user->class))->pluck('name')->join(', ') }}
                         </td>
-                        <td>
-                            {{ $test->user->email }}
-                        </td>
+                        <td>{{ !empty($test->user->email) ? $test->user->email : 'N/A' }}</td>
+
                          @if(auth()->user()->is_admin == 1)
                          <td>
                             @php

@@ -130,8 +130,7 @@ class StudentListAdmin extends Component
 
             if (
                 $schoolCode === '' || $studentName === '' || $class === '' || $sessionYear === '' ||
-                $parentName === '' || $parentCountryCode === '' ||
-                $country === '' || $state === '' || $city === '' || $pincode === ''
+                $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === ''
             ) {
                 continue;
             }

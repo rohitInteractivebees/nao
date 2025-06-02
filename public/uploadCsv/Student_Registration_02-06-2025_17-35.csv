@@ -1,0 +1,4 @@
+s.no,school_code,student_name,class,session_year,parent_name,parent_email,parent_country_code,parent_phone,country,state,city,pincode,loginId,password
+1,IBS1,"Anthony Thompson",6,2023-2024,"Melinda Decker",,,,india,"New delhi",Delhi,110001,IBS1_124,IBS1_124
+2,IBS1,"Tammie Davis",6,2023-2024,"Kimberly Valdez",,,,india,"New delhi",Delhi,110002,IBS1_125,IBS1_125
+3,IBS1,"Christopher Whitney",6,2023-2024,"Christopher Barajas",,,,india,"New delhi",Delhi,110003,IBS1_126,IBS1_126

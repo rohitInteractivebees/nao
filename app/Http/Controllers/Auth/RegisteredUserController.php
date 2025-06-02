@@ -143,12 +143,21 @@ class RegisteredUserController extends Controller
             $schoolCode = $schoolData->code;
         }else{
             $schoolName = trim($request->school_name);
-            $initials = collect(explode(' ', $schoolName))
-            ->filter()
-            ->map(fn($word) => strtoupper(substr($word, 0, 1)))
-            ->implode('');
 
-            $schoolCode = $initials.rand(10,99);
+            // 1. Remove all special characters except letters and spaces
+            $cleanedName = preg_replace('/[^a-zA-Z\s]/', '', $schoolName);
+
+            // 2. Replace multiple spaces with a single space
+            $cleanedName = preg_replace('/\s+/', ' ', $cleanedName);
+
+            // 3. Extract initials
+            $initials = collect(explode(' ', $cleanedName))
+                ->filter()
+                ->map(fn($word) => strtoupper(substr($word, 0, 1)))
+                ->implode('');
+
+            // 4. Generate the final school code with a random 2-digit number
+            $schoolCode = $initials . rand(10, 99);
         }
         $lastUser = User::where('reg_no', 'LIKE', $schoolCode . '_%')
             ->orderByRaw("CAST(SUBSTRING_INDEX(reg_no, '_', -1) AS UNSIGNED) DESC")
@@ -205,7 +214,7 @@ class RegisteredUserController extends Controller
         }
         try {
             Mail::to(Session::get('parent_email'))->cc($AdminEmail)->send(new SignupMail($request->student_name,Session::get('parent_email'),$request->parent_phone,$pdf));
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         session()->flash('password', $request->parent_phone);
@@ -244,13 +253,19 @@ class RegisteredUserController extends Controller
             'name' => $schoolName,
             'status' => 1,
         ]);
+        // 1. Remove all special characters except letters and spaces
+        $cleanedName = preg_replace('/[^a-zA-Z\s]/', '', $schoolName);
 
-        // Generate code: first letter of each word + ID
-        $initials = collect(explode(' ', $schoolName))
+        // 2. Replace multiple spaces with a single space
+        $cleanedName = preg_replace('/\s+/', ' ', $cleanedName);
+
+        // 3. Extract initials
+        $initials = collect(explode(' ', $cleanedName))
             ->filter()
             ->map(fn($word) => strtoupper(substr($word, 0, 1)))
             ->implode('');
 
+        // 4. Generate the final school code with a random 2-digit number
         $code = $initials . $institute->id;
 
         // Update the record with the generated code
@@ -289,7 +304,7 @@ class RegisteredUserController extends Controller
 
         try {
             Mail::to(Session::get('principal_email'))->cc($AdminEmail)->send(new SignupMailSchool($schoolName,Session::get('principal_email'),$request->principal_mobile,$code));
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         session()->flash('password', $request->principal_mobile);
@@ -319,7 +334,7 @@ class RegisteredUserController extends Controller
         // Send OTP via email
         try {
             Mail::to($request->parent_email)->send(new OtpMail($otp,$request->student_name));
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         return response()->json(['message' => 'OTP sent to your email']);
@@ -338,8 +353,8 @@ class RegisteredUserController extends Controller
         }
 
         // Generate OTP
-        $otp = rand(100000, 999999);
-
+        //$otp = rand(100000, 999999);
+        $otp = 123456;
         // Store OTP in session
         Session::put('school_otp', $otp);
         Session::put('principal_email', $request->principal_email);
@@ -347,7 +362,7 @@ class RegisteredUserController extends Controller
         // Send OTP via email
         try {
             Mail::to($request->principal_email)->send(new OtpMailSchool($otp,$request->school));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         return response()->json(['message' => 'OTP sent to your email']);

@@ -200,16 +200,10 @@
                                 <li><a href="{{ route('class.list') }}"> Classes </a></li>
                                 <li><a href="{{ route('quizzes') }}"> Quizzes </a></li>
                                 <li><a href="{{ route('studentlistadmin') }}"> Student </a></li>
-
                                 <li><a href="{{ route('tests') }}">  Tests </a></li>
                                 <li><a href="{{ route('institute') }}">  School </a></li>
                                 <li><a href="{{ route('institute_login') }}">  School Login </a></li>
-                                <!--<li><a href="{{ route('register-team') }}"> Team  </a></li>-->
-                                <!--<li><a href="{{ route('submissonlist') }}"> Digital Prototype Submissions List </a></li>-->
-
-
-                                <!--<li><a href="{{ route('physciallysubmissonlist') }}"> Physical Prototype and Sales Presentation List</a></li>-->
-
+                                <li><a href="{{ route('reattemptstudentlistadmin') }}"> Re-attempt Quiz </a></li>
                             </ul>
                         </li>
                     @endadmin

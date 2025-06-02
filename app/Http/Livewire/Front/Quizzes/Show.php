@@ -27,7 +27,7 @@ class Show extends Component
     {
         $user = auth()->user();
 
-        //$user->increment('attempt_count');
+        $user->increment('attempt_count');
 
         $this->startTimeInSeconds = now()->timestamp;
 
@@ -145,7 +145,10 @@ class Show extends Component
     {
         $user = auth()->user();
         $attempt_count = $user->attempt_count;
-
-        return view('livewire.front.quizzes.show',compact('attempt_count'));
+        if($attempt_count > 1) {
+            return view('content.quiz_notification');
+        }else{
+            return view('livewire.front.quizzes.show',compact('attempt_count'));
+        }
     }
 }

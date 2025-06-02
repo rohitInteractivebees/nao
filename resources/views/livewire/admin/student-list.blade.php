@@ -1,17 +1,17 @@
-<div class="common-sec py-4">
+<div class="py-4 common-sec">
     <div class="container">
-        <div class="md:flex justify-between items-end">
+        <div class="items-end justify-between md:flex">
             <div class="item">
-                <div class="sub-title mb-0">Student List</div>
+                <div class="mb-0 sub-title">Student List</div>
             </div>
             <div class="item">
-                <div class="items-end justify-center right d-flex sm:justify-end gap-3">
+                <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
                     <div class=" filter-options form-style">
                         <select class="w-100" wire:model="class_id" name="class_id">
                             <option value="">All Classes</option>
                             @foreach($classes as $class)
                                 <option value="{{ $class->id }}">{{ $class->name }}</option>
-                            @endforeach    
+                            @endforeach
                         </select>
                     </div>
                     <form action="{{ route('upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
@@ -35,14 +35,14 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="mx-auto max-w-7xl">
             <div class="overflow-hidden bg-white">
                 <div class="items-end justify-center filter-data d-flex sm:justify-between">
                     <div class="left">
                         {{-- <a href="{{ route('student.create') }}" class="common-btn short">Create Student</a> --}}
                     </div>
-                    
+
                 </div>
 
                 <div class="loader-sec" id="loader" style="display: none;">
@@ -55,11 +55,23 @@
                 </div>
                 <div id="success-message" style="display: none;">CSV uploaded and emails sent successfully.</div>
                 @if (session()->has('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                
+    <div class="alert alert-success" id="success-alert">
+        {{ session('success') }}
+    </div>
+
+    <script>
+        setTimeout(function () {
+            let alertBox = document.getElementById('success-alert');
+            if (alertBox) {
+                alertBox.style.transition = 'opacity 0.5s ease';
+                alertBox.style.opacity = '0';
+                setTimeout(() => alertBox.remove(), 500); // Fully remove after fade out
+            }
+        }, 3000); // 3 seconds
+    </script>
+@endif
+
+
 
                 <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                     <table class="min-w-full border divide-y divide-gray-200">
@@ -132,21 +144,21 @@
                                         <div class="sub-title">Reset User Password</div>
                                         <form action="{{ route('updateUserPassword') }}" method="POST">
                                             @csrf
-                                            <div class="d-flex gap-3">
-                                                
+                                            <div class="gap-3 d-flex">
+
                                                 <input type="hidden" class="block w-full mt-1" value="{{ $admin->id }}" name="user_id">
                                                 <div class="form-style w-[48%]">
                                                     <label class="block text-sm font-medium text-gray-700" for="loginId">Login ID</label>
                                                     <input type="text" class="block w-full mt-1"  value="{{ $admin->loginId }}" readonly>
                                                 </div>
 
-                                                <div class="form-style w-1/2">
+                                                <div class="w-1/2 form-style">
                                                     <label class="block text-sm font-medium text-gray-700" for="password">New Password</label>
                                                     <input type="text" class="block w-full mt-1" name="password" required>
                                                 </div>
 
                                                 <div class="justify-center mt-6 d-flex w-100 links">
-                                                    <button type="submit" class="common-btn admin-btn green w-full">Update</button>
+                                                    <button type="submit" class="w-full common-btn admin-btn green">Update</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -252,31 +264,34 @@
             document.getElementById('loader').style.display = 'flex';
 
             fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loader').style.display = 'none';
+                if (data.success) {
+
+                    alert(data.message);
+
+                    // Trigger download
+                    if (data.file_url) {
+                        const link = document.createElement('a');
+                        link.href = data.file_url;
+                        link.download = ''; // Let browser use default filename
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.location.reload();
                     }
-                })
-                .then(async (response) => {
-                    document.getElementById('loader').style.display = 'none';
-
-                    const data = await response.json();
-
-                    if (!response.ok) {
-                        // Handle validation or server errors
-                        throw new Error(data.message || 'An error occurred');
-                    }
-
-                    // Success
-                    alert(data.message || 'Upload successful!');
-                    form.reset(); // Optional
-                    window.location.reload(); // Optional
-                })
-                .catch(error => {
-                    document.getElementById('loader').style.display = 'none';
-                    alert('CSV file is improperly formatted.');
-                });
+                } else {
+                    alert(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong.');
+            });
         });
     });
     </script>

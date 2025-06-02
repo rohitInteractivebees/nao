@@ -101,8 +101,15 @@
                                         @endphp
                                         <td>{{ $instituteName }}</td>
                                         <td>{{ $student->name }}</td>
-                                        <td>{{ $student->email }}</td>
-                                        <td>+{{ $student->country_code.' '.$student->phone }}</td>
+                                        <td>{{ !empty($student->email) ? $student->email : 'N/A' }}</td>
+
+                                        <td>
+                                            @if($student->country_code || $student->phone)
+                                                +{{ trim($student->country_code.' '.$student->phone) }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                         <td> {{ $student->created_at->format('d-m-Y') }}</td>
                                         <td align="center">
                                             <a data-fancybox href="#dialog-content-detail{{ $student->id }}">

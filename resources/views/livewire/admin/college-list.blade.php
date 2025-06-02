@@ -1,12 +1,12 @@
 <div>
     <div class="pb-12">
         <div class="container">
-            <div class="md:flex justify-between items-end mb-5">
+            <div class="items-end justify-between mb-5 md:flex">
                 <div class="item">
-                    <div class="sub-title mb-0">School Login</div>
+                    <div class="mb-0 sub-title">School Login</div>
                 </div>
                 <div class="item">
-                    <div class="items-end justify-center right d-flex sm:justify-end gap-3">
+                    <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
                         <form action="{{ route('school.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                             @csrf
                             <div class="items-end justify-center half-view d-flex gap sm:justify-end">
@@ -25,7 +25,7 @@
                             <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                             <a href="{{url('sampleCsv/School_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
                         </button>
-                       
+
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                                     <th width="400">
                                         School
                                     </th>
-                                   
+
                                 </tr>
                             </thead>
 
@@ -78,10 +78,15 @@
                                         <td>
                                             {{ $admin->name }}
                                         </td>
-                                        <td>
-                                            {{ $admin->email }}
+                                        <td>{{ !empty($admin->email) ? $admin->email : 'N/A' }}</td>
+
+                                         stu<td>
+                                            @if($admin->country_code || $admin->phone)
+                                                +{{ trim($admin->country_code.' '.$admin->phone) }}
+                                            @else
+                                                N/A
+                                            @endif
                                         </td>
-                                         <td>+{{ $admin->country_code.' '.$admin->phone }}</td>
                                         @php
                                             $inst =  App\Models\Instute::find($admin->institute);
                                         @endphp
@@ -89,8 +94,8 @@
                                         <td>
                                             {{ @$inst->name }}
                                         </td>
-                                        
-                                        
+
+
                                     </tr>
                                 @empty
                                     <tr>

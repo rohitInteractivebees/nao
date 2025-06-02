@@ -100,8 +100,15 @@
                                 <td>
                                     {{ \App\Models\Classess::whereIn('id', json_decode($admin->class))->pluck('name')->join(', ') }}
                                 </td>
-                                <td>{{ $admin->email }}</td>
-                                <td>+{{ $admin->country_code.' '.$admin->phone }}</td>
+                                <td>{{ !empty($admin->email) ? $admin->email : 'N/A' }}</td>
+
+                                <td>
+                                    @if($admin->country_code || $admin->phone)
+                                        +{{ trim($admin->country_code.' '.$admin->phone) }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                                 <!--<td>-->
                                 <!--    @if($admin->is_verified == 1)-->
                                 <!--    <button type="button" class="table-btn green no-hov no-pointer">Verified</button>-->

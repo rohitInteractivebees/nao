@@ -7,15 +7,17 @@ use App\Models\Instute;
 use Livewire\Component;
 use App\Models\Classess;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CollegeList extends Component
 {
     public function delete(User $admin)
     {
-        abort_if(!auth()->user()->is_admin, Response::HTTP_FORBIDDEN, 403);
+        abort_if(!auth()->user()->is_admin, HttpResponse::HTTP_FORBIDDEN, 403);
 
         $admin->delete();
     }
@@ -27,6 +29,59 @@ class CollegeList extends Component
         return view('livewire.admin.college-list', [
             'admins' => $admins
         ]);
+    }
+
+    public function export()
+    {
+        $is_login = auth()->user();
+        if (auth()->user()->is_admin) {
+            $students = User::where('is_college',1)->get();
+
+            $csvData = [];
+            $csvData[] = ['Sr.No', 'School Name', 'Principal Name', 'Principal Mobile', 'Principal Email', 'Spoc Name', 'Spoc Eamil', 'Spoc Mobile', 'Country', 'State', 'City', 'Pincode', 'Registration Date'];
+
+            foreach ($students as $index => $student) {
+                $instituteName = Instute::where('id', $student->institute)->value('name');
+
+                $email = !empty($student->email) ? $student->email : 'N/A';
+
+                $csvData[] = [
+                    $index + 1,
+                    $instituteName,
+                    $student->name,
+                    ($student->country_code || $student->phone) ? '+' . trim($student->country_code . ' ' . $student->phone) : 'N/A',
+                    $email,
+                    $student->parent_name,
+                    $student->spoc_email,
+                    ($student->spoc_country_code || $student->spoc_mobile) ? '+' . trim($student->spoc_country_code . ' ' . $student->spoc_mobile) : 'N/A',
+                    $student->country,
+                    $student->state,
+                    $student->city,
+                    $student->pincode,
+                    $student->created_at->format('d-m-Y'),
+                ];
+            }
+
+            // Convert array to CSV
+            $filename = 'school_export_' . now()->format('Y_m_d_H_i_s') . '.csv';
+            $handle = fopen('php://temp', 'r+');
+
+            foreach ($csvData as $row) {
+                fputcsv($handle, $row);
+            }
+
+            rewind($handle);
+            $csvOutput = stream_get_contents($handle);
+            fclose($handle);
+
+            return Response::make($csvOutput, 200, [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => "attachment; filename=\"$filename\"",
+            ]);
+        } else {
+            Auth::logout();
+            return redirect()->route('login');
+        }
     }
 
     public function verifySchool(Request $request, $id)

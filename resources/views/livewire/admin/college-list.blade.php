@@ -28,6 +28,13 @@
 
                     </div>
                 </div>
+                <!--Export Div Starts here-->
+                <div class="items-center justify-end gap-3 mt-4 item md:flex">
+                    <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
+                        <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                        <a href="{{ route('admin.export.school') }}" download><span>Export</span></a>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="mx-auto max-w-7xl">
@@ -55,6 +62,9 @@
                                     <th width="100">
                                         Sr.No
                                     </th>
+                                    <th width="400">
+                                        School
+                                    </th>
                                     <th width="200">
                                        Principal Name
                                     </th>
@@ -64,9 +74,7 @@
                                     <th width="300">
                                         Principal Mobile
                                     </th>
-                                    <th width="400">
-                                        School
-                                    </th>
+
 
                                 </tr>
                             </thead>
@@ -75,6 +83,13 @@
                                 @forelse($admins as $index => $admin)
                                     <tr>
                                         <td>{{ $admins->firstItem() + $index }}</td>
+                                        @php
+                                            $inst =  App\Models\Instute::find($admin->institute);
+                                        @endphp
+
+                                        <td>
+                                            {{ @$inst->name }}
+                                        </td>
                                         <td>
                                             {{ $admin->name }}
                                         </td>
@@ -87,13 +102,7 @@
                                                 N/A
                                             @endif
                                         </td>
-                                        @php
-                                            $inst =  App\Models\Instute::find($admin->institute);
-                                        @endphp
 
-                                        <td>
-                                            {{ @$inst->name }}
-                                        </td>
 
 
                                     </tr>

@@ -295,7 +295,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-                                @foreach($students as $stu)
+                                @forelse($students as $stu)
                                     <tr>
                                         <td>
                                             {{$sno1}}
@@ -320,7 +320,14 @@
 
                                     </tr>
                                     @php            $sno1++; @endphp
-                                @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="8"
+                                        class="px-6 py-4 leading-5 text-center text-gray-900 whitespace-no-wrap">
+                                        No tests were found.
+                                    </td>
+                                </tr>
+                            @endforelse
 
                             </tbody>
                         </table>
@@ -517,7 +524,7 @@
 
                 <section class="common-sec congrats-sec min-h-[75vh]">
                     <div class="container">
-                        <div class="certificate pt-5">
+                        <div class="pt-5 certificate">
                             <img src="{{ asset('/assets/images/congrats-certificate.jpg') }}" width="1114" height="615" alt="">
                         </div>
                     </div>

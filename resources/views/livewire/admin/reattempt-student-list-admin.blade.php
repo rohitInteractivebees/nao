@@ -70,7 +70,7 @@
                                         @endphp
                                         <td>{{ $instituteName }}</td>
                                         <td>{{ $student->name }}</td>
-                                        admin<td>{{ !empty($student->email) ? $student->email : 'N/A' }}</td>
+                                        <td>{{ !empty($student->email) ? $student->email : 'N/A' }}</td>
 
                                         <td>
                                             @if($student->country_code || $student->phone)

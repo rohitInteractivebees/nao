@@ -195,15 +195,17 @@
                         <li><a href="{{ route('leaderboard') }}">Leaderboard </a></li>
                         <li class="submenu"><a href="javascript:void(0)"> Manage </a>
                             <ul class="dropdown">
-                                <!-- <li><a href="{{ route('admins') }}"> Admins </a></li> -->
-                                <li><a href="{{ route('questions') }}"> Questions</a></li>
-                                <li><a href="{{ route('class.list') }}"> Classes </a></li>
+                                <li><a href="{{ route('institute_login') }}">  School Register </a></li>
+                                <li><a href="{{ route('institute') }}">  School Details</a></li>
+                                <li><a href="{{ route('studentlistadmin') }}"> Student Register</a></li>
+                                <li><a href="{{ route('questions') }}"> Question Bank</a></li>
+                                <li><a href="{{ route('class.list') }}"> Class Insights </a></li>
                                 <li><a href="{{ route('quizzes') }}"> Quizzes </a></li>
-                                <li><a href="{{ route('studentlistadmin') }}"> Student </a></li>
-                                <li><a href="{{ route('tests') }}">  Tests </a></li>
-                                <li><a href="{{ route('institute') }}">  School </a></li>
-                                <li><a href="{{ route('institute_login') }}">  School Login </a></li>
-                                <li><a href="{{ route('reattemptstudentlistadmin') }}"> Re-attempt Quiz </a></li>
+
+                                <li><a href="{{ route('tests') }}">  Quiz Attempt Tracker </a></li>
+
+
+                                <li><a href="{{ route('reattemptstudentlistadmin') }}">Quiz Re-attempt  </a></li>
                             </ul>
                         </li>
                     @endadmin

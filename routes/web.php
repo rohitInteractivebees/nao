@@ -160,6 +160,7 @@ Route::middleware('auth')->group(function () {
         Route::get('tests', TestList::class)->name('tests');
         Route::get('/phase-submission-3', PhaseSubmission::class)->name('submissions3');
         Route::get('/phase-submission-3/create', PhaseSubmissionForm::class)->name('submissions3.create');
+        Route::get('/export-students', [StudentListAdmin::class, 'export'])->name('admin.export.students');
     });
     Route::get('student-list', ClassList::class)->name('class.list');
 });

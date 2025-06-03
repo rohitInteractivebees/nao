@@ -161,6 +161,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/phase-submission-3', PhaseSubmission::class)->name('submissions3');
         Route::get('/phase-submission-3/create', PhaseSubmissionForm::class)->name('submissions3.create');
         Route::get('/export-students', [StudentListAdmin::class, 'export'])->name('admin.export.students');
+        Route::get('/export-school', [CollegeList::class, 'export'])->name('admin.export.school');
     });
     Route::get('student-list', ClassList::class)->name('class.list');
 });

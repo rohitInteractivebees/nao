@@ -80,7 +80,7 @@
                                         </td>
                                         <td>{{ !empty($admin->email) ? $admin->email : 'N/A' }}</td>
 
-                                         stu<td>
+                                        <td>
                                             @if($admin->country_code || $admin->phone)
                                                 +{{ trim($admin->country_code.' '.$admin->phone) }}
                                             @else

@@ -5,8 +5,8 @@
                 <div class="item">
                     <div class="mb-0 sub-title">Re-Attempt Student List</div>
                 </div>
-                <div class="item">
-                    <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
+                <div class="item sm:w-3/4">
+                    <div class="items-end justify-center gap-3 right md:flex sm:justify-end">
                         @if(auth()->user()->is_admin)
                         <div class=" filter-options form-style">
                             <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
@@ -18,12 +18,12 @@
                             </select>
                         </div>
                         @endif
-                    </div>
-                    <div class="mb-4">
-                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, or phone..." class="form-control">
+                    <div class="md:w-2/5 mt-4 md:mt-0">
+                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, or phone..." class="form-control" style="border: 1px solid #ccc !important;">
                     </div>
                 </div>
             </div>
+        </div>
             @if (session()->has('success'))
                 <div class="alert alert-success" id="success-message">
                     {{ session('success') }}
@@ -81,7 +81,7 @@
                                         </td>
                                         <td> {{ $student->created_at->format('d-m-Y') }}</td>
                                         <td align="center">
-                                            <button wire:click="confirmAllow({{ $student->id }})" class="btn btn-sm btn-success">
+                                            <button wire:click="confirmAllow({{ $student->id }})" class="btn btn-sm btn-success table-btn green">
                                                 Allow
                                             </button>
                                     </td>

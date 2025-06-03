@@ -278,7 +278,7 @@
         border-left: none;
         border-right: none;
         border-top: none;
-        top: 15px;
+        top: 28px;
         right: 0px;
         background: url("../images/icon-arrow-white.png") no-repeat 0 5px;
         background-size: 20px;
@@ -902,7 +902,7 @@
         width: 100%;
     }
     .result-list-page .result-summary .result-sumary-test li {
-        font-size: 10px;
+        font-size: 12px;
         padding-left: 3px;
         padding-right: 3px;
     }

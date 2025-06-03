@@ -1,19 +1,21 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+    <div class="breadcrumb-sec py-7">
+        <div class="container">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
             Quiz: {{ $quiz->title }}
         </h2>
-    </x-slot>
+        </div>
+    </div>
 
     <x-slot name="title">
         {{ $quiz->title }}
     </x-slot>
 
-    <section class="common-sec">
+    <section class="common-sec common-sec1 pt-0">
     <div class="container">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="">
             <div class="overflow-hidden bg-white">
-                <div class="p-6 text-gray-900">
+                <div class="text-gray-900">
                     @if (!$quiz->public && !auth()->check())
                         <div class="relative px-6 py-4 mb-4 text-white bg-red-700 border-0 rounded">
                             <span class="inline-block mr-8 align-middle">

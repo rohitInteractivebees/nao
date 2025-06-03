@@ -1,27 +1,16 @@
 <div>
     <div class="common-sec1">
         <div class="container">
-            <div class="items-end justify-between md:flex">
+            <div class="items-end justify-between lg:flex">
                 <div class="item">
                     <div class="mb-0 sub-title">Student List</div>
                 </div>
                 <div class="item">
                     <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
-                        @if(auth()->user()->is_admin)
-                        <div class=" filter-options form-style">
-                            <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
-                                <option value="0">All School</option>
-                                @foreach(App\Models\Instute::all() as $college)
-                                    <option value="{{ $college->id }}">{{ $college->name }}</option>
-                                @endforeach
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        @endif
                         <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                             @csrf
                             <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                                <div class="form-style">
+                                <div class="form-style w-auto" style="width: auto !important;">
                                     <input type="file" name="csv_file" required>
                                 </div>
                                 <div class="links">
@@ -40,6 +29,34 @@
                     </div>
                 </div>
             </div>
+            
+            <!--Export Div Starts here-->
+            <div class="item md:flex justify-end mt-4 items-center gap-3">
+                <div class="item">
+                    @if(auth()->user()->is_admin)
+                        <div class=" filter-options form-style mt-0">
+                            <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
+                                <option value="0">All School</option>
+                                @foreach(App\Models\Instute::all() as $college)
+                                    <option value="{{ $college->id }}">{{ $college->name }}</option>
+                                @endforeach
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        @endif
+                </div>
+                <div class="item filter-options form-style mt-0">
+                    <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
+                        <option value="0">All Classes</option>
+                            <option value="">School 1</option>
+                    </select>
+                </div>
+                <button class="items-center common-btn admin-btn d-flex common-btn-two mt-4 md:mt-0 " type="submit">
+                    <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                    <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Export</span></a>
+                </button>
+            </div>
+            <!--Export Div Ends here-->
             <div class="mx-auto max-w-7xl">
                 <div class="overflow-hidden bg-white">
 

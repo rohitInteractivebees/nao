@@ -1,5 +1,5 @@
 <x-app-layout>
-<section class="common-sec congrats-sec">
+<section class="common-sec congrats-sec common-sec1">
     <div class="container">
         <div class="certificate">
             <img src="{{ asset('/assets/images/congrats-certificate.jpg') }}" width="1114" height="615" alt="">

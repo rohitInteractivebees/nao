@@ -1,10 +1,10 @@
- <section class="common-sec collage-dashboared common-sec1">
+ <section class="common-sec collage-dashboared common-sec1 pt-0">
      <div class="container">
          <div class="items-center justify-between filter-data d-flex">
              <div class="left">
                  <div class="justify-between half-view d-flex">
                  @if(auth()->user()->is_admin == 1)
-                     <div class="form-style">
+                     <div class="form-style pt-0">
                          <label class="block text-sm font-medium text-gray-700" for="quiz">School</label>
 
                          <select class="block w-full mt-1" wire:model="quiz_id" name="quiz">
@@ -33,7 +33,7 @@
                         @endif
                          <th width="300">Correct Answers</th>
                          @if(auth()->user()->is_college == 1)
-                            <th width="500">Result</th>
+                            <th width="150">Result</th>
                         @endif
                      </tr>
                  </thead>
@@ -83,9 +83,9 @@
                                         $marks_percent = ($qus_count * $test->quiz->pass_fail_percent / 100 );
                                     @endphp
                                     @if($test->result >= $marks_percent)
-                                        <div class="table-btn green no-hov">Pass</div>
+                                        <div class="table-btn green no-hov"><span class="">Pass</span></div>
                                     @else
-                                        <div class="table-btn red no-hov">Fail</div>
+                                        <div class="table-btn red no-hov"><span class="">Fail </span></div>
                                     @endif
                          </td>
                          @endif

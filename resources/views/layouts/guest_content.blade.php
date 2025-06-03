@@ -8,14 +8,14 @@
                     <img src="{{ asset('/images/mobile-banner.webp') }}" alt="Nao 2025">
                 </div>
             </div>
-            <div class="item">
-                <div class="hidden sm:block">
-                    <img src="{{ asset('/images/coming-banner.webp') }}" alt="Nao 2025">
-                </div>
-                <div class="block sm:hidden">
-                    <img src="{{ asset('/images/mobile-coming-banner.webp') }}" alt="Nao 2025">
-                </div>
-            </div>
+            <!--<div class="item">-->
+            <!--    <div class="hidden sm:block">-->
+            <!--        <img src="{{ asset('/images/coming-banner.webp') }}" alt="Nao 2025">-->
+            <!--    </div>-->
+            <!--    <div class="block sm:hidden">-->
+            <!--        <img src="{{ asset('/images/mobile-coming-banner.webp') }}" alt="Nao 2025">-->
+            <!--    </div>-->
+            <!--</div>-->
             <div class="item">
                 <div class="hidden sm:block">
                     <img src="{{ asset('/images/banner3.webp') }}" alt="Nao 2025">

@@ -385,7 +385,7 @@ button.table-btn.green {
 }
 .header li ul.dropdown {
     position: absolute;
-    width: 120px;
+    width: 8rem;
     background: linear-gradient(90deg, #FA3667 0%, #FA644C 100%);
     display: none;
     top: 35px;
@@ -1367,7 +1367,7 @@ input:-webkit-autofill:hover {
     width: 150px;
 }
 .result-list-page .result-summary .result-sumary-test {
-    width: calc(100% - 170px);
+    width: 70%;
 }
 .result-list-page .result-summary .result-sumary-test li {
     width: 32%;

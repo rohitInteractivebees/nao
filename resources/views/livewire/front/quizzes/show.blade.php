@@ -32,7 +32,7 @@
         >
         <div class="items-end justify-between result-summary d-flex">
             <div class="heading short">Level 1 <span>Question {{ $currentQuestionIndex + 1 }} of {{ $this->questionsCount }}:</div>
-            <div class="result-sumary-test">
+            <div class="result-sumary-test w-3/4">
                 <ul class="justify-between d-flex">
                     <li>
                         <span>Date : </span> {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
@@ -102,7 +102,7 @@
         @else
             <div class="mt-4">
                 <x-primary-button
-                    class="red"
+                    class="common-btn short red"
                     x-on:click="submitDisabled = true; window.onbeforeunload = null; $wire.submit();"
                     x-bind:disabled="submitDisabled"
                 >

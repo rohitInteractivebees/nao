@@ -515,9 +515,9 @@
             <!-- #region-->
             @elseif($testuser && @$resultpublished->result_show != 1)
 
-                <section class="common-sec congrats-sec">
+                <section class="common-sec congrats-sec min-h-[75vh]">
                     <div class="container">
-                        <div class="certificate">
+                        <div class="certificate pt-5">
                             <img src="{{ asset('/assets/images/congrats-certificate.jpg') }}" width="1114" height="615" alt="">
                         </div>
                     </div>

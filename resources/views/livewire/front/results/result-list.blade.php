@@ -1,4 +1,4 @@
-<section class="common-sec result-list-page">
+<section class="common-sec result-list-page min-h-[80vh]">
     <div class="container">
         <!-- <div class="heading short">Dashboard</div> -->
         <div class="table-sec-outer">

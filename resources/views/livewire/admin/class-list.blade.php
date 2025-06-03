@@ -11,7 +11,7 @@
                                         Sr.No
                                     </th>
                                     <th>
-                                       Name
+                                       Class
                                     </th>
                                     <th>
                                        Group

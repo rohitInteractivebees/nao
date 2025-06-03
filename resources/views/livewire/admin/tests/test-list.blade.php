@@ -61,9 +61,7 @@
                                     <td>
                                         {{ $test->user->name ?? 'Guest' }}
                                     </td>
-                                    <td>
-                                        {{ $test->user->email }}
-                                    </td>
+                                    <td>{{ !empty($test->email) ? $test->email : 'N/A' }}</td>
                                     <td>
                                         {{ \App\Models\Classess::whereIn('id', json_decode($test->user->class))->pluck('name')->join(', ') }}
                                     </td>

@@ -1,9 +1,9 @@
 <div>
     <div class="common-sec1">
         <div class="container">
-            <div class="md:flex justify-between items-end">
+            <div class="items-end justify-between md:flex">
                 <div class="item">
-                    <div class="sub-title mb-0">
+                    <div class="mb-0 sub-title">
                         <a href="{{ route('question.create') }}"
                             class="common-btn short">
                             Create Question
@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <div class="items-end justify-center right d-flex sm:justify-end gap-3">
+                    <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
                         <form action="{{ route('question.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                             @csrf
                             <div class="items-end justify-center half-view d-flex gap sm:justify-end">
@@ -30,13 +30,13 @@
                             <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                             <a href="{{url('sampleCsv/admin_question_sample.csv')}}" download><span>Download Sample CSV</span></a>
                         </button>
-                       
+
                     </div>
                 </div>
             </div>
             <div class="mx-auto max-w-7xl">
                 <div class="overflow-hidden bg-white">
-                    
+
                     <div class="loader-sec" id="loader" style="display: none;">
                         <div class="inner">
                             <span class="dot"></span>
@@ -90,9 +90,9 @@
                                             <a href="{{ route('question.edit', $question->id) }}">
                                                 <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="">
                                             </a>
-                                            <button wire:click="delete({{ $question }})">
+                                            {{-- <button wire:click="delete({{ $question }})">
                                                 <img src="{{ asset('/assets/images/icon-delete.png') }}" alt="">
-                                            </button>
+                                            </button> --}}
                                         </td>
                                     </tr>
                                 @empty
@@ -184,9 +184,9 @@
             event.preventDefault();
             let form = event.target;
             let formData = new FormData(form);
-    
+
             document.getElementById('loader').style.display = 'flex';
-    
+
             fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -196,14 +196,14 @@
                 })
                 .then(async (response) => {
                     document.getElementById('loader').style.display = 'none';
-    
+
                     const data = await response.json();
-    
+
                     if (!response.ok) {
                         // Handle validation or server errors
                         throw new Error(data.message || 'An error occurred');
                     }
-    
+
                     // Success
                     alert(data.message || 'Upload successful!');
                     form.reset(); // Optional

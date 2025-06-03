@@ -60,13 +60,14 @@ class StudentListAdmin extends Component
             if ($this->quiz_id1 == 'Other') {
                 $query->where('institute', $this->quiz_id1);
             }else {
-                if ($this->class_id > 0) {
-                    $query->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
+                if ($this->quiz_id1 > 0) {
+                    $query->where('institute', $this->quiz_id1);
                 }
             }
-            if ($this->quiz_id1 > 0) {
-                $query->where('institute', $this->quiz_id1);
+            if ($this->class_id > 0) {
+                $query->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
             }
+
 
             $students = $query->paginate(10);
 

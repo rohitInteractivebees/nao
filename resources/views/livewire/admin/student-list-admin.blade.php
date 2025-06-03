@@ -10,7 +10,7 @@
                         <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                             @csrf
                             <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                                <div class="form-style w-auto" style="width: auto !important;">
+                                <div class="w-auto form-style" style="width: auto !important;">
                                     <input type="file" name="csv_file" required>
                                 </div>
                                 <div class="links">
@@ -29,12 +29,12 @@
                     </div>
                 </div>
             </div>
-            
+
             <!--Export Div Starts here-->
-            <div class="item md:flex justify-end mt-4 items-center gap-3">
+            <div class="items-center justify-end gap-3 mt-4 item md:flex">
                 <div class="item">
                     @if(auth()->user()->is_admin)
-                        <div class=" filter-options form-style mt-0">
+                        <div class="mt-0 filter-options form-style">
                             <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
                                 <option value="0">All School</option>
                                 @foreach(App\Models\Instute::all() as $college)
@@ -45,15 +45,17 @@
                         </div>
                         @endif
                 </div>
-                <div class="item filter-options form-style mt-0">
-                    <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
+                <div class="mt-0 item filter-options form-style">
+                    <select class="block w-full mt-1" wire:model="class_id" name="class_id">
                         <option value="0">All Classes</option>
-                            <option value="">School 1</option>
+                        @foreach(App\Models\Classess::all() as $class)
+                            <option value="{{ $class->id }}">{{ $class->name }}</option>
+                        @endforeach
                     </select>
                 </div>
-                <button class="items-center common-btn admin-btn d-flex common-btn-two mt-4 md:mt-0 " type="submit">
+                <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
                     <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                    <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Export</span></a>
+                    <a href="{{ route('admin.export.students', ['quiz_id1' => $quiz_id1, 'class_id' => $class_id]) }}" download><span>Export</span></a>
                 </button>
             </div>
             <!--Export Div Ends here-->
@@ -93,6 +95,7 @@
                                     <th width="100">Sr.No</th>
                                     <th width="300">School Name</th>
                                     <th width="300">Student Name</th>
+                                    <th width="300">Class</th>
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>
                                     <th width="150">Registration Date</th>
@@ -118,6 +121,9 @@
                                         @endphp
                                         <td>{{ $instituteName }}</td>
                                         <td>{{ $student->name }}</td>
+                                        <td>
+                                            {{ \App\Models\Classess::whereIn('id', json_decode($student->class))->pluck('name')->join(', ') }}
+                                        </td>
                                         <td>{{ !empty($student->email) ? $student->email : 'N/A' }}</td>
 
                                         <td>

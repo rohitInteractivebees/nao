@@ -19,6 +19,8 @@ class Leaderboard extends Component
     public Collection $quizzes;
 
     public $quiz_id = 0;
+    
+    protected $updatesQueryString = ['quiz_id'];
 
     public function mount()
     {
@@ -26,6 +28,11 @@ class Leaderboard extends Component
         $this->college = Instute::get();
     }
 
+    public function updatingQuizId()
+    {
+        $this->resetPage();
+    }
+    
     public function render(): View
     {
         if(auth()->user()->is_admin == 1)

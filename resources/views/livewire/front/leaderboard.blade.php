@@ -38,12 +38,10 @@
                      </tr>
                  </thead>
                  <tbody>
-                     @forelse ($tests as $test)
+                     @forelse ($tests as $index => $test)
                      <tr @class([ ''=> auth()->check() && $test->user->name == auth()->user()->name,
                          ])>
-                         <td>
-                             {{ $loop->iteration }}
-                         </td>
+                         <td>{{ $tests->firstItem() + $index }}</td>
                          <td>
                              {{ $test->user->name }}
                          </td>

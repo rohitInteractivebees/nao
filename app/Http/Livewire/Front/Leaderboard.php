@@ -52,8 +52,7 @@ class Leaderboard extends Component
                 ->withCount('questions')
                 ->orderBy('result', 'desc')
                 ->orderBy('time_spent')
-                ->take(40)
-                ->get();
+                ->paginate(20);
             // Extract the user IDs from the top 40 tests
             $topUserIds = $tests->pluck('user_id')->toArray();
 
@@ -91,8 +90,7 @@ class Leaderboard extends Component
                 ->withCount('questions')
                 ->orderBy('result', 'desc')
                 ->orderBy('time_spent')
-                ->take(40)
-                ->get();
+                ->paginate(20);
 
 
             // Extract the user IDs from the top 40 tests

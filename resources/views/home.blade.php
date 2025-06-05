@@ -539,7 +539,7 @@
                 </section>
 
             @else
-                <section class="common-sec levels-sec quiz-main-page common-sec1">
+                <section class="common-sec levels-sec quiz-main-page min-h-[82vh]">
 
                     @if(!empty($liveQuiz) && count($liveQuiz) > 0 && $liveQuiz != null && $liveQuiz != '')
                     <style>
@@ -742,10 +742,10 @@
                         </div>
                     </div>
                     @else
-                    <div class="flex-wrap items-center common-sec1 d-flex">
+                    <div class="flex-wrap items-center d-flex">
                         <div class="container justify-center d-flex">
                             <div class="quiz-body">
-                                <div class="items-center justify-center min-h-full gap-2 sub-title d-flex"><strong class="mb-0 common-title">Quiz <span>Date:</span> </strong> Will commence from 10th June to 31st July 2025</div>
+                                <div class="items-center justify-center min-h-full gap-2 sub-title d-flex"><strong class="mb-0 common-title">Quiz <span>Date:</span> </strong> Get ready! Your assessments will start from 10th June.</div>
                             </div>
                         </div>
                     </div>

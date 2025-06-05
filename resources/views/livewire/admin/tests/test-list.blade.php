@@ -1,14 +1,15 @@
 <div>
        <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="item">
-                <div class="mb-0 sub-title">Quiz Attempt Tracker</div>
-            </div>
+            
             <div class="overflow-hidden bg-white">
-                <div class="form-style">
-                    <div class="items-center justify-end gap-3 mt-4 item md:flex">
+                <div class="form-style mt-0">
+                    <div class="items-center justify-between gap-3 mt-4 item md:flex px-3 md:px-0">
                         <div class="item">
-                            <select class="w-full p-3 mb-3 text-sm leading-5 text-slate-600"
+                            <div class="md:mb-0 sub-title text-center">Quiz Attempt Tracker</div>
+                        </div>
+                        <div class="item md:flex justify-end gap-3 items-center md:w-3/5 text-center">
+                            <select class="md:w-auto md:m-0 m-auto p-3"
                                 wire:model="quiz_id">
                                 <option value="0">All School</option>
                                 @foreach ($college as $quiz)
@@ -16,8 +17,9 @@
                                 @endforeach
                                 <option value="Other">Other</option>
                             </select>
-                            <div class="mt-0 item filter-options form-style">
-                                <select class="block w-full mt-1" wire:model="class_id" name="class_id">
+                            
+                            <div class="mt-0 item filter-options form-style text-center">
+                                <select class="block md:m-0 m-auto mt-3 " wire:model="class_id" name="class_id">
                                     <option value="0">All Classes</option>
                                     @foreach(App\Models\Classess::all() as $class)
                                         <option value="{{ $class->id }}">{{ $class->name }}</option>

@@ -1,10 +1,10 @@
- <section class="common-sec collage-dashboared common-sec1 pt-0">
+ <section class="pt-0 common-sec collage-dashboared common-sec1">
      <div class="container">
          <div class="items-center justify-between filter-data d-flex">
              <div class="left">
                  <div class="justify-between half-view d-flex">
                  @if(auth()->user()->is_admin == 1)
-                     <div class="form-style pt-0">
+                     <div class="pt-0 form-style">
                          <label class="block text-sm font-medium text-gray-700" for="quiz">School</label>
 
                          <select class="block w-full mt-1" wire:model="quiz_id" name="quiz">
@@ -126,6 +126,6 @@
                  </tbody>
              </table>
          </div>
-         {{ $students->links() }}
+         {{ $tests->links() }}
      </div>
  </section>

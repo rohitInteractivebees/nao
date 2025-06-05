@@ -1,15 +1,15 @@
 <div>
        <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            
+
             <div class="overflow-hidden bg-white">
-                <div class="form-style mt-0">
-                    <div class="items-center justify-between gap-3 mt-4 item md:flex px-3 md:px-0">
+                <div class="mt-0 form-style">
+                    <div class="items-center justify-between gap-3 px-3 mt-4 item md:flex md:px-0">
                         <div class="item">
-                            <div class="md:mb-0 sub-title text-center">Quiz Attempt Tracker</div>
+                            <div class="text-center md:mb-0 sub-title">Quiz Attempt Tracker</div>
                         </div>
-                        <div class="item md:flex justify-end gap-3 items-center md:w-3/5 text-center">
-                            <select class="md:w-auto md:m-0 m-auto p-3"
+                        <div class="items-center justify-end gap-3 text-center item md:flex md:w-3/5">
+                            <select class="p-3 m-auto md:w-auto md:m-0"
                                 wire:model="quiz_id">
                                 <option value="0">All School</option>
                                 @foreach ($college as $quiz)
@@ -17,9 +17,9 @@
                                 @endforeach
                                 <option value="Other">Other</option>
                             </select>
-                            
-                            <div class="mt-0 item filter-options form-style text-center">
-                                <select class="block md:m-0 m-auto mt-3 " wire:model="class_id" name="class_id">
+
+                            <div class="mt-0 text-center item filter-options form-style">
+                                <select class="block m-auto mt-3 md:m-0 " wire:model="class_id" name="class_id">
                                     <option value="0">All Classes</option>
                                     @foreach(App\Models\Classess::all() as $class)
                                         <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -47,11 +47,14 @@
                                     School
                                 </th>
                                 <th width="100">
-                                    Result
+                                    Marks
                                 </th>
 
                                 <th width="150">
                                     Time Spent
+                                </th>
+                                <th width="150">
+                                    Result
                                 </th>
                                 <th width="100" align="center">
                                     Action
@@ -88,6 +91,16 @@
 
                                     <td>
                                         {{ intval($test->time_spent / 60) >= $test->quiz->duration ? $test->quiz->duration : intval($test->time_spent / 60) }}:{{ intval($test->time_spent / 60) >= $test->quiz->duration ? '00' : gmdate('s', $test->time_spent) }} minutes
+                                    </td>
+                                    <td>
+                                        @php
+                                            $marks_percent = ($test->questions_count * $test->quiz->pass_fail_percent / 100 );
+                                        @endphp
+                                        @if($test->result >= $marks_percent)
+                                            <div class="table-btn green no-hov"><span class="">Pass</span></div>
+                                        @else
+                                            <div class="table-btn red no-hov"><span class="">Fail </span></div>
+                                        @endif
                                     </td>
                                     <td align="center">
                                         <a href="{{ route('results.show', $test) }}">

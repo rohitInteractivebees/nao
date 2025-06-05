@@ -11,9 +11,11 @@ use Livewire\Component;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithPagination; 
 
 class Leaderboard extends Component
 {
+    use WithPagination;
     public Collection $quizzes;
 
     public $quiz_id = 0;

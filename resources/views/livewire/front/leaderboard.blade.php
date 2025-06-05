@@ -126,5 +126,6 @@
                  </tbody>
              </table>
          </div>
+         {{ $students->links() }}
      </div>
  </section>

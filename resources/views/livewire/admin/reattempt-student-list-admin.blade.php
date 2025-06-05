@@ -3,7 +3,7 @@
         <div class="container">
             <div class="items-end justify-between md:flex">
                 <div class="item">
-                    <div class="mb-0 sub-title">Re-Attempt Student List</div>
+                    <div class="mb-0 sub-title">Quiz Re-attempt</div>
                 </div>
                 <div class="item sm:w-3/4">
                     <div class="items-end justify-center gap-3 right md:flex sm:justify-end">
@@ -18,7 +18,7 @@
                             </select>
                         </div>
                         @endif
-                    <div class="md:w-2/5 mt-4 md:mt-0">
+                    <div class="mt-4 md:w-2/5 md:mt-0">
                         <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, or phone..." class="form-control" style="border: 1px solid #ccc !important;">
                     </div>
                 </div>

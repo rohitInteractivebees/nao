@@ -745,7 +745,7 @@
                     <div class="flex-wrap items-center common-sec1 d-flex">
                         <div class="container justify-center d-flex">
                             <div class="quiz-body">
-                                <div class="items-center justify-center min-h-full gap-2 sub-title d-flex"><strong class="mb-0 common-title">Quiz <span>Date:</span> </strong> Will commence from 23rd May to 31st July 2025</div>
+                                <div class="items-center justify-center min-h-full gap-2 sub-title d-flex"><strong class="mb-0 common-title">Quiz <span>Date:</span> </strong> Will commence from 10th June to 31st July 2025</div>
                             </div>
                         </div>
                     </div>

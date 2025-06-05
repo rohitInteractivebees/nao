@@ -9,6 +9,7 @@
                     </div>
                 @endif
                     <div class="mb-4">
+                        <div class="mb-0 sub-title">Quizzes</div>
                         <a href="{{ route('quiz.create') }}"
                             class="common-btn short">
                             Create Quiz

@@ -1,6 +1,9 @@
 <div>
        <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="item">
+                <div class="mb-0 sub-title">Quiz Attempt Tracker</div>
+            </div>
             <div class="overflow-hidden bg-white">
                 <div class="form-style">
                     <div class="items-center justify-end gap-3 mt-4 item md:flex">

@@ -4,6 +4,7 @@
             <div class="items-end justify-between md:flex">
                 <div class="item">
                     <div class="mb-0 sub-title">
+                        <div class="mb-0 sub-title">Question Bank</div>
                         <a href="{{ route('question.create') }}"
                             class="common-btn short">
                             Create Question

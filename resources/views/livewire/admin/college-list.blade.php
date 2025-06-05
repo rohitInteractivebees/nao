@@ -3,7 +3,7 @@
         <div class="container">
             <div class="items-end justify-between mb-5 md:flex">
                 <div class="item">
-                    <div class="mb-0 sub-title">School Login</div>
+                    <div class="mb-0 sub-title">School Register</div>
                 </div>
                 <div class="item">
                     <div class="items-end justify-center gap-3 right d-flex sm:justify-end">

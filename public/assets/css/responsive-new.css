@@ -74,6 +74,10 @@
         align-items: center;
         float: right;
     }
+    header nav ul li.open > a svg {
+        transform: rotate(0);
+    }
+
 }
 @media (max-width: 991px){
     .stats-sec .item{
@@ -293,5 +297,10 @@
     }
     .collage-dashboared .sub-title{
         text-align: center;
+    }
+}
+@media(max-width: 1024px) and (min-width: 991px){
+    body, html{
+        font-size: 1.1vw;
     }
 }

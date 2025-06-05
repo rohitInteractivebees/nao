@@ -18,6 +18,14 @@
             <!--</div>-->
             <div class="item">
                 <div class="hidden sm:block">
+                    <img src="{{ asset('/images/banner33.webp') }}" alt="Nao 2025">
+                </div>
+                <div class="block sm:hidden">
+                    <img src="{{ asset('/images/mobile-banner-3.webp') }}" alt="Nao 2025">
+                </div>
+            </div>
+            <div class="item">
+                <div class="hidden sm:block">
                     <img src="{{ asset('/images/banner3.webp') }}" alt="Nao 2025">
                 </div>
                 <div class="block sm:hidden">
@@ -866,7 +874,7 @@
                         <div class="sub-title text-center">NAO Partner</div>
                         <ul>
                             <li>
-                                <div class="imgWrap"><img src="{{ asset('/images/logo5.webp') }}" alt="Humming Bird" width="218" height="120">
+                                <div class="imgWrap"><img src="{{ asset('/images/hummig-bird.png') }}" alt="Humming Bird" width="218" height="120">
                                 </div>
                             </li>
                         </ul>

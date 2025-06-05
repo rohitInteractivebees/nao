@@ -4,6 +4,9 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden">
                 <div class="p-6 text-gray-900">
+                    <div class="item">
+                        <div class="mb-0 sub-title">School Details</div>
+                    </div>
                     {{-- <div class="mb-4">
                         <a href="{{ route('institute.create') }}"
                             class="common-btn short">

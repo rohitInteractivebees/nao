@@ -1,6 +1,9 @@
 <div class="common-sec1">
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="item">
+                    <div class="mb-0 sub-title">Class Insights</div>
+                </div>
             <div class="overflow-hidden bg-white">
                 <div class="">
                     <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">

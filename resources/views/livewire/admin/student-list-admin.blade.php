@@ -3,7 +3,7 @@
         <div class="container">
             <div class="items-end justify-between lg:flex">
                 <div class="item">
-                    <div class="mb-0 sub-title">Student List</div>
+                    <div class="mb-0 sub-title">Student Register</div>
                 </div>
                 <div class="item">
                     <div class="items-end justify-center gap-3 right d-flex sm:justify-end">

@@ -9,7 +9,7 @@
     <div class="container items-center justify-between d-flex">
         <div class="logo-img">
             <a href="{{url('')}}" aria-label="NAO">
-                <img src="{{ asset('/images/logo.jpg') }}" width="157px" height="55px" alt="">
+                <img src="{{ asset('/images/nao-logo-new.png') }}" width="157px" height="55px" alt="">
             </a>
             <!--<a href="{{url('')}}" aria-label="NAO">-->
             <!--    <img src="{{ asset('/images/logo.png') }}" width="85px" style="height:100px;"  alt="">-->

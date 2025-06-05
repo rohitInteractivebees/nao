@@ -2,7 +2,7 @@
         <div class="banner-list ">
             <div class="item">
                 <div class="hidden sm:block">
-                    <img src="{{ asset('/images/banner.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/banner12.webp') }}" alt="Nao 2025">
                 </div>
                 <div class="block sm:hidden">
                     <img src="{{ asset('/images/mobile-banner.webp') }}" alt="Nao 2025">
@@ -26,7 +26,7 @@
             </div>
             <div class="item">
                 <div class="hidden sm:block">
-                    <img src="{{ asset('/images/banner3.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/banner22.webp') }}" alt="Nao 2025">
                 </div>
                 <div class="block sm:hidden">
                     <img src="{{ asset('/images/mobile-banner3.webp') }}" alt="Nao 2025">

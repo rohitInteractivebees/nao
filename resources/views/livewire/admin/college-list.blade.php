@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <!--Export Div Starts here-->
-                <div class="items-center justify-end gap-3 mt-4 item md:flex">
+                <div class="items-center md:justify-end gap-3 justify-center mt-4 item flex">
                     <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{ route('admin.export.school') }}" download><span>Export</span></a>

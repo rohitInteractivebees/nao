@@ -1,4 +1,4 @@
-<div class="common-sec common-sec1">
+<div class="common-sec common-sec1 pt-6">
     <div class="container">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden">
@@ -8,12 +8,14 @@
                         {{ session('message') }}
                     </div>
                 @endif
-                    <div class="mb-4">
+                    <div class="mb-4 d-flex justify-between items-center">
                         <div class="mb-0 sub-title">Quizzes</div>
-                        <a href="{{ route('quiz.create') }}"
-                            class="common-btn short">
-                            Create Quiz
-                        </a>
+                        <div class="">
+                            <a href="{{ route('quiz.create') }}"
+                                class="common-btn short">
+                                Create Quiz
+                            </a>
+                        </div>
                     </div>
 
                     <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">

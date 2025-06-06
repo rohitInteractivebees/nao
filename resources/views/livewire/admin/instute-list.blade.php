@@ -1,11 +1,11 @@
 <div>
 
-    <div class="py-12">
+    <div class="py-12 pt-4 pb-4">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden">
                 <div class="p-6 text-gray-900">
                     <div class="item">
-                        <div class="mb-0 sub-title">School Details</div>
+                        <div class="sub-title">School Details</div>
                     </div>
                     {{-- <div class="mb-4">
                         <a href="{{ route('institute.create') }}"
@@ -14,7 +14,7 @@
                         </a>
                     </div> --}}
 
-                    <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
+                    <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md pb-6">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
                                 <tr>

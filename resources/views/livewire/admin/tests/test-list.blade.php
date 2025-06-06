@@ -28,6 +28,7 @@
                             </div>
                          </div>
                     </div>
+                    <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                     <table class="table w-full mt-4 table-view">
                         <thead>
                             <tr>
@@ -104,7 +105,7 @@
                                     </td>
                                     <td align="center">
                                         <a href="{{ route('results.show', $test) }}">
-                                            <img src="{{ asset('/assets/images/icon-view.png') }}" alt="">
+                                            <img src="{{ asset('/assets/images/icon-view.png') }}" alt="" class="w-6 h-auto">
                                         </a>
                                     </td>
                                 </tr>
@@ -118,6 +119,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    </div>
                     <div class="mt-3">
                         {{ $tests->links() }}
                     </div>

@@ -1,5 +1,5 @@
 <div>
-    <div class="common-sec1">
+    <div class="common-sec1 pb-6">
         <div class="container">
             <div class="items-end justify-between lg:flex">
                 <div class="item">
@@ -31,7 +31,7 @@
             </div>
 
             <!--Export Div Starts here-->
-            <div class="items-center justify-end gap-3 mt-4 item md:flex">
+            <div class="items-center md:justify-end justify-center gap-3 mt-4 item flex md:flex-nowrap flex-wrap">
                 <div class="item">
                     @if(auth()->user()->is_admin)
                         <div class="mt-0 filter-options form-style">
@@ -140,7 +140,7 @@
                                             </a>
                                             <div class="verify-sec" id="dialog-content-detail{{ $student->id }}">
                                                 <div class="sub-title">Reset User Password</div>
-                                                <form action="{{ route('updateUserPassword') }}" method="POST">
+                                                <form class="flex max-w-full" action="{{ route('updateUserPassword') }}" method="POST">
                                                     @csrf
                                                     <div class="gap-3 d-flex">
 

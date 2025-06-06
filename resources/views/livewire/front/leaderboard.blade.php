@@ -20,7 +20,7 @@
                  </div>
              </div>
          </div>
-         <div class="mt-6 table-sec-outer">
+         <div class="mt-6 table-sec-outer mb-5">
              <table class="table-sec">
                  <thead>
                      <tr>

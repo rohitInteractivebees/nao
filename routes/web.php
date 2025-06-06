@@ -1,40 +1,41 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ResultController;
-use App\Http\Livewire\Admin\AdminForm;
-use App\Http\Livewire\Admin\AdminList;
-use App\Http\Livewire\Admin\Tests\TestList;
-use App\Http\Livewire\Front\Leaderboard;
-use App\Http\Livewire\Front\Results\ResultList;
-use App\Http\Livewire\Question\QuestionForm;
-use App\Http\Livewire\Question\QuestionList;
 use App\Http\Livewire\Quiz\QuizForm;
 use App\Http\Livewire\Quiz\QuizList;
-use App\Http\Livewire\Admin\TeamRegistration;
-use App\Http\Livewire\Admin\PhaseSubmission;
-use App\Http\Livewire\Admin\PhaseSubmissionForm;
+use App\Http\Livewire\Admin\TeamForm;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Admin\InstuteForm;
-use App\Http\Livewire\Admin\InstuteList;
+use App\Http\Livewire\Admin\AdminForm;
+use App\Http\Livewire\Admin\AdminList;
+use App\Http\Livewire\Admin\ClassList;
+use App\Http\Livewire\Counter\Counter;
+use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Admin\CollegeForm;
 use App\Http\Livewire\Admin\CollegeList;
-use App\Http\Livewire\Admin\StudentList;
-use App\Http\Livewire\Admin\ClassList;
-use App\Http\Livewire\Admin\TeamForm;
-use App\Http\Livewire\Counter\Counter;
+use App\Http\Livewire\Admin\InstuteForm;
+use App\Http\Livewire\Admin\InstuteList;
 use App\Http\Livewire\Admin\StudentForm;
-use App\Http\Livewire\Admin\SubmissonList;
-use App\Http\Livewire\Admin\PrototypeList;
-use App\Http\Livewire\Admin\StudentSubmisson;
-use App\Http\Livewire\Admin\PhysciallySubmissonList;
-use App\Http\Livewire\Admin\PhysicalyList;
-use App\Http\Livewire\Admin\StudentPhysciallySubmisson;
-use App\Http\Livewire\Admin\StudentListAdmin;
-use App\Http\Livewire\Admin\ReattemptStudentListAdmin;
+use App\Http\Livewire\Admin\StudentList;
+use App\Http\Livewire\Front\Leaderboard;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\UpdateQuizStatus;
+use App\Http\Livewire\Admin\PhysicalyList;
+use App\Http\Livewire\Admin\PrototypeList;
+use App\Http\Livewire\Admin\SubmissonList;
+use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Admin\InstuteListAll;
+use App\Http\Livewire\Admin\Tests\TestList;
+use App\Http\Livewire\Admin\PhaseSubmission;
+use App\Http\Livewire\Question\QuestionForm;
+use App\Http\Livewire\Question\QuestionList;
+use App\Http\Livewire\Admin\StudentListAdmin;
+use App\Http\Livewire\Admin\StudentSubmisson;
+use App\Http\Livewire\Admin\TeamRegistration;
 use App\Http\Controllers\CertificateController;
+use App\Http\Livewire\Front\Results\ResultList;
+use App\Http\Livewire\Admin\PhaseSubmissionForm;
+use App\Http\Livewire\Admin\PhysciallySubmissonList;
+use App\Http\Livewire\Admin\ReattemptStudentListAdmin;
+use App\Http\Livewire\Admin\StudentPhysciallySubmisson;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -150,6 +151,7 @@ Route::middleware('auth')->group(function () {
         Route::get('admins/create', AdminForm::class)->name('admin.create');
         Route::get('school/{instute}/delete', [InstuteList::class,'delete'])->name('institute.delete');
         Route::get('school', InstuteList::class)->name('institute');
+        Route::get('all_schools', InstuteListAll::class)->name('all_schools');
         Route::get('school/create', InstuteForm::class)->name('institute.create');
         Route::get('school/{instute}/edit', InstuteForm::class)->name('institute.edit');
         Route::get('school_login', CollegeList::class)->name('institute_login');

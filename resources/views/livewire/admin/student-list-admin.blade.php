@@ -135,34 +135,10 @@
                                         </td>
                                         <td> {{ $student->created_at->format('d-m-Y') }}</td>
                                         <td align="center">
-                                            <a data-fancybox href="#dialog-content-detail{{ $student->id }}">
+                                            <a data-fancybox href="#dialog-content-detail" onclick="dataAdd('{{ $student->id }}','{{ $student->loginId }}')">
                                                 <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
                                             </a>
-                                            <div class="verify-sec" id="dialog-content-detail{{ $student->id }}">
-                                                <div class="sub-title">Reset User Password</div>
-                                                <form class="flex max-w-full" action="{{ route('updateUserPassword') }}" method="POST">
-                                                    @csrf
-                                                    <div class="gap-3 d-flex">
-
-                                                        <input type="hidden" class="block w-full mt-1" value="{{ $student->id }}" name="user_id">
-                                                        <div class="form-style w-[48%]">
-                                                            <label class="block text-sm font-medium text-gray-700" for="loginId">Login ID</label>
-                                                            <input type="text" class="block w-full mt-1"  value="{{ $student->loginId }}" readonly>
-                                                        </div>
-
-                                                        <div class="w-1/2 form-style">
-                                                            <label class="block text-sm font-medium text-gray-700" for="password">New Password</label>
-                                                            <input type="text" class="block w-full mt-1" name="password" required>
-                                                        </div>
-
-                                                        <div class="justify-center mt-6 d-flex w-100 links">
-                                                            <button type="submit" class="w-full common-btn admin-btn green">Update</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                    </td>
+                                        </td>
 
                                     </tr>
                                 @empty
@@ -182,6 +158,30 @@
                 </div>
             </div>
         </div>
+
+    </div>
+    <div class="verify-sec" id="dialog-content-detail" style="display:none;">
+        <div class="sub-title">Reset User Password</div>
+        <form action="{{ route('updateUserPassword') }}" method="POST">
+            @csrf
+            <div class="gap-3 d-flex">
+
+                <input type="hidden" class="block w-full mt-1" value="" name="user_id" id="student_id">
+                <div class="form-style w-[48%]">
+                    <label class="block text-sm font-medium text-gray-700" for="loginId">Login ID</label>
+                    <input type="text" class="block w-full mt-1"  value="" id="login_id" readonly>
+                </div>
+
+                <div class="w-1/2 form-style">
+                    <label class="block text-sm font-medium text-gray-700" for="password">New Password</label>
+                    <input type="text" class="block w-full mt-1" name="password" required>
+                </div>
+
+                <div class="justify-center mt-6 d-flex w-100 links">
+                    <button type="submit" class="w-full common-btn admin-btn green">Update</button>
+                </div>
+            </div>
+        </form>
 
     </div>
     <section class="loader-sec" id="loaders">
@@ -385,5 +385,10 @@
             });
         });
     });
+    function dataAdd(student_id,login_id)
+    {
+        document.getElementById('student_id').value = student_id;
+        document.getElementById('login_id').value = login_id;
+    }
     </script>
 </div>

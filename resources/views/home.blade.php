@@ -722,9 +722,7 @@
                                                     <p>Total Time</p>
                                                     <div class="count">{{ $quiz->duration }} <span>Minutes</span></div>
                                                 </li>
-                                                <li>
-                                                    <p>All Questions are Mandatory</p>
-                                                </li>
+                                                
                                             </ul>
 
                                            @if (Carbon\Carbon::now()->between(Carbon\Carbon::parse($quiz->start_date), Carbon\Carbon::parse($quiz->end_date)))

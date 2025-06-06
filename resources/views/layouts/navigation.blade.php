@@ -197,14 +197,12 @@
                             <ul class="dropdown">
                                 <li><a href="{{ route('institute_login') }}">  School Register </a></li>
                                 <li><a href="{{ route('institute') }}">  School Details</a></li>
+                                <li><a href="{{ route('all_schools') }}">  All Schools</a></li>
                                 <li><a href="{{ route('studentlistadmin') }}"> Student Register</a></li>
                                 <li><a href="{{ route('questions') }}"> Question Bank</a></li>
                                 <li><a href="{{ route('class.list') }}"> Class Insights </a></li>
                                 <li><a href="{{ route('quizzes') }}"> Quizzes </a></li>
-
                                 <li><a href="{{ route('tests') }}">  Quiz Attempt Tracker </a></li>
-
-
                                 <li><a href="{{ route('reattemptstudentlistadmin') }}">Quiz Re-attempt  </a></li>
                             </ul>
                         </li>

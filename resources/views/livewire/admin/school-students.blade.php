@@ -25,7 +25,7 @@
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>
                                     <th width="150">Registration Date</th>
-                                    <th align="center" width="100">Action</th>
+                                    {{-- <th align="center" width="100">Action</th> --}}
                                 </tr>
                             </thead>
                             @php
@@ -60,11 +60,11 @@
                                             @endif
                                         </td>
                                         <td> {{ $student->created_at->format('d-m-Y') }}</td>
-                                        <td align="center">
+                                        {{-- <td align="center">
                                             <a data-fancybox href="#dialog-content-detail" onclick="dataAdd('{{ $student->id }}','{{ $student->loginId }}')">
                                                 <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
                                             </a>
-                                        </td>
+                                        </td> --}}
 
                                     </tr>
                                 @empty

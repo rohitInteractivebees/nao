@@ -2,7 +2,7 @@
     <div class="container">
         @php
 
-            $totalSeconds = $quiz->duration * 6000000;
+            $totalSeconds = $quiz->duration * 60;
             $entangleKey = 'answersOfQuestions.' . $currentQuestionIndex;
         @endphp
 
@@ -32,7 +32,7 @@
         >
         <div class="items-end justify-between result-summary d-flex">
             <div class="heading short">Level 1 <span>Question {{ $currentQuestionIndex + 1 }} of {{ $this->questionsCount }}:</div>
-            <div class="result-sumary-test w-3/4">
+            <div class="w-3/4 result-sumary-test">
                 <ul class="justify-between d-flex">
                     <li>
                         <span>Date : </span> {{ \Carbon\Carbon::now()->format('l, F j, Y') }}

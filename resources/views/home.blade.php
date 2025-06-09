@@ -146,14 +146,14 @@
                                                         {{$clg->name}}
                                                     </td>
                                                     <td>
-                                                        {{count($studenclg)}}
+                                                        <a href="{{ route('schoolStudents') . '?school='.$clg->id }}">{{count($studenclg)}}</a>
                                                     </td>
                                                     <td>
                                                         @php
                                                             $partstudentCount = App\Models\Test::whereIn('user_id', $studenclg->pluck('id'))->distinct('user_id')->count('user_id');
                                                         @endphp
 
-                                                        {{ $partstudentCount }}
+                                                        <a href="{{ route('schoolStudentsParticipents') . '?school='.$clg->id }}">{{ $partstudentCount }}</a>
 
 
 
@@ -722,7 +722,7 @@
                                                     <p>Total Time</p>
                                                     <div class="count">{{ $quiz->duration }} <span>Minutes</span></div>
                                                 </li>
-                                                
+
                                             </ul>
 
                                            @if (Carbon\Carbon::now()->between(Carbon\Carbon::parse($quiz->start_date), Carbon\Carbon::parse($quiz->end_date)))

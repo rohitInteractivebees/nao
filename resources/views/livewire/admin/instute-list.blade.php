@@ -14,7 +14,7 @@
                         </a>
                     </div> --}}
 
-                    <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md pb-6">
+                    <div class="min-w-full pb-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
                                 <tr>
@@ -58,14 +58,14 @@
                                             @php
                                                 $studenclg = App\Models\User::where('institute', $admin->id)->where('is_college', null)->get();
                                             @endphp
-                                            {{count($studenclg)}}
+                                            <a href="{{ route('schoolStudents') . '?school='.$admin->id }}">{{count($studenclg)}}</a>
                                         </td>
                                         <td>
                                             @php
                                                 $partstudentCount = App\Models\Test::whereIn('user_id', $studenclg->pluck('id'))->distinct('user_id')->count('user_id');
                                             @endphp
 
-                                            {{ $partstudentCount }}
+                                            <a href="{{ route('schoolStudentsParticipents') . '?school='.$admin->id }}">{{ $partstudentCount }}</a>
                                         </td>
                                     </tr>
                                 @empty

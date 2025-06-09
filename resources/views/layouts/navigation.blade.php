@@ -43,6 +43,7 @@
                         @endif
                         <li class="submenu"><a href="javascript:void(0)"> Welcome, {{ Auth::user()->name }}</a>
                             <ul class="dropdown">
+                                <li><a href="{{ route('home') }}">Home </a></li>
                                 <li><a href="{{ route('profile.edit') }}">My Profile </a></li>
 
                                 @if(auth()->user()->is_college != 1 && auth()->user()->is_admin != 1)

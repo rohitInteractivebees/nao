@@ -36,6 +36,8 @@ use App\Http\Livewire\Admin\PhaseSubmissionForm;
 use App\Http\Livewire\Admin\PhysciallySubmissonList;
 use App\Http\Livewire\Admin\ReattemptStudentListAdmin;
 use App\Http\Livewire\Admin\StudentPhysciallySubmisson;
+use App\Http\Livewire\Admin\SchoolStudents;
+use App\Http\Livewire\Admin\SchoolStudentsParticipents;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -123,10 +125,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/finalnotapprove-team1/{id}', [PhysciallySubmissonList::class, 'finalnotapproveTeam1']);
     Route::get('student-physcially-submisson', StudentPhysciallySubmisson::class)->name('student-physcially-submisson');
     Route::get('student-physcially-submisson/{physicaly}/edit', StudentPhysciallySubmisson::class)->name('student-physcially-submisson.edit');
-   // Route::post('/upload-physciallysubmisson', StudentPhysciallySubmisson::class)->name('upload.physciallysubmisson');
+    // Route::post('/upload-physciallysubmisson', StudentPhysciallySubmisson::class)->name('upload.physciallysubmisson');
 
     // Admin routes
     Route::middleware('isAdmin')->group(function () {
+        Route::get('/school_students', SchoolStudents::class)->name('schoolStudents');
+        Route::get('/school_students_participents', SchoolStudentsParticipents::class)->name('schoolStudentsParticipents');
 
         Route::get('/download-student', [CertificateController::class, 'downloadUsers'])->name('download.student');
         Route::get('studentlistadmin', StudentListAdmin::class)->name('studentlistadmin');

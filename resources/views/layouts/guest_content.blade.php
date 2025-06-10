@@ -1,3 +1,9 @@
+
+<style>
+.nao-logo {
+    width: 11rem;
+}    
+</style>
 <section class="main-banner">
         <div class="banner-list ">
             <div class="item">
@@ -496,7 +502,7 @@
       <div class="flex justify-between winners-main">
         <div class="item flex gap-4">
           <div class="nao-logo">
-            <img src="{{ asset('/images/nao-logo.svg') }}" alt="Nao 2025" />
+            <img src="{{ asset('/images/nao-logo.svg') }}" alt="Nao 2025" width="176" />
           </div>
           <div class="common-title">NAO <span>Winners</span></div>
         </div>

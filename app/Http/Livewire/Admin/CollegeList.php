@@ -12,9 +12,23 @@ use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Livewire\WithPagination;
 
 class CollegeList extends Component
 {
+    use WithPagination;
+
+    public $search = '';
+
+    public function mount()
+    {
+        $this->search = request()->query('search', $this->search);
+    }
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function delete(User $admin)
     {
         abort_if(!auth()->user()->is_admin, HttpResponse::HTTP_FORBIDDEN, 403);
@@ -24,7 +38,23 @@ class CollegeList extends Component
 
     public function render(): View
     {
-        $admins = User::where('is_college',1)->paginate();
+        $query = User::where('is_college', 1)
+            ->leftJoin('instutes', 'users.institute', '=', 'instutes.id')
+            ->select('users.*', 'instutes.name as schoolname','instutes.code');
+
+        if (!empty($this->search)) {
+            $searchTerm = '%' . $this->search . '%';
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('users.name', 'like', $searchTerm)
+                    ->orWhere('users.email', 'like', $searchTerm)
+                    ->orWhere('users.phone', 'like', $searchTerm)
+                    ->orWhere('users.school_name', 'like', $searchTerm)  // for institute = Other
+                    ->orWhere('instutes.name', 'like', $searchTerm)  // for institute != Other
+                    ->orWhere('instutes.code', 'like', $searchTerm);
+            });
+        }
+
+        $admins = $query->paginate();
 
         return view('livewire.admin.college-list', [
             'admins' => $admins

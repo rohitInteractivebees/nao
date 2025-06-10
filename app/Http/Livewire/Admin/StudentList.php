@@ -2,6 +2,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Quiz;
+use App\Models\Test;
 use App\Models\User;
 use App\Models\Instute;
 use Livewire\Component;
@@ -9,12 +10,13 @@ use App\Models\Classess;
 use App\Mail\VarifyEmail;
 use App\Mail\WelcomeEmail;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Livewire\WithPagination;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Livewire\WithPagination;
 //use App\Jobs\SendWelcomeEmail;
 class StudentList extends Component
 {
@@ -23,12 +25,14 @@ class StudentList extends Component
 
     public $quiz_id = 1;
     public $class_id = '';
+    public $search = '';
 
      // Optional: Set default values
     public function mount()
     {
         $this->quiz_id = request()->query('quiz_id', $this->quiz_id);
         $this->class_id = request()->query('class_id', $this->class_id);
+        $this->search = request()->query('search', $this->search);
     }
 
     public function updatingClassId()
@@ -37,6 +41,10 @@ class StudentList extends Component
     }
 
     public function updatingQuizId()
+    {
+        $this->resetPage();
+    }
+    public function updatingSearch()
     {
         $this->resetPage();
     }
@@ -60,6 +68,14 @@ class StudentList extends Component
             {
                 $query->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
             }
+            if (!empty($this->search)) {
+                $searchTerm = '%' . $this->search . '%';
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('name', 'like', $searchTerm)
+                      ->orWhere('email', 'like', $searchTerm)
+                      ->orWhere('phone', 'like', $searchTerm);
+                });
+            }
             $student = $query->paginate(10);
             $classes = Classess::orderBy('id','asc')->get();
             return view('livewire.admin.student-list', [
@@ -68,6 +84,83 @@ class StudentList extends Component
             ]);
         } else {
             Auth::logout();
+        }
+    }
+    public function export()
+    {
+        $is_login = auth()->user();
+        $quizId = $is_login->institute;
+        $classId = request('class_id');
+        if (auth()->user()->is_college == 1) {
+            $students = User::where('id', '!=', $is_login->id)
+                    ->where(function ($query) {
+                        $query->where('is_college', 0)->orWhereNull('is_college');
+                    });
+             if ($quizId == 'Other') {
+                $students->where('institute', $quizId);
+            } elseif ($quizId > 0) {
+                $students->where('institute', $quizId);
+            }
+
+            if ($classId > 0) {
+                $students->whereRaw('JSON_CONTAINS(class, \'\"' . $classId . '\"\')');
+            }
+
+            $students = $students->get();
+
+            $csvData = [];
+            $csvData[] = ['Sr.No', 'Student Name', 'Class', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
+
+            foreach ($students as $index => $student) {
+
+                $classNames = Classess::whereIn('id', json_decode($student->class ?? '[]'))->pluck('name')->join(', ');
+
+                $TestAtmp = Test::where('user_id', $student->id)->first();
+                if($TestAtmp)
+                {
+                    $userquizatmp = 'Attempt';
+                }
+                else{
+                    $userquizatmp = 'Pending';
+                }
+                $email = !empty($student->email) ? $student->email : 'N/A';
+
+                $csvData[] = [
+                    $index + 1,
+                    $student->name,
+                    $classNames,
+                    $student->session_year,
+                    $student->parent_name,
+                    $email,
+                    ($student->country_code || $student->phone) ? '+' . trim($student->country_code . ' ' . $student->phone) : 'N/A',
+                    $student->country,
+                    $student->state,
+                    $student->city,
+                    $student->pincode,
+                    $student->created_at->format('d-m-Y'),
+                    $userquizatmp,
+                ];
+            }
+
+            // Convert array to CSV
+            $filename = 'students_export_' . now()->format('Y_m_d_H_i_s') . '.csv';
+            $handle = fopen('php://temp', 'r+');
+
+            foreach ($csvData as $row) {
+                fputcsv($handle, $row);
+            }
+
+            rewind($handle);
+            $csvOutput = stream_get_contents($handle);
+            fclose($handle);
+
+            return Response::make($csvOutput, 200, [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => "attachment; filename=\"$filename\"",
+            ]);
+        } else {
+            Auth::logout();
+            return redirect()->route('login');
         }
     }
     public function uploadCsv(Request $request)

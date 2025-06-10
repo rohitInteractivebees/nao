@@ -29,11 +29,16 @@
                     </div>
                 </div>
                 <!--Export Div Starts here-->
-                <div class="items-center md:justify-end gap-3 justify-center mt-4 item flex">
+                <div class="flex items-center justify-center gap-3 mt-4 md:justify-end item">
                     <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{ route('admin.export.school') }}" download><span>Export</span></a>
                     </button>
+                </div>
+                <div class="item md:w-2/5">
+                    <div class="mt-4 md:mt-0">
+                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search " class="form-control" style="border: 1px solid #ccc !important;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,6 +70,9 @@
                                     <th width="400">
                                         School
                                     </th>
+                                    <th width="400">
+                                        Code
+                                    </th>
                                     <th width="200">
                                        Principal Name
                                     </th>
@@ -84,11 +92,17 @@
                                     <tr>
                                         <td>{{ $admins->firstItem() + $index }}</td>
                                         @php
-                                            $inst =  App\Models\Instute::find($admin->institute);
-                                        @endphp
+                                            if($admin->institute != 'Other')
+                                            {
+                                                $instituteName = App\Models\Instute::where('id', $admin->institute)->value('name');
 
+                                            }else{
+                                                $instituteName = $admin->institute.' ('.$admin->school_name.')';
+                                            }
+                                        @endphp
+                                        <td>{{ $instituteName }}</td>
                                         <td>
-                                            {{ @$inst->name }}
+                                            {{ $admin->code }}
                                         </td>
                                         <td>
                                             {{ $admin->name }}

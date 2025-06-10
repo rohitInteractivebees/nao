@@ -31,6 +31,11 @@
                             <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                             <a href="{{url('sampleCsv/admin_question_sample.csv')}}" download><span>Download Sample CSV</span></a>
                         </button>
+                        <div class="item md:w-2/5">
+                            <div class="mt-4 md:mt-0">
+                                <input type="text" wire:model.debounce.500ms="search" placeholder="Search by questions,group or level..." class="form-control" style="border: 1px solid #ccc !important;">
+                            </div>
+                        </div>
 
                     </div>
                 </div>

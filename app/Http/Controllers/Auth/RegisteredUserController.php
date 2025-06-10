@@ -353,8 +353,8 @@ class RegisteredUserController extends Controller
         }
 
         // Generate OTP
-        //$otp = rand(100000, 999999);
-        $otp = 123456;
+        $otp = rand(100000, 999999);
+        //$otp = 123456;
         // Store OTP in session
         Session::put('school_otp', $otp);
         Session::put('principal_email', $request->principal_email);

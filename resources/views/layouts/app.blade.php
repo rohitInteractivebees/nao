@@ -9,7 +9,7 @@
 @if(in_array($routeName, $routeArr))
     @auth
         @include('layouts.assets_file.css.old_css')
-        
+
     @else
         @include('layouts.assets_file.css.new_css')
     @endauth
@@ -17,7 +17,8 @@
     @include('layouts.assets_file.css.old_css')
 @endif
 
-<body class="font-sans antialiased disableselect">
+<body class="font-sans antialiased {{ request()->routeIs('quiz.show') ? 'disableselect' : '' }}">
+
     <div class="">
         @include('layouts.navigation')
 
@@ -39,7 +40,7 @@
     @if(in_array($routeName, $routeArr))
         @auth
             @include('layouts.assets_file.js.old_js')
-            
+
         @else
             @include('layouts.assets_file.js.new_js')
         @endauth

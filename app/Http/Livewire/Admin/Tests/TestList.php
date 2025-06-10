@@ -18,6 +18,7 @@ class TestList extends Component
     public $quiz_id = 0;
     public $class_id = 0;
     public $college;
+    public $search = '';
 
     protected $updatesQueryString = ['quiz_id1','class_id'];
 
@@ -25,6 +26,11 @@ class TestList extends Component
     {
         $this->quizzes = Quiz::published()->get();
         $this->college = Instute::get();
+        $this->search = request()->query('search', $this->search);
+    }
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function updatingQuizId()
@@ -56,13 +62,26 @@ class TestList extends Component
         }
 
         $tests = Test::query()
-            ->with(['user', 'quiz'])
-            ->withCount('questions')
-            ->when($this->quiz_id > 0, function ($query) use ($user_ids) {
-                $query->whereIn('user_id', $user_ids);
-            })
-            ->latest()
-            ->paginate();
+    ->with(['user', 'quiz'])
+    ->withCount('questions')
+    ->when($this->quiz_id > 0, function ($query) use ($user_ids) {
+        $query->whereIn('user_id', $user_ids);
+    })
+    ->when(!empty($this->search), function ($query) {
+        $searchTerm = '%' . $this->search . '%';
+
+        $query->whereHas('user', function ($q) use ($searchTerm) {
+            $q->where(function ($q2) use ($searchTerm) {
+                $q2->where('name', 'like', $searchTerm)
+                   ->orWhere('loginId', 'like', $searchTerm)
+                   ->orWhere('email', 'like', $searchTerm)
+                   ->orWhere('phone', 'like', $searchTerm);
+            });
+        });
+    })
+    ->latest()
+    ->paginate();
+
 
             return view('livewire.admin.tests.test-list', [
             'tests' => $tests

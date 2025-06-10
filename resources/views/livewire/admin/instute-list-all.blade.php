@@ -6,6 +6,11 @@
                 <div class="p-6 text-gray-900">
                     <div class="item">
                         <div class="mb-0 sub-title">All Schools</div>
+                        <div class="item md:w-2/5">
+                    <div class="mt-4 md:mt-0">
+                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name" class="form-control" style="border: 1px solid #ccc !important;">
+                    </div>
+                </div>
                     </div>
                     <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">

@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/finalnotapprove-team1/{id}', [PhysciallySubmissonList::class, 'finalnotapproveTeam1']);
     Route::get('student-physcially-submisson', StudentPhysciallySubmisson::class)->name('student-physcially-submisson');
     Route::get('student-physcially-submisson/{physicaly}/edit', StudentPhysciallySubmisson::class)->name('student-physcially-submisson.edit');
+    Route::get('/school-export-students', [StudentList::class, 'export'])->name('export.students');
     // Route::post('/upload-physciallysubmisson', StudentPhysciallySubmisson::class)->name('upload.physciallysubmisson');
 
     // Admin routes

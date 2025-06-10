@@ -23,6 +23,7 @@ class StudentListAdmin extends Component
 
     public $quiz_id1 = 0;
     public $class_id = 0;
+    public $search = '';
 
     protected $updatesQueryString = ['quiz_id1','class_id'];
 
@@ -30,6 +31,7 @@ class StudentListAdmin extends Component
     {
         $this->quiz_id1 = request()->query('quiz_id1', $this->quiz_id1);
         $this->class_id = request()->query('class_id', $this->class_id);
+        $this->search = request()->query('search', $this->search);
     }
     public function updatingQuizId1()
     {
@@ -44,6 +46,10 @@ class StudentListAdmin extends Component
         abort_if(!auth()->user()->is_admin, HttpResponse::HTTP_FORBIDDEN, '403 Forbidden');
 
         $admin->delete();
+    }
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function render()
@@ -67,7 +73,15 @@ class StudentListAdmin extends Component
             if ($this->class_id > 0) {
                 $query->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
             }
-
+            if (!empty($this->search)) {
+                $searchTerm = '%' . $this->search . '%';
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('name', 'like', $searchTerm)
+                      ->orWhere('email', 'like', $searchTerm)
+                      ->orWhere('phone', 'like', $searchTerm)
+                      ->orWhere('loginId', 'like', $searchTerm);
+                });
+            }
 
             $students = $query->paginate(10);
 

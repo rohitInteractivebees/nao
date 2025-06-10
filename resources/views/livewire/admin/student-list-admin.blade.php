@@ -1,5 +1,5 @@
 <div>
-    <div class="common-sec1 pb-6">
+    <div class="pb-6 common-sec1">
         <div class="container">
             <div class="items-end justify-between lg:flex">
                 <div class="item">
@@ -25,13 +25,17 @@
                             <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                             <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
                         </button>
-
+                        <div class="item md:w-2/5">
+                            <div class="mt-4 md:mt-0">
+                                <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!--Export Div Starts here-->
-            <div class="items-center md:justify-end justify-center gap-3 mt-4 item flex md:flex-nowrap flex-wrap">
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-4 md:justify-end item md:flex-nowrap">
                 <div class="item">
                     @if(auth()->user()->is_admin)
                         <div class="mt-0 filter-options form-style">
@@ -95,6 +99,7 @@
                                     <th width="100">Sr.No</th>
                                     <th width="300">School Name</th>
                                     <th width="300">Student Name</th>
+                                    <th width="300">Student ID</th>
                                     <th width="300">Class</th>
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>
@@ -121,6 +126,7 @@
                                         @endphp
                                         <td>{{ $instituteName }}</td>
                                         <td>{{ $student->name }}</td>
+                                        <td>{{ $student->loginId }}</td>
                                         <td>
                                             {{ \App\Models\Classess::whereIn('id', json_decode($student->class))->pluck('name')->join(', ') }}
                                         </td>

@@ -26,6 +26,11 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="item md:w-2/5">
+                                <div class="mt-4 md:mt-0">
+                                    <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
+                                </div>
+                            </div>
                          </div>
                     </div>
                     <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
@@ -35,17 +40,19 @@
                                 <th width="100">
                                     Sr.No
                                 </th>
+                                <th width="300">School Name</th>
                                 <th width="200">
                                     Student Name
+                                </th>
+                                <th width="300">Student ID</th>
+                                <th width="200">
+                                    Class
                                 </th>
                                 <th width="200">
                                     Parent Email
                                 </th>
                                 <th width="200">
-                                    Class
-                                </th>
-                                <th width="300">
-                                    School
+                                    Parent Phone
                                 </th>
                                 <th width="100">
                                     Marks
@@ -68,13 +75,6 @@
                                 <tr>
                                     <td>{{ $tests->firstItem() + $index }}</td>
                                     <td>
-                                        {{ $test->user->name ?? 'Guest' }}
-                                    </td>
-                                    <td>{{ !empty($test->user->email) ? $test->user->email : 'N/A' }}</td>
-                                    <td>
-                                        {{ \App\Models\Classess::whereIn('id', json_decode($test->user->class))->pluck('name')->join(', ') }}
-                                    </td>
-                                    <td>
                                     @php
                                         if($test->user->institute != 'Other')
                                         {
@@ -86,6 +86,24 @@
                                         @endphp
                                         {{ $instituteName }}
                                     </td>
+                                    <td>
+                                        {{ $test->user->name ?? 'Guest' }}
+                                    </td>
+                                    <td>
+                                        {{ $test->user->loginId }}
+                                    </td>
+                                    <td>{{ !empty($test->user->email) ? $test->user->email : 'N/A' }}</td>
+                                    <td>
+                                        {{ \App\Models\Classess::whereIn('id', json_decode($test->user->class))->pluck('name')->join(', ') }}
+                                    </td>
+                                    <td>
+                                        @if($test->user->country_code || $test->user->phone)
+                                            +{{ trim($test->user->country_code.' '.$test->user->phone) }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+
                                     <td>
                                         {{ $test->result . '/' . $test->questions_count }}
                                     </td>

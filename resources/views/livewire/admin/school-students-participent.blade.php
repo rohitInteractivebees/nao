@@ -7,7 +7,7 @@
                 </div>
                 <div class="item md:w-2/5">
                     <div class="mt-4 md:mt-0">
-                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, or phone..." class="form-control" style="border: 1px solid #ccc !important;">
+                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email or phone..." class="form-control" style="border: 1px solid #ccc !important;">
                     </div>
                 </div>
             </div>

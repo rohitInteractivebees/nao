@@ -65,6 +65,9 @@ class User extends Authenticatable
     {
         return $query->where('is_admin', true);
     }
+    public function instituteData() {
+        return $this->belongsTo(Instute::class, 'institute', 'id');
+    }
 
     /**
      * Send the custom password reset notification.

@@ -7,9 +7,23 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
+use Livewire\WithPagination;
 
 class QuestionList extends Component
 {
+    use WithPagination;
+
+    public $search = '';
+
+    public function mount()
+    {
+        $this->search = request()->query('search', $this->search);
+    }
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function delete(Question $question)
     {
         abort_if(!auth()->user()->is_admin, Response::HTTP_FORBIDDEN, 403);
@@ -19,7 +33,35 @@ class QuestionList extends Component
 
     public function render(): View
     {
-        $questions = Question::paginate(10);
+        $query = Question::query();
+        if (!empty($this->search)) {
+            $searchTerm = '%' . $this->search . '%';
+
+            // Map level text to corresponding number
+            $levelMap = [
+                'easy' => '1',
+                'medium' => '2',
+                'hard' => '3',
+            ];
+
+            // Check if search matches one of the level words
+            $levelSearch = null;
+            $lowerSearch = strtolower(trim($this->search));
+            if (array_key_exists($lowerSearch, $levelMap)) {
+                $levelSearch = $levelMap[$lowerSearch];
+            }
+
+            $query->where(function ($q) use ($searchTerm, $levelSearch) {
+                $q->where('text', 'like', $searchTerm)
+                    ->orWhere('class_ids', 'like', 'Group '.$searchTerm);
+
+                // If level search matched, add level filter
+                if (!is_null($levelSearch)) {
+                    $q->orWhere('level', $levelSearch);
+                }
+            });
+        }
+        $questions = $query->paginate(10);
 
         return view('livewire.question.qusetion-list', compact('questions'));
     }
@@ -46,7 +88,7 @@ class QuestionList extends Component
         $headerData = $csvData[0];
         //dd($headerData);
         if(!($headerData[1] == 'group') || !($headerData[2] == 'level') || !($headerData[3] == 'question_text') || !($headerData[4] == 'option_1') || !($headerData[5] == 'is_correct_option_1') || !($headerData[6] == 'option_2') || !($headerData[7] == 'is_correct_option_2') || !($headerData[8] == 'option_3') || !($headerData[9] == 'is_correct_option_3') || !($headerData[10] == 'option_4') || !($headerData[11] == 'is_correct_option_4')){
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => 'CSV file is improperly formatted1.'
@@ -61,7 +103,7 @@ class QuestionList extends Component
             [
                 $index, $group, $level, $questionText, $option1, $isCorrectOption1, $option2, $isCorrectOption2, $option3, $isCorrectOption3, $option4, $isCorrectOption4
             ] = array_map('trim', $row);
-            
+
             // Create user
            $question = Question::create([
                 'text' => $questionText,
@@ -77,13 +119,13 @@ class QuestionList extends Component
                 ['text' => $option3, 'correct' => filter_var($isCorrectOption3, FILTER_VALIDATE_BOOLEAN)],
                 ['text' => $option4, 'correct' => filter_var($isCorrectOption4, FILTER_VALIDATE_BOOLEAN)],
             ];
-    
+
             foreach ($options as $opt) {
                 if (!empty($opt['text'])) {
                     $question->options()->create($opt); // Assuming Question has `options()` relation
                 }
             }
-            
+
         }
 
         return response()->json([

@@ -18,6 +18,7 @@ class CertificateController extends Controller
     {
         $user = auth()->user();
         // Define custom page size in points (1 inch = 72 points)
+        //return view('certificates.certificates', compact('test', 'user'));
         $customPaper = array(0, 0, 800, 690);
         $pdf = PDF::loadView('certificates.certificates', compact('test', 'user'))
                 ->setPaper($customPaper); // Set custom paper size
@@ -47,9 +48,9 @@ class CertificateController extends Controller
                 $instituteName = $user->institute.'('.$user->school_name.')';
             }
             $TestAtmp = Test::where('user_id', $user->id)->first();
-            
+
             $class = Classess::whereIn('id', json_decode($user->class))->pluck('name')->join(', ');
-    
+
             if($TestAtmp)
             {
                 $userquizatmp = 'Attempt';
@@ -70,8 +71,8 @@ class CertificateController extends Controller
                 'class' => $class,
                 'school' => $instituteName,
                 'status' => $userquizatmp,
-                
-                
+
+
             ];
         }
 

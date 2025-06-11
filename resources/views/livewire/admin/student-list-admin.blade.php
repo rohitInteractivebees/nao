@@ -99,7 +99,7 @@
                                     <th width="100">Sr.No</th>
                                     <th width="300">School Name</th>
                                     <th width="300">Student Name</th>
-                                    <th width="300">Student ID</th>
+                                    <th width="300">Login ID</th>
                                     <th width="300">Class</th>
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>

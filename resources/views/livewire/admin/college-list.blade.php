@@ -82,6 +82,7 @@
                                     <th width="300">
                                         Principal Mobile
                                     </th>
+                                    <th align="center" width="100">Action</th>
 
 
                                 </tr>
@@ -115,6 +116,11 @@
                                             @else
                                                 N/A
                                             @endif
+                                        </td>
+                                        <td align="center">
+                                            <a href="{{ route('editschoolprofile',['id' => $admin->id]) }}">
+                                                <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
+                                            </a>
                                         </td>
 
 
@@ -283,6 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
     });
 });
+
 </script>
 
 

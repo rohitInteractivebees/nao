@@ -117,7 +117,7 @@ class StudentListAdmin extends Component
             $students = $students->get();
 
             $csvData = [];
-            $csvData[] = ['Sr.No', 'School Name', 'Student Name', 'Class', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
+            $csvData[] = ['Sr.No', 'School Name', 'Student Name', 'Login ID', 'Class', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
 
             foreach ($students as $index => $student) {
                 $instituteName = $student->institute !== 'Other'
@@ -140,6 +140,7 @@ class StudentListAdmin extends Component
                     $index + 1,
                     $instituteName,
                     $student->name,
+                    $student->loginId,
                     $classNames,
                     $student->session_year,
                     $student->parent_name,

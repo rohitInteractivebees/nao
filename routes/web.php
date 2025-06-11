@@ -38,6 +38,7 @@ use App\Http\Livewire\Admin\ReattemptStudentListAdmin;
 use App\Http\Livewire\Admin\StudentPhysciallySubmisson;
 use App\Http\Livewire\Admin\SchoolStudents;
 use App\Http\Livewire\Admin\SchoolStudentsParticipents;
+use App\Http\Livewire\Admin\SchoolEditForm;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -110,6 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::get('student/create', StudentForm::class)->name('student.create');
     Route::post('/upload-csv', [StudentList::class, 'uploadCsv'])->name('upload.csv');
     Route::post('/update_user_password', [StudentList::class, 'updatePassword'])->name('updateUserPassword');
+
     Route::get('results/{test}', [ResultController::class, 'show'])->name('results.show');
     Route::get('/get-user-details', [TeamForm::class, 'getUserDetails'])->name('getUserDetails');
     Route::get('leaderboard', Leaderboard::class)->name('leaderboard');
@@ -169,6 +171,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/phase-submission-3/create', PhaseSubmissionForm::class)->name('submissions3.create');
         Route::get('/export-students', [StudentListAdmin::class, 'export'])->name('admin.export.students');
         Route::get('/export-school', [CollegeList::class, 'export'])->name('admin.export.school');
+        Route::get('school/edit_school_profile/{id}', SchoolEditForm::class)->name('editschoolprofile');
     });
     Route::get('student-list', ClassList::class)->name('class.list');
 });

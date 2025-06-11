@@ -68,16 +68,20 @@ class CollegeList extends Component
             $students = User::where('is_college',1)->get();
 
             $csvData = [];
-            $csvData[] = ['Sr.No', 'School Name', 'Principal Name', 'Principal Mobile', 'Principal Email', 'Spoc Name', 'Spoc Eamil', 'Spoc Mobile', 'Country', 'State', 'City', 'Pincode', 'Registration Date'];
+            $csvData[] = ['Sr.No', 'School Name', 'Code', 'Principal Name', 'Principal Mobile', 'Principal Email', 'Spoc Name', 'Spoc Eamil', 'Spoc Mobile', 'Country', 'State', 'City', 'Pincode', 'Registration Date'];
 
             foreach ($students as $index => $student) {
-                $instituteName = Instute::where('id', $student->institute)->value('name');
+                $instituteData = Instute::where('id', $student->institute)->first();
+
+                $instituteName = $instituteData->name;
+                $instituteCode = $instituteData->code;
 
                 $email = !empty($student->email) ? $student->email : 'N/A';
 
                 $csvData[] = [
                     $index + 1,
                     $instituteName,
+                    $instituteCode,
                     $student->name,
                     ($student->country_code || $student->phone) ? '+' . trim($student->country_code . ' ' . $student->phone) : 'N/A',
                     $email,
@@ -255,5 +259,4 @@ class CollegeList extends Component
             'message' => 'CSV uploaded and schools created successfully.'
         ]);
     }
-
 }

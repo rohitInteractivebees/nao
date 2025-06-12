@@ -1,38 +1,35 @@
 <div>
-       <div class="py-12 min-h-[80vh]">
+       <div class="pb-12 min-h-[80vh]">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
 
             <div class="overflow-hidden bg-white">
                 <div class="mt-0 form-style">
-                    <div class="items-center justify-between gap-3 px-3 mt-4 item md:flex md:px-0">
+                    <div class="items-center flex-wrap gap-1 justify-between my-5 md:flex">
                         <div class="item">
                             <div class="text-center md:mb-0 sub-title">Quiz Attempt Tracker</div>
                         </div>
-                        <div class="items-center justify-end gap-3 text-center item md:flex md:w-3/5">
-                            <select class="p-3 m-auto md:w-auto md:m-0"
+                        <div class="items-center d-flex gap-1 flex-wrap">
+                            <select class="p-3 w-64 m-auto md:m-0"
                                 wire:model="quiz_id">
                                 <option value="0">All School</option>
                                 @foreach ($college as $quiz)
                                     <option value="{{ $quiz->id }}">{{ $quiz->name }}</option>
                                 @endforeach
                                 <option value="Other">Other</option>
+                            </select>   
+                            <select class="block m-auto mt-3 md:m-0 " wire:model="class_id" name="class_id">
+                                <option value="0">All Classes</option>
+                                @foreach(App\Models\Classess::all() as $class)
+                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                @endforeach
                             </select>
-
-                            <div class="mt-0 text-center item filter-options form-style">
-                                <select class="block m-auto mt-3 md:m-0 " wire:model="class_id" name="class_id">
-                                    <option value="0">All Classes</option>
-                                    @foreach(App\Models\Classess::all() as $class)
-                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="item md:w-2/5">
-                                <div class="mt-4 md:mt-0">
-                                    <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
-                                </div>
+                            <div class="md:mt-0">
+                                <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
                             </div>
                          </div>
                     </div>
+                    
+                    
                     <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                     <table class="table w-full mt-4 table-view">
                         <thead>

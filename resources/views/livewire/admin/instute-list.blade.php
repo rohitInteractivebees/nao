@@ -4,14 +4,13 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden">
                 <div class="p-6 text-gray-900">
-                    <div class="item">
-                        <div class="sub-title">School Details</div>
-                        <div class="item md:w-2/5">
-                    <div class="mt-4 md:mt-0">
-                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name or code" class="form-control" style="border: 1px solid #ccc !important;">
+                    <div class="items-center flex-wrap gap-2 justify-between my-5 md:flex">
+                        <div class="sub-title mb-0">School Details</div>
+                        <div class="md:mt-0">
+                            <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name or code" class="form-control" style="border: 1px solid #ccc !important;">
+                        </div>
                     </div>
-                </div>
-                    </div>
+                    
                     {{-- <div class="mb-4">
                         <a href="{{ route('institute.create') }}"
                             class="common-btn short">

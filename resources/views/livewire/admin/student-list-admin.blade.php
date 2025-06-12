@@ -2,36 +2,38 @@
     <div class="pb-6 common-sec1">
         <div class="container">
             <div class="items-center flex-wrap justify-between mt-5 lg:flex">
+                <div class="item">
                 <div class="mb-0 sub-title">Student Register</div>
-                <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
-                    @csrf
-                    <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                        <div class="w-auto form-style mt-0" style="width: auto !important;">
-                            <input type="file" name="csv_file" required>
-                        </div>
-                        <div class="links">
-                            <button class="items-center common-btn admin-btn d-flex" type="submit">
-                                <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                                <span>Upload CSV</span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
-                    <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                    <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
-                </button>
-                <div class="mt-4 md:mt-0">
-                    <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
                 </div>
-                <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
-                    <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                    <a href="{{ route('admin.export.students', ['quiz_id1' => $quiz_id1, 'class_id' => $class_id]) }}" download><span>Export</span></a>
-                </button>
+                <div class="item d-flex gap-1">
+                    <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
+                        @csrf
+                        <div class="items-end justify-center half-view d-flex gap sm:justify-end">
+                            <div class="w-auto form-style mt-0" style="width: auto !important;">
+                                <input type="file" name="csv_file" required>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="items-center common-btn admin-btn d-flex" type="submit">
+                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                        <span>Upload CSV</span>
+                    </button>
+                    <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
+                        <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                        <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
+                    </button>
+                    <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
+                        <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                        <a href="{{ route('admin.export.students', ['quiz_id1' => $quiz_id1, 'class_id' => $class_id]) }}" download><span>Export</span></a>
+                    </button>
+                    <div class="mt-4 md:mt-0">
+                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
+                    </div>
+                </div>
             </div>
 
             <!--Export Div Starts here-->
-            <div class="flex flex-wrap items-center justify-center gap-3 mt-4 md:justify-end item md:flex-nowrap">
+            <div class="flex flex-wrap items-center justify-center gap-1 mt-2 md:justify-end item md:flex-nowrap">
                 <div class="item">
                     @if(auth()->user()->is_admin)
                         <div class="mt-0 filter-options form-style">

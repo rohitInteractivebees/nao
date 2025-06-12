@@ -39,6 +39,7 @@ use App\Http\Livewire\Admin\StudentPhysciallySubmisson;
 use App\Http\Livewire\Admin\SchoolStudents;
 use App\Http\Livewire\Admin\SchoolStudentsParticipents;
 use App\Http\Livewire\Admin\SchoolEditForm;
+use App\Http\Livewire\Admin\StudentEditForm;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -78,7 +79,7 @@ Route::middleware('guest')->group(function () {
     Route::get('testimonial', [HomeController::class, 'testimonial_form'])->name('testimonial');
     Route::post('testimonial_submit', [HomeController::class, 'testimonial_store'])->name('testimonial.store');
 });
-Route::view('congratulation', 'content.congratulation')->name('quiz.congratulation');
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -90,6 +91,7 @@ Route::view('not-found','404.blade.php');
 
 // protected routes
 Route::middleware('auth')->group(function () {
+    Route::view('congratulation', 'content.congratulation')->name('quiz.congratulation');
     Route::view('quiz-notification', 'content.quiz_notification')->name('content.quiz_notification');
     Route::get('prototypelist', PrototypeList::class)->name('prototypelist');
     Route::get('physciallylist', PhysicalyList::class)->name('physciallylist');
@@ -172,6 +174,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/export-students', [StudentListAdmin::class, 'export'])->name('admin.export.students');
         Route::get('/export-school', [CollegeList::class, 'export'])->name('admin.export.school');
         Route::get('school/edit_school_profile/{id}', SchoolEditForm::class)->name('editschoolprofile');
+        Route::get('student/edit_student_profile/{id}', StudentEditForm::class)->name('editstudentprofile');
     });
     Route::get('student-list', ClassList::class)->name('class.list');
 });

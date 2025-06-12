@@ -134,7 +134,10 @@
                                         </td>
                                         <td> {{ $student->created_at->format('d-m-Y') }}</td>
                                         <td align="center">
-                                            <a data-fancybox href="#dialog-content-detail" onclick="dataAdd('{{ $student->id }}','{{ $student->loginId }}')">
+                                            {{-- <a data-fancybox href="#dialog-content-detail" onclick="dataAdd('{{ $student->id }}','{{ $student->loginId }}')">
+                                                <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
+                                            </a> --}}
+                                            <a href="{{ route('editstudentprofile',['id' => $student->id]) }}">
                                                 <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
                                             </a>
                                         </td>
@@ -159,7 +162,7 @@
         </div>
 
     </div>
-    <div class="verify-sec" id="dialog-content-detail" style="display:none;">
+    {{-- <div class="verify-sec" id="dialog-content-detail" style="display:none;">
         <div class="sub-title">Reset User Password</div>
         <form action="{{ route('updateUserPassword') }}" method="POST">
             @csrf
@@ -182,7 +185,7 @@
             </div>
         </form>
 
-    </div>
+    </div> --}}
     <section class="loader-sec" id="loaders">
         <div class="inner">
             <span class="dot"></span>
@@ -396,10 +399,10 @@
             });
         });
     });
-    function dataAdd(student_id,login_id)
-    {
-        document.getElementById('student_id').value = student_id;
-        document.getElementById('login_id').value = login_id;
-    }
+    // function dataAdd(student_id,login_id)
+    // {
+    //     document.getElementById('student_id').value = student_id;
+    //     document.getElementById('login_id').value = login_id;
+    // }
     </script>
 </div>

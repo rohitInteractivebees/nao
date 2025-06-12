@@ -29,7 +29,8 @@
                         </div>
                         <div class="form-style">
                             <x-input-label for="phone" value="Principal Phone" />
-                            <select wire:model="country_code" name="country_code" required class="block w-full mt-1">
+                            <select wire:model="country_code" name="country_code" class="block w-full mt-1">
+                                <option value="">Select Code</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country->phonecode }}">
                                         +{{ $country->phonecode }} ({{ $country->shortname }})
@@ -47,6 +48,7 @@
                         <div class="form-style">
                             <x-input-label for="spoc_mobile" value="Spoc Mobile" />
                             <select id="spoc_country_code" wire:model="spoc_country_code" name="spoc_country_code" required class="block w-full mt-1">
+                                <option value="">Select Code</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country->phonecode }}">
                                         +{{ $country->phonecode }} ({{ $country->shortname }})

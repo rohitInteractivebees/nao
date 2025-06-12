@@ -17,10 +17,20 @@ class CertificateController extends Controller
     public function download(Test $test)
     {
         $user = auth()->user();
+        if($user->institute == 'Other')
+        {
+            $school_name = $user->school_name;
+            $school_code = explode("_",$user->reg_no)[0];
+        }else{
+            $schoolData = Instute::where('id',$user->institute)->first();
+            $school_name = $schoolData->name;
+            $school_code = $schoolData->code;
+        }
+        $class = Classess::where('id',json_decode($user->class,true)[0])->value('name');
         // Define custom page size in points (1 inch = 72 points)
         //return view('certificates.certificates', compact('test', 'user'));
-        $customPaper = array(0, 0, 800, 690);
-        $pdf = PDF::loadView('certificates.certificates', compact('test', 'user'))
+        $customPaper = array(0, 0, 800, 700);
+        $pdf = PDF::loadView('certificates.certificates', compact('test', 'user','school_code','school_name','class'))
                 ->setPaper($customPaper); // Set custom paper size
 
         return $pdf->download('certificate.pdf');

@@ -6,12 +6,26 @@
                 <div class="p-6 text-gray-900">
                     <div class="item">
                         <div class="mb-0 sub-title">All Schools</div>
-                        <div class="item md:w-2/5">
-                    <div class="mt-4 md:mt-0">
-                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name" class="form-control" style="border: 1px solid #ccc !important;">
-                    </div>
-                </div>
-                    </div>
+                            <div class="item md:w-2/5">
+                                <div class="mt-4 md:mt-0">
+                                    <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name" class="form-control" style="border: 1px solid #ccc !important;">
+                                </div>
+                            </div>
+                            <div class="items-center justify-between filter-data d-flex">
+                                <div class="right">
+                                    <div class="justify-between half-view d-flex">
+                                        <div class="pt-0 form-style">
+                                            <select class="block w-full mt-1" wire:model="schools" name="schools">
+                                                <option value="0">All Schools</option>
+                                                <option value="1">Registerd Schools</option>
+                                                <option value="2">Other Schools</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <div class="min-w-full mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>

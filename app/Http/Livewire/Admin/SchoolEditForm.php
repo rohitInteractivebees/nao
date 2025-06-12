@@ -32,7 +32,7 @@ class SchoolEditForm extends Component
             'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
 
             'phone' => [
-                'required',
+                'nullable',
                 'string',
                 'regex:/^\d{7,12}$/',
                 Rule::unique('users', 'phone')->ignore($this->userId),
@@ -61,7 +61,6 @@ class SchoolEditForm extends Component
             'name.required' => 'Principal Name field is required.',
             'name.regex' => 'Principal Name should only contain letters and spaces.',
 
-            'phone.required' => 'Principal Phone number is required.',
             'phone.regex' => 'Principal Phone number must be between 7 and 12 digits.',
             'phone.unique' => 'Principal Phone number is already taken.',
             'phone.different' => 'Principal Phone number must be different from SPOC mobile.',

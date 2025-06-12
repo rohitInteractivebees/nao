@@ -722,6 +722,9 @@
                                                     <p>Total Time</p>
                                                     <div class="count">{{ $quiz->duration }} <span>Minutes</span></div>
                                                 </li>
+                                                <li>
+                                                    <p>All Questions are mandatory.</p>
+                                                </li>
 
                                             </ul>
 

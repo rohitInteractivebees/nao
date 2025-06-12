@@ -62,6 +62,10 @@ class Show extends Component
 
     public function nextQuestion()
     {
+        if (empty($this->answersOfQuestions[$this->currentQuestionIndex])) {
+            $this->addError('answersOfQuestions.' . $this->currentQuestionIndex, 'Please select an option before continuing.');
+            return;
+        }
         $this->currentQuestionIndex++;
 
         if ($this->currentQuestionIndex >= $this->questionsCount) {

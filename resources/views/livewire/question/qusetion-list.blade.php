@@ -1,45 +1,32 @@
 <div>
     <div class="common-sec1">
         <div class="container">
-            <div class="items-end justify-between md:flex">
-                <div class="item">
-                    <div class="mb-0 sub-title">
-                        <div class="mb-0 sub-title">Question Bank</div>
-                        <a href="{{ route('question.create') }}"
-                            class="common-btn short">
-                            Create Question
-                        </a>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
-                        <form action="{{ route('question.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
-                            @csrf
-                            <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                                <div class="form-style">
-                                    <input type="file" name="csv_file" required>
-                                </div>
-                                <div class="links">
-                                    <button class="items-center common-btn admin-btn d-flex" type="submit">
-                                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                                        <span>Upload CSV</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
-                            <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                            <a href="{{url('sampleCsv/admin_question_sample.csv')}}" download><span>Download Sample CSV</span></a>
-                        </button>
-                        <div class="item md:w-2/5">
-                            <div class="mt-4 md:mt-0">
-                                <input type="text" wire:model.debounce.500ms="search" placeholder="Search by questions,group or level..." class="form-control" style="border: 1px solid #ccc !important;">
-                            </div>
+            <div class="items-center flex-wrap justify-between mt-5 md:flex">
+                <div class="mb-0 sub-title">Question Bank</div>
+                <a href="{{ route('question.create') }}" class="common-btn short"> Create Question</a>
+                <form action="{{ route('question.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
+                    @csrf
+                    <div class="d-flex gap ">
+                        <div class="form-style mt-0">
+                            <input type="file" name="csv_file" required>
                         </div>
-
                     </div>
+                </form>
+                <button class="items-center common-btn admin-btn d-flex" type="submit">
+                    <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                    <span>Upload CSV</span>
+                </button>
+                <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
+                    <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                    <a href="{{url('sampleCsv/admin_question_sample.csv')}}" download><span>Download Sample CSV</span></a>
+                </button>
+                <div class="mt-4 md:mt-0">
+                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by questions,group or level..." class="form-control" style="border: 1px solid #ccc !important;">
                 </div>
+               
             </div>
+            
+            
             <div class="mx-auto max-w-7xl">
                 <div class="overflow-hidden bg-white">
 
@@ -127,6 +114,18 @@
         </div>
     </section>
     <style>
+        .form-control{
+            height: auto;
+            padding: 10px !important;
+            line-height: 22px;
+        }
+    
+        input[type='file'] {
+            font-size: 0.9rem;
+            height: auto;
+            padding: 10px;
+            margin: 0;
+        }
         .table-btn {
             background-color: green;
             color: white;

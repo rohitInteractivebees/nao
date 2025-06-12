@@ -284,13 +284,13 @@
                         <table class="table-sec">
                             <thead>
                                 <tr>
-                                    <th width="200">
+                                    <th width="100">
                                         Sr.No
                                     </th>
-                                    <th width="440">
+                                    <th width="250">
                                         Student Name
                                     </th>
-                                    <th width="440">
+                                    <th width="100">
                                         Class
                                     </th>
                                     <th width="220">

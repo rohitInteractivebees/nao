@@ -44,7 +44,7 @@
                                 <th width="200">
                                     Student Name
                                 </th>
-                                <th width="300">Student ID</th>
+                                <th width="300">Login ID</th>
                                 <th width="200">
                                     Class
                                 </th>
@@ -92,10 +92,11 @@
                                     <td>
                                         {{ $test->user->loginId }}
                                     </td>
-                                    <td>{{ !empty($test->user->email) ? $test->user->email : 'N/A' }}</td>
+
                                     <td>
                                         {{ \App\Models\Classess::whereIn('id', json_decode($test->user->class))->pluck('name')->join(', ') }}
                                     </td>
+                                    <td>{{ !empty($test->user->email) ? $test->user->email : 'N/A' }}</td>
                                     <td>
                                         @if($test->user->country_code || $test->user->phone)
                                             +{{ trim($test->user->country_code.' '.$test->user->phone) }}

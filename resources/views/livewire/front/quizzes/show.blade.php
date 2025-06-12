@@ -7,10 +7,10 @@
         @endphp
 
         <div x-data="{
-            secondsLeft: {{ $totalSeconds }},
-            selectedAnswer: @entangle($entangleKey),
-            submitDisabled: false
-        }"
+                secondsLeft: {{ $totalSeconds }},
+                selectedAnswer: @entangle($entangleKey),
+                submitDisabled: false
+            }"
         x-init="
             setInterval(() => {
                 if (secondsLeft > 0) {
@@ -18,6 +18,7 @@
                 } else {
                     if (!submitDisabled) {
                         submitDisabled = true;
+                        selectedAnswer = true;
                         $wire.submit();
                     }
                 }
@@ -76,8 +77,7 @@
                                     id="option.{{ $option->id }}"
                                     wire:model.defer="answersOfQuestions.{{ $currentQuestionIndex }}"
                                     name="answersOfQuestions.{{ $currentQuestionIndex }}"
-                                    value="{{ $option->id }}"
-                                    x-on:change="selectedAnswer = '{{ $option->id }}'"
+                                    value="{{ $option->id }}" required
                                 >
                                 <label for="option.{{ $option->id }}">{{ $option->text }}</label>
                             </li>
@@ -89,22 +89,26 @@
             </ul>
         </div>
     <div class="justify-center mt-6 links d-flex">
+
         @if ($currentQuestionIndex < $this->questionsCount - 1)
             <div class="mt-4">
                 <x-secondary-button
                     class="red"
                     x-on:click="$wire.nextQuestion()"
-                    x-bind:disabled="!selectedAnswer"
+                     x-bind:disabled="!selectedAnswer"
                 >
                     Next question
                 </x-secondary-button>
             </div>
+            <p x-show="!selectedAnswer" class="mt-2 text-sm text-red-600">
+                Please select an option before continuing.
+            </p>
         @else
             <div class="mt-4">
                 <x-primary-button
                     class="common-btn short red"
                     x-on:click="submitDisabled = true; window.onbeforeunload = null; $wire.submit();"
-                    x-bind:disabled="submitDisabled"
+                    x-bind:disabled="submitDisabled || !selectedAnswer"
                 >
                     Submit
                 </x-primary-button>

@@ -6,18 +6,6 @@
             </div>
             <div class="item">
                 <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
-                    <div class=" filter-options form-style">
-                        <select class="w-100" wire:model="class_id" name="class_id">
-                            <option value="">All Classes</option>
-                            @foreach($classes as $class)
-                                <option value="{{ $class->id }}">{{ $class->name }}</option>
-                            @endforeach
-                        </select>
-                        <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
-                            <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                            <a href="{{ route('export.students', ['class_id' => $class_id]) }}" download><span>Export</span></a>
-                        </button>
-                    </div>
                     <form action="{{ route('upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                         @csrf
                         <div class="items-end justify-center half-view d-flex gap sm:justify-end">
@@ -36,10 +24,20 @@
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{url('sampleCsv/Student_Registration(School).csv')}}" download><span>Download Sample CSV</span></a>
                     </button>
+                    <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
+                        <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                        <a href="{{ route('export.students', ['class_id' => $class_id]) }}" download><span>Export</span></a>
+                    </button>
                 </div>
-                <div class="item md:w-2/5">
-                    <div class="mt-4 md:mt-0">
-                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email or phone..." class="form-control" style="border: 1px solid #ccc !important;">
+                <div class="item">
+                    <div class="form-style sm:flex sm:justify-end gap-6">
+                    <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email or phone..." class="form-control" style="border: 1px solid #ccc !important;">
+                    <select class="w-100" wire:model="class_id" name="class_id">
+                        <option value="">All Classes</option>
+                        @foreach($classes as $class)
+                            <option value="{{ $class->id }}">{{ $class->name }}</option>
+                        @endforeach
+                    </select>
                     </div>
                 </div>
             </div>

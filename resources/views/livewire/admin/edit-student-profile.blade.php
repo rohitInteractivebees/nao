@@ -1,7 +1,7 @@
 
 <section class="common-sec login-page">
     <div class="container">
-        <div class="common-title">Edit S tudent Profile</div>
+        <div class="common-title">Edit Student Profile</div>
         @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}

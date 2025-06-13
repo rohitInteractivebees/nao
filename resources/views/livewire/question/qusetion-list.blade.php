@@ -24,12 +24,13 @@
                         <a href="{{url('sampleCsv/admin_question_sample.csv')}}" download><span>Download Sample CSV</span></a>
                     </button>
                 </div> --}}
-            </div>
-            <div class="gap-2 items-center flex-wrap justify-end mt-5 md:flex">
+                <div class="mt-5 md:w-[30%]">
                 <div class="mt-4 md:mt-0">
                     <input type="text" wire:model.debounce.500ms="search" placeholder="Search by questions,group or level..." class="form-control" style="border: 1px solid #ccc !important;">
                 </div>
             </div>
+            </div>
+            
             <div class="mx-auto max-w-7xl">
                 <div class="overflow-hidden bg-white">
 

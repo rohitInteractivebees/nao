@@ -63,7 +63,7 @@ class Show extends Component
     public function nextQuestion()
     {
         if (empty($this->answersOfQuestions[$this->currentQuestionIndex])) {
-            $this->addError('answersOfQuestions.' . $this->currentQuestionIndex, 'Please select an option before continuing.');
+            $this->addError('answersOfQuestions.' . $this->currentQuestionIndex, 'Please select an option before continue.');
             return;
         }
         $this->currentQuestionIndex++;
@@ -85,7 +85,7 @@ class Show extends Component
                             ->first();
 
         if ($existingTest) {
-            return to_route('quiz.congratulation', ['test' => $existingTest]);
+            return to_route('home');
         }
 
         $test = Test::create([
@@ -141,7 +141,7 @@ class Show extends Component
             'result' => $result
         ]);
 
-        return to_route('quiz.congratulation', ['test' => $test]);
+       return to_route('home');
 
     }
 

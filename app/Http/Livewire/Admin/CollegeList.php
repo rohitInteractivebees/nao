@@ -40,7 +40,7 @@ class CollegeList extends Component
     {
         $query = User::where('is_college', 1)
             ->leftJoin('instutes', 'users.institute', '=', 'instutes.id')
-            ->select('users.*', 'instutes.name as schoolname','instutes.code');
+            ->select('users.*', 'instutes.name as schoolname','instutes.code','instutes.id as schoolID');
 
         if (!empty($this->search)) {
             $searchTerm = '%' . $this->search . '%';

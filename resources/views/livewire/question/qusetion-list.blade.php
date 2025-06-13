@@ -5,7 +5,7 @@
                 <div class="item">
                     <div class="mb-0 sub-title">Question Bank</div>
                 </div>
-                <div class="item d-flex gap-2">
+                {{-- <div class="item d-flex gap-2">
                     <form action="{{ route('question.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                         @csrf
                         <div class="d-flex gap ">
@@ -23,7 +23,7 @@
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{url('sampleCsv/admin_question_sample.csv')}}" download><span>Download Sample CSV</span></a>
                     </button>
-                </div>
+                </div> --}}
             </div>
             <div class="gap-2 items-center flex-wrap justify-end mt-5 md:flex">
                 <div class="mt-4 md:mt-0">
@@ -122,7 +122,7 @@
             padding: 10px !important;
             line-height: 22px;
         }
-    
+
         input[type='file'] {
             font-size: 0.9rem;
             height: auto;

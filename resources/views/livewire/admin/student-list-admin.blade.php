@@ -5,16 +5,16 @@
                 <div class="item">
                 <div class="mb-0 sub-title">Student Register</div>
                 </div>
-                <div class="item d-flex gap-1">
+                <div class="item d-flex gap-3 justify-center">
                     <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                         @csrf
                         <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                            <div class="w-auto form-style mt-0" style="width: auto !important;">
+                            <div class="w-auto form-style mt-0 md:w-auto w-100">
                                 <input type="file" name="csv_file" required>
                             </div>
                         </div>
                     </form>
-                    <button class="items-center common-btn admin-btn d-flex" type="submit">
+                    <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
                         <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <span>Upload CSV</span>
                     </button>
@@ -22,22 +22,19 @@
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
                     </button>
-                    <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
-                        <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                        <a href="{{ route('admin.export.students', ['quiz_id1' => $quiz_id1, 'class_id' => $class_id]) }}" download><span>Export</span></a>
-                    </button>
-                    <div class="mt-4 md:mt-0">
-                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
-                    </div>
+                    
                 </div>
             </div>
 
             <!--Export Div Starts here-->
-            <div class="flex flex-wrap items-center justify-center gap-1 mt-2 md:justify-end item md:flex-nowrap">
-                <div class="item">
+            <div class="flex flex-wrap items-center justify-center gap-2 mt-2 md:justify-end item md:flex-nowrap">
+                <div class="mt-0 md:min-w-[30%] min-w-full">
+                    <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
+                </div>
+                <div class="item md:max-w-[20%] mt-0">
                     @if(auth()->user()->is_admin)
                         <div class="mt-0 filter-options form-style">
-                            <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
+                            <select class="block w-full" wire:model="quiz_id1" name="quiz">
                                 <option value="0">All School</option>
                                 @foreach(App\Models\Instute::all() as $college)
                                     <option value="{{ $college->id }}">{{ $college->name }}</option>
@@ -55,6 +52,11 @@
                         @endforeach
                     </select>
                 </div>
+                <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
+                        <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                        <a href="{{ route('admin.export.students', ['quiz_id1' => $quiz_id1, 'class_id' => $class_id]) }}" download><span>Export</span></a>
+                    </button>
+                    
                 
             </div>
             <!--Export Div Ends here-->

@@ -1,12 +1,13 @@
  <section class="pt-0 common-sec collage-dashboared common-sec1">
      <div class="container">
          <div class="items-center justify-between filter-data d-flex">
+             <div class="item">
+                 <div class="mb-0 sub-title">Leaderboard</div>
+             </div>
              <div class="left">
-                 <div class="justify-between half-view d-flex">
+                 <div class="justify-end half-view d-flex">
                  @if(auth()->user()->is_admin == 1)
-                     <div class="pt-0 form-style">
-                         <label class="block text-sm font-medium text-gray-700" for="quiz">School</label>
-
+                     <div class="pt-0 form-style mt-0">
                          <select class="block w-full mt-1" wire:model="quiz_id" name="quiz">
                              <option value="0">All School</option>
                              @foreach ($college as $quiz)
@@ -26,7 +27,7 @@
                      <tr>
                          <th width="100">S. No</th>
                          <th width="300">Student Name</th>
-                         <th width="300">Class</th>
+                         <th width="100">Class</th>
                          <th width="300">Parent Email</th>
                          @if(auth()->user()->is_admin == 1)
                             <th width="500">School</th>

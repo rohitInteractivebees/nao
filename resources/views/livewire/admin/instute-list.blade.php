@@ -3,10 +3,10 @@
     <div class="py-12 pt-4 pb-4">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden">
-                <div class="p-6 text-gray-900">
-                    <div class="items-center flex-wrap gap-2 justify-between my-5 md:flex">
-                        <div class="sub-title mb-0">School Details</div>
-                        <div class="md:mt-0">
+                <div class="px-6 text-gray-900">
+                    <div class="items-center flex-wrap gap-2 justify-between my-4 md:flex">
+                        <div class="sub-title mb-0 text-center">School Details</div>
+                        <div class="md:mt-0 mt-4">
                             <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name or code" class="form-control" style="border: 1px solid #ccc !important;">
                         </div>
                     </div>
@@ -18,7 +18,7 @@
                         </a>
                     </div> --}}
 
-                    <div class="min-w-full pb-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
+                    <div class="min-w-full pb-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md min-h-[60vh]">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
                                 <tr>

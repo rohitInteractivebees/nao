@@ -5,8 +5,8 @@
                 <div class="item d-flex justify-center">
                     <div class="mb-0 sub-title">School Register</div>
                 </div>
-                <div class="item d-flex gap-2 justify-center mt-4">
-                    <form action="{{ route('school.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
+                <div class="item d-flex gap-2 justify-center mt-4 items-center">
+                    <form action="{{ route('school.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form flex items-center gap-2 flex-wrap justify-center">
                         @csrf
                         <div class="items-center d-flex sm:justify-end">
                             <div class="form-style mt-0">

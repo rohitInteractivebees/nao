@@ -529,7 +529,11 @@
                 @endif
             <!-- #region-->
             @elseif($testuser && @$resultpublished->result_show != 1)
-
+<style>
+    .download-certificate:after{
+        transform: rotate(90deg);
+    }
+</style>
                 <section class="common-sec congrats-sec min-h-[75vh]">
                     <div class="container">
                         <div class="pt-5 certificate">
@@ -542,7 +546,10 @@
                                 ->where('user_id', auth()->user()->id)->first();
 
                         @endphp
-                        <a href="{{ route('download.certificate', $testsHome) }}" class="table-btn common-btn-two no-hov">Download</a>
+                        <div class="d-flex justify-center mt-4">
+                            <a href="{{ route('download.certificate', $testsHome) }}" class="common-btn red common-btn short download-certificate">Download Certificate</a>
+                        </div>
+                        
                     </div>
                 </section>
 

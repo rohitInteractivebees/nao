@@ -35,15 +35,18 @@
             <div class="heading short">Level 1 <span>Question {{ $currentQuestionIndex + 1 }} of {{ $this->questionsCount }}:</div>
             <div class="w-3/4 result-sumary-test">
                 <ul class="justify-between d-flex">
-                    <li>
+                    <li class="" style="    background: #ecf6ff;
+    border: 0.1rem solid #2084e0;">
                         <span>Date : </span> {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
                     </li>
-                    <li>
+                    <li style="border-color: #20dc49;
+    background: #f9ffec;">
                     <span>Time: </span>{{ \Carbon\Carbon::now('Asia/Kolkata')->format('h:i A') }}
 
 
                     </li>
-                    <li>
+                    <li style="border-color: #d26e13;
+    background: #fff5ec;">
                         <span>Time Left:</span>
                         <em
                             x-text="
@@ -60,7 +63,7 @@
         </div>
         <div class="result-question-answer step-first">
             <ul class="justify-center d-flex">
-                <li class="justify-between outer d-flex">
+                <li class="justify-between outer d-flex" style="background-color: #fff5ec;">
                     <div class="count">{{ $currentQuestionIndex + 1 }}</div>
                     <div class="detail">
                         <div class="question">{{ $currentQuestion->text }}</div>
@@ -88,10 +91,19 @@
                 </li>
             </ul>
         </div>
-    <div class="justify-center mt-6 links d-flex">
+    <div class="justify-center mt-6 links text-center">
 
         @if ($currentQuestionIndex < $this->questionsCount - 1)
-            <div class="mt-4">
+            @php
+                $errorKey = 'answersOfQuestions.' . $currentQuestionIndex;
+            @endphp
+
+            @error($errorKey)
+                <div class="inline-block bg-red-100 text-red-700 text-sm mt-1 px-3 py-1 rounded-full font-medium">
+                    {{ $message }}
+                </div>
+            @enderror
+            <div class="mt-4 d-flex justify-center">
                 <x-secondary-button
                     class="red"
                     x-on:click="$wire.nextQuestion()"
@@ -100,15 +112,7 @@
                     Next question
                 </x-secondary-button>
             </div>
-            @php
-                $errorKey = 'answersOfQuestions.' . $currentQuestionIndex;
-            @endphp
-
-            @error($errorKey)
-                <div class="text-red-600 text-sm mt-1">
-                    {{ $message }}
-                </div>
-            @enderror
+            
         @else
             <div class="mt-4">
                 <x-primary-button

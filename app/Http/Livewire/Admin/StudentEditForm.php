@@ -89,6 +89,7 @@ class StudentEditForm extends Component
         $this->user->parent_name = $this->parent_name;
         $this->user->session_year = $this->session_year;
         $this->user->class = $encodedClassname;
+        $this->user->institute = $this->school_name;
         if($this->school_name != 'Other')
         {
             $this->user->school_name = null;

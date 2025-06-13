@@ -1,3 +1,8 @@
+<style>
+    .no-hov:hover{
+        color: #fff;
+    }
+</style>
 <section class="common-sec result-list-page min-h-[80vh]">
     <div class="container">
         <!-- <div class="heading short">Dashboard</div> -->
@@ -39,7 +44,7 @@
                                 <td>{{ $test->created_at->setTimezone('Asia/Kolkata')->format('d/m/Y h:i A') }}</td>
                                 <td align="center">
                                     <a href="{{ route('results.show', $test) }}">
-                                        <img src="{{ asset('/assets/images/icon-view.png') }}" width="28" height="17" alt="">
+                                        <img src="{{ asset('/assets/images/icon-view.png') }}" width="28" height="auto" alt="" style="height: auto;width:1.2rem">
                                     </a>
                                 </td>
                                 <td align="center">
@@ -53,7 +58,7 @@
                                     @endif
                                 </td>
                                 <td align="center">
-                                    <a href="{{ route('download.certificate', $test) }}" class="table-btn blue no-hov">Download</a>
+                                    <a href="{{ route('download.certificate', $test) }}" class="table-btn common-btn-two no-hov">Download</a>
                                 </td>
                             </tr>
                         @else

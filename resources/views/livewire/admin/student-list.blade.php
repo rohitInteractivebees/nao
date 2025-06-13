@@ -1,8 +1,8 @@
-<div class="py-4 common-sec">
+<div class="py-4 common-sec min-h-[80vh]">
     <div class="container">
-        <div class="items-end justify-between md:flex">
+        <div class="items-baseline justify-between md:flex">
             <div class="item">
-                <div class="mb-0 sub-title">Student List</div>
+                <div class="mb-0 sub-title text-center">Student List</div>
             </div>
             <div class="item">
                 <div class="items-end justify-center gap-3 right d-flex sm:justify-end">
@@ -30,9 +30,9 @@
                     </button>
                 </div>
                 <div class="item">
-                    <div class="form-style sm:flex sm:justify-end gap-6">
+                    <div class="form-style sm:flex sm:justify-end gap-6 md:mt-4">
                     <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email or phone..." class="form-control" style="border: 1px solid #ccc !important;">
-                    <select class="w-100" wire:model="class_id" name="class_id">
+                    <select class="w-100 md:mt-0 mt-4" wire:model="class_id" name="class_id">
                         <option value="">All Classes</option>
                         @foreach($classes as $class)
                             <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -151,33 +151,10 @@
                                     <!--        @endif-->
                                     <!--    </div>-->
                                     <!--</div>-->
-                                    <a data-fancybox href="#dialog-content-detail{{ $admin->id }}">
+                                    <a data-fancybox href="#dialog-content-detail" onclick="dataAdd('{{ $admin->id }}','{{ $admin->loginId }}')">
                                         <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
                                     </a>
-                                    <div class="verify-sec" id="dialog-content-detail{{ $admin->id }}">
-                                        <div class="sub-title">Reset User Password</div>
-                                        <form action="{{ route('updateUserPassword') }}" method="POST">
-                                            @csrf
-                                            <div class="gap-3 d-flex">
-
-                                                <input type="hidden" class="block w-full mt-1" value="{{ $admin->id }}" name="user_id">
-                                                <div class="form-style w-[48%]">
-                                                    <label class="block text-sm font-medium text-gray-700" for="loginId">Login ID</label>
-                                                    <input type="text" class="block w-full mt-1"  value="{{ $admin->loginId }}" readonly>
-                                                </div>
-
-                                                <div class="w-1/2 form-style">
-                                                    <label class="block text-sm font-medium text-gray-700" for="password">New Password</label>
-                                                    <input type="text" class="block w-full mt-1" name="password" required>
-                                                </div>
-
-                                                <div class="justify-center mt-6 d-flex w-100 links">
-                                                    <button type="submit" class="w-full common-btn admin-btn green">Update</button>
-                                                </div>
-                                            </div>
-                                        </form>
-
-                                    </div>
+                                    
                                 </td>
 
                             </tr>
@@ -196,7 +173,30 @@
         </div>
     </div>
 </div>
+<div class="verify-sec" id="dialog-content-detail" style="display:none;">
+        <div class="sub-title">Reset User Password</div>
+        <form action="{{ route('updateUserPassword') }}" method="POST">
+            @csrf
+            <div class="gap-3 md:flex flex-wrap">
 
+                <input type="hidden" class="block w-full mt-1" value="" name="user_id" id="student_id">
+                <div class="form-style md:w-[48%]">
+                    <label class="block text-sm font-medium text-gray-700" for="loginId">Login ID</label>
+                    <input type="text" class="block w-full mt-1"  value="" id="login_id" readonly>
+                </div>
+
+                <div class="md:w-1/2 form-style">
+                    <label class="block text-sm font-medium text-gray-700" for="password">New Password</label>
+                    <input type="text" class="block w-full mt-1" name="password" required>
+                </div>
+
+                <div class="justify-center mt-6 d-flex w-100 links">
+                    <button type="submit" class="w-full common-btn admin-btn green">Update</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
 <style>
     .verify-sec {
         width: 700px;
@@ -309,6 +309,11 @@
             });
         });
     });
+    function dataAdd(student_id,login_id)
+    {
+        document.getElementById('student_id').value = student_id;
+        document.getElementById('login_id').value = login_id;
+    }
     </script>
     <script>
         function openModal(id) {

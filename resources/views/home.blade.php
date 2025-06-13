@@ -542,137 +542,61 @@
                 <section class="common-sec levels-sec quiz-main-page min-h-[82vh]">
 
                     @if(!empty($liveQuiz) && count($liveQuiz) > 0 && $liveQuiz != null && $liveQuiz != '')
-                    <style>
-                .popUp {
-                    position: fixed;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    height: 100%;
-                    width: 100%;
-                    background: rgba(0, 0, 0, 0.6);
-                    z-index: 9;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .popUp.active {
-                    display: flex;
-                }
-
-                .popUp .popInner {
-                    background: #fff;
-                    max-width: 60vw;
-                    width: 100%;
-                    height: 80vh;
-                    overflow-y: auto;
-                    border-radius: 4px;
-                    font-size: 1rem;
-                    display: flex;
-                    align-items: baseline;
-                    flex-direction: column;
-                    padding-left: 0;
-                }
-
-                .popUp .popInner p{
-                    font-size: 1rem;
-                }
-
-                .popInner ul {
-                    margin-bottom: 1rem;
-                    padding-bottom: 1rem;
-                    border-bottom: 0.1rem solid #e2e2e2;
-                }
-
-                .popInner ul:last-child {
-                    padding: 0;
-                    margin: 0;
-                    border: 0;
-                }
-
-                .popInner ul li {
-                    margin-bottom: 0.5rem;
-                    padding-left: 0;
-                    list-style: disc;
-                    margin-left: 1.3rem;
-                }
-
-                .popUp .close {
-                    position: absolute;
-                    top: -1rem;
-                    z-index: 11;
-                    background: var(--primary-color);
-                    color: #fff;
-                    padding: 0.6rem 1rem;
-                    border-radius: 50%;
-                    font-size: 1.2rem;
-                    font-weight: 600;
-                right: -1rem;
-                cursor: pointer;
-                }
-                .popup-main {
-                    background: #fff;
-                    border-radius: 1rem;
-                    padding: 1.5rem;
-                    padding-bottom: 1rem;
-                }
-                @media(max-width: 600px){
-                    .popUp .popInner{
-                        max-width: 80vw;
-                    }
-                }
-            </style>
-<div class="popUp">
-    <div class="relative popup-content">
-        <div class="close">X</div>
-            <div class="relative popup-main">
-                <div class="popInner">
-                    <div class="sub-title">National Automobile Olympiad (NAO) 2025 - Examination Rule</div>
-                    <p><strong>1. Quiz Structure</strong></p>
-                    <ul>
-                        <li>The Examination consists of 30 multiple-choice questions.</li>
-                        <li>Each question carries 1 mark.</li>
-                        <li>Total marks: 30</li>
-                        <li>No negative marking</li>
-                        <li>Questions will be displayed one by one at a time</li>
-                        <li>You <strong>must answer all questions</strong>. You <strong>cannot submit</strong> the examination if any question is left unanswered.</li>
-                    </ul>
-                    <p><strong>2. Mode of Examination</strong></p>
-                    <ul>
-                        <li>The Examination will be conducted in online mode only.</li>
-                        <li>Students must use a laptop, desktop, tablet, or smartphone with internet access.</li>
-                        <li>It is recommended to use updated browsers like Google Chrome, Mozilla Firefox, or Microsoft Edge.</li>
-                        <li>Ensure a stable internet connection before starting the Examination.</li>
-                    </ul>
-                    <p><strong>3. Quiz Attempt Rules</strong></p>
-                    <ul>
-                        <li>You are allowed to attempt the examination <strong>only once</strong></li>
-                        <li><strong>No second attempt</strong> will be allowed.</li>
-                    </ul>
-                    <p><strong>4. General Instructions</strong></p>
-                    <ul>
-                        <li>Students must log in using their assigned credentials.</li>
-                        <li>The examination is <strong>time-bound</strong>. Complete it within the given time .</li>
-                        <li>Do not refresh or close the browser once the Examination has started.</li>
-                        <li>Do not switch tabs or minimize the browser. Doing so may lead to automatic submission or disqualification.</li>
-                        <li>Use of external help, including books, websites, or other persons, is strictly prohibited during the Examination.</li>
-                    </ul>
-                    <p><strong>5. Technical Guidelines</strong></p>
-                    <ul>
-                        <li>Ensure the device used is fully charged or connected to a power source.</li>
-                        <li>Close all other applications and tabs to avoid distractions or technical issues.</li>
-                        <li>In case of any technical problems during the quiz, contact the support team immediately&nbsp;</li>
-                    </ul>
-                    <p><b>For any questions or support, please contact: <a href="mailto:nep@asdc.org.in">nep@asdc.org.in</a></b></p>
-                </div>
-                {{-- <div class="text-center">
-                    <a class="common-btn short" >Start Now</a>
-                </div> --}}
-            </div>
-        </div>
-    </div>
+                        @if(auth()->user()->attempt_count == 0)    
+                        <div class="popUp">
+                            <div class="relative popup-content">
+                                <!--<div class="close">X</div>-->
+                                <div class="relative popup-main">
+                                    <div class="popInner">
+                                        <div class="sub-title">National Automobile Olympiad (NAO) 2025 - Examination Rule</div>
+                                        <p><strong>1. Quiz Structure</strong></p>
+                                        <ul>
+                                            <li>The Examination consists of 30 multiple-choice questions.</li>
+                                            <li>Each question carries 1 mark.</li>
+                                            <li>Total marks: 30</li>
+                                            <li>No negative marking</li>
+                                            <li>Questions will be displayed one by one at a time</li>
+                                            <li>You <strong>must answer all questions</strong>. You <strong>cannot submit</strong> the examination if any question is left unanswered.</li>
+                                        </ul>
+                                        <p><strong>2. Mode of Examination</strong></p>
+                                        <ul>
+                                            <li>The Examination will be conducted in online mode only.</li>
+                                            <li>Students must use a laptop, desktop, tablet, or smartphone with internet access.</li>
+                                            <li>It is recommended to use updated browsers like Google Chrome, Mozilla Firefox, or Microsoft Edge.</li>
+                                            <li>Ensure a stable internet connection before starting the Examination.</li>
+                                        </ul>
+                                        <p><strong>3. Quiz Attempt Rules</strong></p>
+                                        <ul>
+                                            <li>You are allowed to attempt the examination <strong>only once</strong></li>
+                                            <li><strong>No second attempt</strong> will be allowed.</li>
+                                        </ul>
+                                        <p><strong>4. General Instructions</strong></p>
+                                        <ul>
+                                            <li>Students must log in using their assigned credentials.</li>
+                                            <li>The examination is <strong>time-bound</strong>. Complete it within the given time .</li>
+                                            <li>Do not refresh or close the browser once the Examination has started.</li>
+                                            <li>Do not switch tabs or minimize the browser. Doing so may lead to automatic submission or disqualification.</li>
+                                            <li>Use of external help, including books, websites, or other persons, is strictly prohibited during the Examination.</li>
+                                        </ul>
+                                        <p><strong>5. Technical Guidelines</strong></p>
+                                        <ul>
+                                            <li>Ensure the device used is fully charged or connected to a power source.</li>
+                                            <li>Close all other applications and tabs to avoid distractions or technical issues.</li>
+                                            <li>In case of any technical problems during the quiz, contact the support team immediately&nbsp;</li>
+                                        </ul>
+                                        <p><b>For any questions or support, please contact: <a href="mailto:nep@asdc.org.in">nep@asdc.org.in</a></b></p>
+                                        <div class="w-100 text-center ">
+                                           <a class="common-btn red short instruction-btn" href="javascript:void(0)">Agree & Continue</a>
+                                        </div>
+                                        
+                                    </div>
+                                    {{-- <div class="text-center">
+                                        <a class="common-btn short" >Start Now</a>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     <div class="container justify-between d-flex">
                         <div class="quiz-type-sec levels-item">
                             <div class="item">
@@ -778,9 +702,9 @@
     @endauth
 </x-app-layout>
 <script>
-    $('.popUp .close').click(function(){
-       $('.popUp').fadeOut();
-    });
+   $('.popUp .instruction-btn').click(function(){
+     $('.popUp').fadeOut();
+});
 </script>
 <script>
     function updateStatus(type, status) {

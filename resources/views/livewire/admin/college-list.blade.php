@@ -2,10 +2,10 @@
     <div class="pb-12">
         <div class="container">
             <div class="items-center flex-wrap gap-2 justify-between my-5 md:flex">
-                <div class="item d-flex ">
+                <div class="item d-flex justify-center">
                     <div class="mb-0 sub-title">School Register</div>
                 </div>
-                <div class="item d-flex gap-2">
+                <div class="item d-flex gap-2 justify-center mt-4">
                     <form action="{{ route('school.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form">
                         @csrf
                         <div class="items-center d-flex sm:justify-end">
@@ -13,25 +13,27 @@
                                 <input type="file" name="csv_file" required>
                             </div>
                         </div>
-                        <button class="items-center common-btn admin-btn d-flex" type="submit">
+                        <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
                             <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                             <span>Upload CSV</span>
                         </button>
                     </form>
-
                     <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{url('sampleCsv/School_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
                     </button>
-                     <button class="items-center common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
+
+                </div>
+            </div>
+            <div class="items-center flex-wrap gap-2 md:justify-end my-5 md:flex justify-center">
+                <div class=" md:mt-0">
+                <input type="text" wire:model.debounce.500ms="search" placeholder="Search " class="form-control" style="border: 1px solid #ccc !important;">
+                </div>
+                <div class="item">
+                     <button class="items-center common-btn admin-btn d-flex common-btn-two md:mt-0 m-auto mt-4 " type="submit">
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{ route('admin.export.school') }}" download><span>Export</span></a>
                     </button>
-                </div>
-            </div>
-            <div class="items-center flex-wrap gap-2 justify-end my-5 md:flex">
-                <div class=" md:mt-0">
-                <input type="text" wire:model.debounce.500ms="search" placeholder="Search " class="form-control" style="border: 1px solid #ccc !important;">
                 </div>
             </div>
         </div>

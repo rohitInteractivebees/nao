@@ -1,9 +1,9 @@
 <div>
     <div class="pb-6 common-sec1">
         <div class="container">
-            <div class="items-center justify-between mt-3 lg:flex">
+            <div class="items-center justify-between mt-6 lg:flex">
                 <div class="item md:w-3/5">
-                    <div class="mb-0 sub-title">Total Student({{ $schoolName }})</div>
+                    <div class="mb-0 sub-title">Total Students ({{ $schoolName }})</div>
                 </div>
                 <div class="item md:w-2/5">
                     <div class="mt-4 md:mt-0">
@@ -21,9 +21,9 @@
                                     <th width="100">Sr.No</th>
                                     <th width="300">School Name</th>
                                     <th width="300">Student Name</th>
-                                    <th width="300">Class</th>
+                                    <th width="100">Class</th>
                                     <th width="400">Parent Email</th>
-                                    <th width="150">Parent Phone</th>
+                                    <th width="200">Parent Phone</th>
                                     <th width="150">Registration Date</th>
                                     {{-- <th align="center" width="100">Action</th> --}}
                                 </tr>

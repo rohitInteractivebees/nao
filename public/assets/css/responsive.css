@@ -780,6 +780,12 @@
     .common-sec1 .sub-title{
         text-align: center;
     }
+    .collage-dashboared .dashboared-items .item .items-center{
+        gap: 2rem;
+    }
+    .collage-dashboared .dashboared-items .text{
+        width: auto;
+    }
 }
 @media screen and (max-width: 639px) {
     .heading,

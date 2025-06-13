@@ -197,7 +197,7 @@
                         <li class="submenu"><a href="javascript:void(0)"> Manage </a>
                             <ul class="dropdown">
                                 <li><a href="{{ route('institute_login') }}">  School Register </a></li>
-                                <li><a href="{{ route('institute') }}">  School Details</a></li>
+                                {{-- <li><a href="{{ route('institute') }}">  School Details</a></li> --}}
                                 <li><a href="{{ route('all_schools') }}">  All Schools</a></li>
                                 <li><a href="{{ route('studentlistadmin') }}"> Student Register</a></li>
                                 <li><a href="{{ route('questions') }}"> Question Bank</a></li>

@@ -13,16 +13,16 @@
                                 <input type="file" name="csv_file" required>
                             </div>
                         </div>
+                        <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
+                            <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                            <span>Upload CSV</span>
+                        </button>
                     </form>
-                    <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
-                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                        <span>Upload CSV</span>
-                    </button>
                     <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{url('sampleCsv/School_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
                     </button>
-                    
+
                 </div>
             </div>
             <div class="items-center flex-wrap gap-2 md:justify-end my-5 md:flex justify-center">
@@ -37,10 +37,10 @@
                 </div>
             </div>
         </div>
-        
-        
-        
-        <div class="mx-auto max-w-7xl min-h-[75vh]">
+
+
+
+        <div class="mx-auto max-w-7xl">
             <div class="overflow-hidden bg-white">
                 <div class="">
                     {{-- <div class="mb-4">
@@ -71,6 +71,9 @@
                                     <th width="400">
                                         Code
                                     </th>
+                                    <th width="900">
+                                        Register Link
+                                    </th>
                                     <th width="200">
                                        Principal Name
                                     </th>
@@ -79,6 +82,12 @@
                                     </th>
                                     <th width="300">
                                         Principal Mobile
+                                    </th>
+                                     <th width="900">
+                                        Total Student
+                                    </th>
+                                    <th width="900">
+                                        Participant Student
                                     </th>
                                     <th align="center" width="100">Action</th>
 
@@ -104,6 +113,12 @@
                                             {{ $admin->code }}
                                         </td>
                                         <td>
+                                            @php
+                                                $baseUrl = url('/register/')
+                                            @endphp
+                                            {{ $baseUrl . '/' . $admin->code }}
+                                        </td>
+                                        <td>
                                             {{ $admin->name }}
                                         </td>
                                         <td>{{ !empty($admin->email) ? $admin->email : 'N/A' }}</td>
@@ -114,6 +129,19 @@
                                             @else
                                                 N/A
                                             @endif
+                                        </td>
+                                        <td>
+                                            @php
+                                                $studenclg = App\Models\User::where('institute', $admin->institute)->where('is_college', null)->get();
+                                            @endphp
+                                            <a href="{{ route('schoolStudents') . '?school='.$admin->id }}">{{count($studenclg)}}</a>
+                                        </td>
+                                        <td>
+                                            @php
+                                                $partstudentCount = App\Models\Test::whereIn('user_id', $studenclg->pluck('id'))->distinct('user_id')->count('user_id');
+                                            @endphp
+
+                                            <a href="{{ route('schoolStudentsParticipents') . '?school='.$admin->id }}">{{ $partstudentCount }}</a>
                                         </td>
                                         <td align="center">
                                             <a href="{{ route('editschoolprofile',['id' => $admin->id]) }}">

@@ -13,16 +13,16 @@
                                 <input type="file" name="csv_file" required>
                             </div>
                         </div>
+                        <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
+                            <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                            <span>Upload CSV</span>
+                        </button>
                     </form>
-                    <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
-                        <span class="reverse-pos"><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                        <span>Upload CSV</span>
-                    </button>
                     <button class="items-center common-btn admin-btn d-flex common-btn-two" type="submit">
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{url('sampleCsv/Student_Registration(Admin).csv')}}" download><span>Download Sample CSV</span></a>
                     </button>
-                    
+
                 </div>
             </div>
 
@@ -56,8 +56,8 @@
                         <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
                         <a href="{{ route('admin.export.students', ['quiz_id1' => $quiz_id1, 'class_id' => $class_id]) }}" download><span>Export</span></a>
                     </button>
-                    
-                
+
+
             </div>
             <!--Export Div Ends here-->
             <div class="mx-auto max-w-7xl">
@@ -204,7 +204,7 @@
             padding: 10px !important;
             line-height: 22px;
         }
-    
+
         input[type='file'] {
             font-size: 0.9rem;
             height: auto;

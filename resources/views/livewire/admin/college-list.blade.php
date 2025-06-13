@@ -134,14 +134,14 @@
                                             @php
                                                 $studenclg = App\Models\User::where('institute', $admin->institute)->where('is_college', null)->get();
                                             @endphp
-                                            <a href="{{ route('schoolStudents') . '?school='.$admin->id }}">{{count($studenclg)}}</a>
+                                            <a href="{{ route('schoolStudents') . '?school='.$admin->schoolID }}">{{count($studenclg)}}</a>
                                         </td>
                                         <td>
                                             @php
                                                 $partstudentCount = App\Models\Test::whereIn('user_id', $studenclg->pluck('id'))->distinct('user_id')->count('user_id');
                                             @endphp
 
-                                            <a href="{{ route('schoolStudentsParticipents') . '?school='.$admin->id }}">{{ $partstudentCount }}</a>
+                                            <a href="{{ route('schoolStudentsParticipents') . '?school='.$admin->schoolID }}">{{ $partstudentCount }}</a>
                                         </td>
                                         <td align="center">
                                             <a href="{{ route('editschoolprofile',['id' => $admin->id]) }}">

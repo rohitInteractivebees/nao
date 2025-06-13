@@ -100,9 +100,15 @@
                     Next question
                 </x-secondary-button>
             </div>
-            <p x-show="!selectedAnswer" class="mt-2 text-sm text-red-600">
-                Please select an option before continuing.
-            </p>
+            @php
+                $errorKey = 'answersOfQuestions.' . $currentQuestionIndex;
+            @endphp
+
+            @error($errorKey)
+                <div class="text-red-600 text-sm mt-1">
+                    {{ $message }}
+                </div>
+            @enderror
         @else
             <div class="mt-4">
                 <x-primary-button

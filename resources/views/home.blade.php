@@ -535,6 +535,14 @@
                         <div class="pt-5 certificate">
                             <img src="{{ asset('/assets/images/congrats-certificate.jpg') }}" width="1114" height="615" alt="">
                         </div>
+                        @php
+                            $testsHome =  App\Models\Test::query()
+                                ->with(['user', 'quiz'])
+                                ->withCount('questions')
+                                ->where('user_id', auth()->user()->id)->first();
+
+                        @endphp
+                        <a href="{{ route('download.certificate', $testsHome) }}" class="table-btn common-btn-two no-hov">Download</a>
                     </div>
                 </section>
 
@@ -542,7 +550,7 @@
                 <section class="common-sec levels-sec quiz-main-page min-h-[82vh]">
 
                     @if(!empty($liveQuiz) && count($liveQuiz) > 0 && $liveQuiz != null && $liveQuiz != '')
-                        @if(auth()->user()->attempt_count == 0)    
+                        @if(auth()->user()->attempt_count == 0)
                         <div class="popUp">
                             <div class="relative popup-content">
                                 <!--<div class="close">X</div>-->
@@ -588,7 +596,7 @@
                                         <div class="w-100 text-center ">
                                            <a class="common-btn red short instruction-btn" href="javascript:void(0)">Agree & Continue</a>
                                         </div>
-                                        
+
                                     </div>
                                     {{-- <div class="text-center">
                                         <a class="common-btn short" >Start Now</a>

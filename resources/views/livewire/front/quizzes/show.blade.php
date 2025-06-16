@@ -92,17 +92,17 @@
             </ul>
         </div>
     <div class="justify-center mt-6 links text-center">
+        @php
+            $errorKey = 'answersOfQuestions.' . $currentQuestionIndex;
+        @endphp
 
+        @error($errorKey)
+            <div class="inline-block bg-red-100 text-red-700 text-sm mt-1 px-3 py-1 rounded-full font-medium">
+                {{ $message }}
+            </div>
+        @enderror
         @if ($currentQuestionIndex < $this->questionsCount - 1)
-            @php
-                $errorKey = 'answersOfQuestions.' . $currentQuestionIndex;
-            @endphp
-
-            @error($errorKey)
-                <div class="inline-block bg-red-100 text-red-700 text-sm mt-1 px-3 py-1 rounded-full font-medium">
-                    {{ $message }}
-                </div>
-            @enderror
+            
             <div class="mt-4 d-flex justify-center">
                 <x-secondary-button
                     class="red"
@@ -117,8 +117,8 @@
             <div class="mt-4">
                 <x-primary-button
                     class="common-btn short red"
-                    x-on:click="submitDisabled = true; window.onbeforeunload = null; $wire.submit();"
-                    x-bind:disabled="submitDisabled || !selectedAnswer"
+                    x-on:click="submitDisabled = true; window.onbeforeunload = null; $wire.nextQuestion()"
+                    x-bind:disabled="!selectedAnswer"
                 >
                     Submit
                 </x-primary-button>

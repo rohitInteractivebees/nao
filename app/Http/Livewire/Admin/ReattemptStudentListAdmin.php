@@ -77,7 +77,8 @@ class ReattemptStudentListAdmin extends Component
                 $query->where(function ($q) use ($searchTerm) {
                     $q->where('name', 'like', $searchTerm)
                       ->orWhere('email', 'like', $searchTerm)
-                      ->orWhere('phone', 'like', $searchTerm);
+                      ->orWhere('phone', 'like', $searchTerm)
+                      ->orWhere('loginId', 'like', $searchTerm);
                 });
             }
 

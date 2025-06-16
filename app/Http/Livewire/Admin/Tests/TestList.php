@@ -47,25 +47,31 @@ class TestList extends Component
 
         $user_ids = [];
 
-        if ($this->quiz_id == 'Other') {
-            $users = User::where('institute', $this->quiz_id)->get();
-            $user_ids = $users->pluck('id')->toArray();
-        }else if ($this->quiz_id > 0) {
-            $users = User::where('institute', $this->quiz_id)->get();
-            $user_ids = $users->pluck('id')->toArray();
-        }
         if ($this->class_id > 0) {
-            $users = User::where('institute', $this->quiz_id)
-                    ->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')')->get();
-            $user_ids = $users->pluck('id')->toArray();
+            $query = User::query()
+                ->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
 
+            if ($this->quiz_id === 'Other' || (is_numeric($this->quiz_id) && $this->quiz_id > 0)) {
+                $query->where('institute', $this->quiz_id);
+            }
+
+            $user_ids = $query->pluck('id')->toArray();
+        } elseif ($this->quiz_id === 'Other' || (is_numeric($this->quiz_id) && $this->quiz_id > 0)) {
+            // No class filter, only institute-based filter
+            $user_ids = User::where('institute', $this->quiz_id)->pluck('id')->toArray();
         }
+
 
         $tests = Test::query()
     ->with(['user', 'quiz'])
     ->withCount('questions')
     ->when($this->quiz_id > 0, function ($query) use ($user_ids) {
         $query->whereIn('user_id', $user_ids);
+    })
+    ->when($this->class_id > 0, function ($query) {
+        $query->whereHas('user', function ($q) {
+            $q->whereRaw('JSON_CONTAINS(class, \'\"' . $this->class_id . '\"\')');
+        });
     })
     ->when(!empty($this->search), function ($query) {
         $searchTerm = '%' . $this->search . '%';

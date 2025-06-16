@@ -8,7 +8,7 @@
                         <div class="item">
                             <div class="text-center md:mb-0 sub-title">Quiz Attempt Tracker</div>
                         </div>
-                        <div class="items-center d-flex gap-1 flex-wrap">
+                        <div class="items-center d-flex gap-2 flex-wrap justify-center">
                             <select class="p-3 w-64 m-auto md:m-0"
                                 wire:model="quiz_id">
                                 <option value="0">All School</option>
@@ -16,7 +16,7 @@
                                     <option value="{{ $quiz->id }}">{{ $quiz->name }}</option>
                                 @endforeach
                                 <option value="Other">Other</option>
-                            </select>   
+                            </select>
                             <select class="block m-auto mt-3 md:m-0 " wire:model="class_id" name="class_id">
                                 <option value="0">All Classes</option>
                                 @foreach(App\Models\Classess::all() as $class)
@@ -24,12 +24,21 @@
                                 @endforeach
                             </select>
                             <div class="md:mt-0">
-                                <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
+                                <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
+                                    <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
+                                    <a href="#" download><span>Export</span></a>
+                                </button>
+
                             </div>
                          </div>
                     </div>
-                    
-                    
+                    <div class="md:flex justify-end">
+                        <div class="item md:min-w-[30%]">
+                            <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
+                        </div>
+                    </div>
+
+
                     <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                     <table class="table w-full mt-4 table-view">
                         <thead>

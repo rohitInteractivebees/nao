@@ -117,7 +117,7 @@ class StudentListAdmin extends Component
             $students = $students->get();
 
             $csvData = [];
-            $csvData[] = ['Sr.No', 'School Name', 'Student Name', 'Login ID', 'Class', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
+            $csvData[] = ['Sr.No', 'School Name', 'School Code', 'Student Name', 'Login ID', 'Class', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
 
             foreach ($students as $index => $student) {
                 $instituteName = $student->institute !== 'Other'
@@ -136,9 +136,18 @@ class StudentListAdmin extends Component
                 }
                 $email = !empty($student->email) ? $student->email : 'N/A';
 
+                if($student->institute == 'Other')
+                {
+                    $school_code = explode("_",$student->reg_no)[0];
+                }else{
+                    $schoolData = Instute::where('id',$student->institute)->first();
+                    $school_code = $schoolData->code;
+                }
+
                 $csvData[] = [
                     $index + 1,
                     $instituteName,
+                    $school_code,
                     $student->name,
                     $student->loginId,
                     $classNames,

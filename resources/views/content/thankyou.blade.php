@@ -53,6 +53,7 @@
                                     @endphp
                                     <p>User ID : <strong> {{ $user->loginId }}</strong></p>
                                     <p>Password : <strong> @if (session('password')){{ session('password') }}@endif</strong></p>
+                                    <p><strong>Kindly use the login credentials shared above to access your account and attempt the quiz.</strong></p>
                                 @else
                                     <p>User not found.</p>
                                 @endif

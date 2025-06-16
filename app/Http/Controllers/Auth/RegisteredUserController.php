@@ -217,6 +217,8 @@ class RegisteredUserController extends Controller
         } catch (\Throwable $e) {
 
         }
+        Session::forget('otp');
+        Session::forget('parent_email');
         session()->flash('password', $request->parent_phone);
         return redirect('/thankyou/'.$user->id);
     }
@@ -307,6 +309,8 @@ class RegisteredUserController extends Controller
         } catch (\Throwable $e) {
 
         }
+        Session::forget('school_otp');
+        Session::forget('principal_email');
         session()->flash('password', $request->principal_mobile);
         return redirect('/thankyou/'.$user->id);
     }

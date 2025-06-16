@@ -16,12 +16,15 @@ trait InteractsWithDockerComposeServices
         'mysql',
         'pgsql',
         'mariadb',
+        'mongodb',
         'redis',
+        'valkey',
         'memcached',
         'meilisearch',
         'typesense',
         'minio',
         'mailpit',
+        'rabbitmq',
         'selenium',
         'soketi',
     ];
@@ -92,7 +95,7 @@ trait InteractsWithDockerComposeServices
         // Merge volumes...
         collect($services)
             ->filter(function ($service) {
-                return in_array($service, ['mysql', 'pgsql', 'mariadb', 'redis', 'meilisearch', 'typesense', 'minio']);
+                return in_array($service, ['mysql', 'pgsql', 'mariadb', 'mongodb', 'redis', 'valkey', 'meilisearch', 'typesense', 'minio', 'rabbitmq']);
             })->filter(function ($service) use ($compose) {
                 return ! array_key_exists($service, $compose['volumes'] ?? []);
             })->each(function ($service) use (&$compose) {
@@ -104,12 +107,11 @@ trait InteractsWithDockerComposeServices
             unset($compose['volumes']);
         }
 
-        // Replace Selenium with ARM base container on Apple Silicon...
-        if (in_array('selenium', $services) && in_array(php_uname('m'), ['arm64', 'aarch64'])) {
-            $compose['services']['selenium']['image'] = 'seleniarm/standalone-chromium';
-        }
+        $yaml = Yaml::dump($compose, Yaml::DUMP_OBJECT_AS_MAP);
 
-        file_put_contents($this->laravel->basePath('docker-compose.yml'), Yaml::dump($compose, Yaml::DUMP_OBJECT_AS_MAP));
+        $yaml = str_replace('{{PHP_VERSION}}', $this->hasOption('php') ? $this->option('php') : '8.4', $yaml);
+
+        file_put_contents($this->laravel->basePath('docker-compose.yml'), $yaml);
     }
 
     /**
@@ -164,6 +166,15 @@ trait InteractsWithDockerComposeServices
             $environment = str_replace('REDIS_HOST=127.0.0.1', 'REDIS_HOST=redis', $environment);
         }
 
+        if (in_array('valkey',$services)){
+            $environment = str_replace('REDIS_HOST=127.0.0.1', 'REDIS_HOST=valkey', $environment);
+        }
+
+        if (in_array('mongodb', $services)) {
+            $environment .= "\nMONGODB_URI=mongodb://mongodb:27017";
+            $environment .= "\nMONGODB_DATABASE=laravel";
+        }
+
         if (in_array('meilisearch', $services)) {
             $environment .= "\nSCOUT_DRIVER=meilisearch";
             $environment .= "\nMEILISEARCH_HOST=http://meilisearch:7700\n";
@@ -195,6 +206,10 @@ trait InteractsWithDockerComposeServices
             $environment = preg_replace("/^MAIL_PORT=(.*)/m", "MAIL_PORT=1025", $environment);
         }
 
+        if (in_array('rabbitmq', $services)) {
+            $environment = str_replace('RABBITMQ_HOST=127.0.0.1', 'RABBITMQ_HOST=rabbitmq', $environment);
+        }
+
         file_put_contents($this->laravel->basePath('.env'), $environment);
     }
 
@@ -216,7 +231,14 @@ trait InteractsWithDockerComposeServices
         $phpunit = file_get_contents($path);
 
         $phpunit = preg_replace('/^.*DB_CONNECTION.*\n/m', '', $phpunit);
-        $phpunit = str_replace('<!-- <env name="DB_DATABASE" value=":memory:"/> -->', '<env name="DB_DATABASE" value="testing"/>', $phpunit);
+        $phpunit = str_replace(
+            [
+                '<!-- <env name="DB_DATABASE" value=":memory:"/> -->',
+                '<env name="DB_DATABASE" value=":memory:"/>',
+            ],
+            '<env name="DB_DATABASE" value="testing"/>',
+            $phpunit
+        );
 
         file_put_contents($this->laravel->basePath('phpunit.xml'), $phpunit);
     }

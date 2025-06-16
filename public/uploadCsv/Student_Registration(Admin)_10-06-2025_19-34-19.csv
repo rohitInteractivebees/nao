@@ -1,0 +1,20 @@
+s.no,school_code,student_name,class,session_year,parent_name,parent_email,parent_country_code,parent_phone,country,state,city,pincode,loginId,password
+1,SAPS10,"Bharadwaj Lijish",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_1,SAPS10_1
+2,SAPS10,"Hamdan Salim",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_2,SAPS10_2
+3,SAPS10,"Jewel J Kappen",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_3,SAPS10_3
+4,SAPS10,"Bhavya P Krishna",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_4,SAPS10_4
+5,SAPS10,"Estha Ann Manjesh",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_5,SAPS10_5
+6,SAPS10,"Elma Jomon",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_6,SAPS10_6
+7,SAPS10,"Andrea Liza Tomy",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_7,SAPS10_7
+8,SAPS10,"Mariya Rose Anish",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_8,SAPS10_8
+9,SAPS10,"Roopika Rajeev",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_9,SAPS10_9
+10,SAPS10,"Aloha Kurian",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_10,SAPS10_10
+11,SAPS10,"Ayfa Maryam",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_11,SAPS10_11
+12,SAPS10,"Haneena Fathima",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_12,SAPS10_12
+13,SAPS10,"Aayisha Ajimsha",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_13,SAPS10_13
+14,SAPS10,"Liya Ross George",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_14,SAPS10_14
+15,SAPS10,Thanmaya,7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_15,SAPS10_15
+16,SAPS10,"Ashish Thomas Krupa",7,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_16,SAPS10_16
+17,SAPS10,"Hilal Sha M",8,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_17,SAPS10_17
+18,SAPS10,"Chrisben Aby",8,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_18,SAPS10_18
+19,SAPS10,"Jezreel S S",8,2025-26,Father,,,,India,Kerala,Kottayam,686001,SAPS10_19,SAPS10_19

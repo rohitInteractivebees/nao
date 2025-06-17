@@ -87,6 +87,7 @@
                                 <th width="100">Sr.No</th>
                                 <th width="300">Student Name</th>
                                 <th width="300">Class</th>
+                                <th width="300">Section</th>
                                 <th width="400">Parent Email</th>
                                 <th width="150">Parent Phone</th>
                                 <!--<th width="150">Status</th>-->
@@ -107,6 +108,7 @@
                                 <td>
                                     {{ \App\Models\Classess::whereIn('id', json_decode($admin->class))->pluck('name')->join(', ') }}
                                 </td>
+                                <td>{{ !empty($admin->section) ? $admin->section : 'N/A' }}</td>
                                 <td>{{ !empty($admin->email) ? $admin->email : 'N/A' }}</td>
 
                                 <td>
@@ -154,7 +156,7 @@
                                     <a data-fancybox href="#dialog-content-detail" onclick="dataAdd('{{ $admin->id }}','{{ $admin->loginId }}')">
                                         <img src="{{ asset('/assets/images/icon-edit.png') }}" alt="" >
                                     </a>
-                                    
+
                                 </td>
 
                             </tr>

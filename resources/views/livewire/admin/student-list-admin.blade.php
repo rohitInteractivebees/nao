@@ -99,6 +99,7 @@
                                     <th width="300">Student Name</th>
                                     <th width="300">Login ID</th>
                                     <th width="300">Class</th>
+                                    <th width="300">Section</th>
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>
                                     <th width="150">Registration Date</th>
@@ -132,6 +133,7 @@
                                         <td>
                                             {{ \App\Models\Classess::whereIn('id', json_decode($student->class))->pluck('name')->join(', ') }}
                                         </td>
+                                        <td>{{ !empty($student->section) ? $student->section : 'N/A' }}</td>
                                         <td>{{ !empty($student->email) ? $student->email : 'N/A' }}</td>
 
                                         <td>

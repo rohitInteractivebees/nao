@@ -26,7 +26,7 @@
                             <div class="md:mt-0">
                                 <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 " type="submit">
                                     <span><img src="{{ asset('/assets/images/icon-download.png') }}" alt=""></span>
-                                    <a href="#" download><span>Export</span></a>
+                                    <a href="{{ route('admin.export.quizattempt', ['quiz_id' => $quiz_id, 'class_id' => $class_id]) }}" download><span>Export</span></a>
                                 </button>
 
                             </div>

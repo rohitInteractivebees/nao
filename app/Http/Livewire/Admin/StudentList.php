@@ -241,24 +241,24 @@ class StudentList extends Component
             $skip = false;
 
             if ($parentEmail) {
-                $userByEmail = User::where('email', $parentEmail)->first();
+                $userByEmail = User::where('email', $parentEmail)
+                    ->whereRaw('LOWER(name) = ?', [trim(strtolower($studentName))])
+                    ->whereRaw('JSON_CONTAINS(class, ?)', ['"' . $classId . '"'])
+                    ->first();
+            
                 if ($userByEmail) {
-                    if (trim(strtolower($userByEmail->name)) === trim(strtolower($studentName))) {
-                        if (in_array($classId, json_decode($userByEmail->class ?? '[]'))) {
-                            $skip = true;
-                        }
-                    }
+                    $skip = true;
                 }
             }
-
+            
             if (!$skip && $phone) {
-                $userByPhone = User::where('phone', $phone)->first();
+                $userByPhone = User::where('phone', $phone)
+                    ->whereRaw('LOWER(name) = ?', [trim(strtolower($studentName))])
+                    ->whereRaw('JSON_CONTAINS(class, ?)', ['"' . $classId . '"'])
+                    ->first();
+            
                 if ($userByPhone) {
-                    if (trim(strtolower($userByPhone->name)) === trim(strtolower($studentName))) {
-                        if (in_array($classId, json_decode($userByPhone->class ?? '[]'))) {
-                            $skip = true;
-                        }
-                    }
+                    $skip = true;
                 }
             }
             $classExists = Classess::where('id', $classId)->exists();

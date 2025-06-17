@@ -2,17 +2,18 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Test;
 use App\Models\User;
 use App\Models\Instute;
 use Livewire\Component;
 use App\Models\Classess;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Http\Response as HttpResponse;
+use Livewire\WithPagination;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Livewire\WithPagination;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response as HttpResponse;
 
 class CollegeList extends Component
 {
@@ -68,7 +69,7 @@ class CollegeList extends Component
             $students = User::where('is_college',1)->get();
 
             $csvData = [];
-            $csvData[] = ['Sr.No', 'School Name', 'Code', 'Register Link', 'Principal Name', 'Principal Mobile', 'Principal Email', 'Spoc Name', 'Spoc Eamil', 'Spoc Mobile', 'Country', 'State', 'City', 'Pincode', 'Registration Date'];
+            $csvData[] = ['Sr.No', 'School Name', 'Code', 'Register Link', 'Principal Name', 'Principal Mobile', 'Principal Email', 'Spoc Name', 'Spoc Eamil', 'Spoc Mobile', 'Country', 'State', 'City', 'Pincode', 'Registration Date','Total Student','Participant Student'];
 
             foreach ($students as $index => $student) {
                 $instituteData = Instute::where('id', $student->institute)->first();
@@ -77,6 +78,10 @@ class CollegeList extends Component
                 $instituteCode = $instituteData->code;
                 $registerLink = url('/register/').'/'.$instituteCode;
                 $email = !empty($student->email) ? $student->email : 'N/A';
+
+                $studenclg = User::where('institute', $student->institute)->where('is_college', null)->get();
+                $total_student = count($studenclg);
+                $partstudentCount = Test::whereIn('user_id', $studenclg->pluck('id'))->distinct('user_id')->count('user_id');
 
                 $csvData[] = [
                     $index + 1,
@@ -94,6 +99,8 @@ class CollegeList extends Component
                     $student->city,
                     $student->pincode,
                     $student->created_at->format('d-m-Y'),
+                    $total_student,
+                    $partstudentCount
                 ];
             }
 

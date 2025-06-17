@@ -173,6 +173,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/phase-submission-3/create', PhaseSubmissionForm::class)->name('submissions3.create');
         Route::get('/export-students', [StudentListAdmin::class, 'export'])->name('admin.export.students');
         Route::get('/export-school', [CollegeList::class, 'export'])->name('admin.export.school');
+        Route::get('/export-quizattempt', [TestList::class, 'export'])->name('admin.export.quizattempt');
         Route::get('school/edit_school_profile/{id}', SchoolEditForm::class)->name('editschoolprofile');
         Route::get('student/edit_student_profile/{id}', StudentEditForm::class)->name('editstudentprofile');
     });

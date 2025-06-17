@@ -44,7 +44,8 @@ class User extends Authenticatable
         'country_code',
         'spoc_country_code',
         'pincode',
-        'attempt_count'
+        'attempt_count',
+        'section',
     ];
 
     protected $hidden = [

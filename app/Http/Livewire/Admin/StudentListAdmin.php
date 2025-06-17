@@ -117,7 +117,7 @@ class StudentListAdmin extends Component
             $students = $students->get();
 
             $csvData = [];
-            $csvData[] = ['Sr.No', 'School Name', 'Student Name', 'Login ID', 'Class', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
+            $csvData[] = ['Sr.No', 'School Name', 'School Code', 'Student Name', 'Login ID', 'Class','Section', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
 
             foreach ($students as $index => $student) {
                 $instituteName = $student->institute !== 'Other'
@@ -136,12 +136,22 @@ class StudentListAdmin extends Component
                 }
                 $email = !empty($student->email) ? $student->email : 'N/A';
 
+                if($student->institute == 'Other')
+                {
+                    $school_code = explode("_",$student->reg_no)[0];
+                }else{
+                    $schoolData = Instute::where('id',$student->institute)->first();
+                    $school_code = $schoolData->code;
+                }
+
                 $csvData[] = [
                     $index + 1,
                     $instituteName,
+                    $school_code,
                     $student->name,
                     $student->loginId,
                     $classNames,
+                    $student->section ?? 'N/A',
                     $student->session_year,
                     $student->parent_name,
                     $email,
@@ -205,15 +215,16 @@ class StudentListAdmin extends Component
             !isset($headerData[1]) || $headerData[1] !== 'school_code' ||
             !isset($headerData[2]) || $headerData[2] !== 'student_name' ||
             !isset($headerData[3]) || $headerData[3] !== 'class' ||
-            !isset($headerData[4]) || $headerData[4] !== 'session_year' ||
-            !isset($headerData[5]) || $headerData[5] !== 'parent_name' ||
-            !isset($headerData[6]) || $headerData[6] !== 'parent_email' ||
-            !isset($headerData[7]) || $headerData[7] !== 'parent_country_code' ||
-            !isset($headerData[8]) || $headerData[8] !== 'parent_phone' ||
-            !isset($headerData[9]) || $headerData[9] !== 'country' ||
-            !isset($headerData[10]) || $headerData[10] !== 'state' ||
-            !isset($headerData[11]) || $headerData[11] !== 'city' ||
-            !isset($headerData[12]) || $headerData[12] !== 'pincode'
+            !isset($headerData[4]) || $headerData[4] !== 'section' ||
+            !isset($headerData[5]) || $headerData[5] !== 'session_year' ||
+            !isset($headerData[6]) || $headerData[6] !== 'parent_name' ||
+            !isset($headerData[7]) || $headerData[7] !== 'parent_email' ||
+            !isset($headerData[8]) || $headerData[8] !== 'parent_country_code' ||
+            !isset($headerData[9]) || $headerData[9] !== 'parent_phone' ||
+            !isset($headerData[10]) || $headerData[10] !== 'country' ||
+            !isset($headerData[11]) || $headerData[11] !== 'state' ||
+            !isset($headerData[12]) || $headerData[12] !== 'city' ||
+            !isset($headerData[13]) || $headerData[13] !== 'pincode'
         ) {
             return response()->json([
                 'success' => false,
@@ -228,30 +239,51 @@ class StudentListAdmin extends Component
         foreach ($csvData as $key => $row) {
             if ($key === 0) continue; // Skip header
 
-            if (count($row) < 13) continue;
+            if (count($row) < 14) continue;
             $row = array_map('trim', $row);
 
             [
-                $index, $schoolCode, $studentName, $class, $sessionYear, $parentName,
+                $index, $schoolCode, $studentName, $class, $section, $sessionYear, $parentName,
                 $parentEmail, $parentCountryCode, $phone, $country, $state, $city, $pincode
             ] = $row;
 
             if (
                 $schoolCode === '' || $studentName === '' || $class === '' || $sessionYear === '' ||
-                $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === ''
+                $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === '' || strlen($section) > 15
             ) {
                 continue;
             }
-
             $classId = (int) $class - 5;
 
-            $emailExists = $parentEmail ? User::where('email', $parentEmail)->exists() : false;
-            $phoneExists = $phone ? User::where('phone', $phone)->exists() : false;
+
+            $skip = false;
+
+            if ($parentEmail) {
+                $userByEmail = User::where('email', $parentEmail)->first();
+                if ($userByEmail) {
+                    if (trim(strtolower($userByEmail->name)) === trim(strtolower($studentName))) {
+                        if (in_array($classId, json_decode($userByEmail->class ?? '[]'))) {
+                            $skip = true;
+                        }
+                    }
+                }
+            }
+
+            if (!$skip && $phone) {
+                $userByPhone = User::where('phone', $phone)->first();
+                if ($userByPhone) {
+                    if (trim(strtolower($userByPhone->name)) === trim(strtolower($studentName))) {
+                        if (in_array($classId, json_decode($userByPhone->class ?? '[]'))) {
+                            $skip = true;
+                        }
+                    }
+                }
+            }
 
             $classExists = Classess::where('id', $classId)->exists();
             $schoolExists = Instute::where('code', $schoolCode)->exists();
 
-            if ($emailExists || $phoneExists || !$classExists || !$schoolExists) {
+            if ($skip || !$classExists || !$schoolExists) {
                 continue;
             }
 
@@ -285,6 +317,7 @@ class StudentListAdmin extends Component
                 'email' => $parentEmail,
                 'institute' => $schoolData->id,
                 'class' => json_encode([(string) $classId]),
+                'section' => $section,
                 'country' => $country,
                 'state' => $state,
                 'city' => $city,

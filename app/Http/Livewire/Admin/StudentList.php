@@ -109,7 +109,7 @@ class StudentList extends Component
             $students = $students->get();
 
             $csvData = [];
-            $csvData[] = ['Sr.No', 'Student Name', 'Class', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
+            $csvData[] = ['Sr.No', 'Student Name', 'Class','Section', 'Session Year', 'Parent Name', 'Parent Email', 'Parent Phone', 'Country', 'State', 'City', 'Pincode', 'Registration Date','status'];
 
             foreach ($students as $index => $student) {
 
@@ -129,6 +129,7 @@ class StudentList extends Component
                     $index + 1,
                     $student->name,
                     $classNames,
+                    $student->section ?? 'N/A',
                     $student->session_year,
                     $student->parent_name,
                     $email,
@@ -190,15 +191,16 @@ class StudentList extends Component
         if (
             !isset($headerData[1]) || $headerData[1] !== 'student_name' ||
             !isset($headerData[2]) || $headerData[2] !== 'class' ||
-            !isset($headerData[3]) || $headerData[3] !== 'session_year' ||
-            !isset($headerData[4]) || $headerData[4] !== 'parent_name' ||
-            !isset($headerData[5]) || $headerData[5] !== 'parent_email' ||
-            !isset($headerData[6]) || $headerData[6] !== 'parent_country_code' ||
-            !isset($headerData[7]) || $headerData[7] !== 'parent_phone' ||
-            !isset($headerData[8]) || $headerData[8] !== 'country' ||
-            !isset($headerData[9]) || $headerData[9] !== 'state' ||
-            !isset($headerData[10]) || $headerData[10] !== 'city' ||
-            !isset($headerData[11]) || $headerData[11] !== 'pincode'
+            !isset($headerData[3]) || $headerData[3] !== 'section' ||
+            !isset($headerData[4]) || $headerData[4] !== 'session_year' ||
+            !isset($headerData[5]) || $headerData[5] !== 'parent_name' ||
+            !isset($headerData[6]) || $headerData[6] !== 'parent_email' ||
+            !isset($headerData[7]) || $headerData[7] !== 'parent_country_code' ||
+            !isset($headerData[8]) || $headerData[8] !== 'parent_phone' ||
+            !isset($headerData[9]) || $headerData[9] !== 'country' ||
+            !isset($headerData[10]) || $headerData[10] !== 'state' ||
+            !isset($headerData[11]) || $headerData[11] !== 'city' ||
+            !isset($headerData[12]) || $headerData[12] !== 'pincode'
         ) {
             return response()->json([
                 'success' => false,
@@ -217,33 +219,54 @@ class StudentList extends Component
         foreach ($csvData as $key => $row) {
             if ($key === 0) continue; // Skip header
             // Ensure minimum column count
-            if (count($row) < 12) continue;
+            if (count($row) < 13) continue;
 
             $row = array_map('trim', $row);
 
             [
-                $index, $studentName, $class, $sessionYear, $parentName,
+                $index, $studentName, $class, $section, $sessionYear, $parentName,
                 $parentEmail, $parentCountryCode, $phone, $country, $state, $city, $pincode
             ] = $row;
 
             if (
-                $studentName === '' || $class === '' || $sessionYear === '' || $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === ''
+                $studentName === '' || $class === '' || $sessionYear === '' || $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === '' || strlen($section) > 15
             ) {
                 continue;
             }
 
             // Convert class to integer (in case it's a string like "6")
             $classId = (int) $class - 5;
-            // Check if already exists
-            $emailExists = $parentEmail ? User::where('email', $parentEmail)->exists() : false;
-            $phoneExists = $phone ? User::where('phone', $phone)->exists() : false;
-            //$loginIdExists = User::where('loginId', $loginId)->exists();
-            $classExists = Classess::where('id', $classId)->exists();
 
-            if ($emailExists || $phoneExists || !$classExists) {
-                continue; // Skip if duplicate or invalid class ID
+
+            $skip = false;
+
+            if ($parentEmail) {
+                $userByEmail = User::where('email', $parentEmail)->first();
+                if ($userByEmail) {
+                    if (trim(strtolower($userByEmail->name)) === trim(strtolower($studentName))) {
+                        if (in_array($classId, json_decode($userByEmail->class ?? '[]'))) {
+                            $skip = true;
+                        }
+                    }
+                }
             }
-            //dd('test');
+
+            if (!$skip && $phone) {
+                $userByPhone = User::where('phone', $phone)->first();
+                if ($userByPhone) {
+                    if (trim(strtolower($userByPhone->name)) === trim(strtolower($studentName))) {
+                        if (in_array($classId, json_decode($userByPhone->class ?? '[]'))) {
+                            $skip = true;
+                        }
+                    }
+                }
+            }
+            $classExists = Classess::where('id', $classId)->exists();
+            $schoolExists = Instute::where('code', $schoolCode)->exists();
+
+            if ($skip || !$classExists || !$schoolExists) {
+                continue;
+            }
 
             // Ensure it's an array before encoding
             if (is_array($classId)) {
@@ -281,6 +304,7 @@ class StudentList extends Component
                 'email' => $parentEmail,
                 'institute' => $id,
                 'class' => $encodedClassname,
+                'section' => $section,
                 'country' => $country,
                 'state' =>$state,
                 'city' =>$city,

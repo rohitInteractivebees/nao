@@ -95,9 +95,11 @@
                                 <tr>
                                     <th width="100">Sr.No</th>
                                     <th width="300">School Name</th>
+                                    <th width="300">School Code</th>
                                     <th width="300">Student Name</th>
                                     <th width="300">Login ID</th>
                                     <th width="300">Class</th>
+                                    <th width="300">Section</th>
                                     <th width="400">Parent Email</th>
                                     <th width="150">Parent Phone</th>
                                     <th width="150">Registration Date</th>
@@ -115,18 +117,23 @@
                                         @php
                                             if($student->institute != 'Other')
                                             {
-                                                $instituteName = App\Models\Instute::where('id', $student->institute)->value('name');
+                                                $instituteNameData = App\Models\Instute::where('id', $student->institute)->first();
+                                                $instituteName = $instituteNameData->name;
+                                                $school_code = $instituteNameData->code;
 
                                             }else{
                                                 $instituteName = $student->institute.' ('.$student->school_name.')';
+                                                $school_code = explode("_",$student->reg_no)[0];
                                             }
                                         @endphp
                                         <td>{{ $instituteName }}</td>
+                                        <td>{{ $school_code }}</td>
                                         <td>{{ $student->name }}</td>
                                         <td>{{ $student->loginId }}</td>
                                         <td>
                                             {{ \App\Models\Classess::whereIn('id', json_decode($student->class))->pluck('name')->join(', ') }}
                                         </td>
+                                        <td>{{ !empty($student->section) ? $student->section : 'N/A' }}</td>
                                         <td>{{ !empty($student->email) ? $student->email : 'N/A' }}</td>
 
                                         <td>

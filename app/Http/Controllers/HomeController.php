@@ -99,14 +99,15 @@ class HomeController extends Controller
             'email' => ['required', 'email'],
             'category' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'image' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // 2MB
-            'message' => ['required', 'string', 'min:50'],
+            'message' => ['required', 'string', 'min:50', 'max:250'],
         ], [
             'name.regex' => 'The name may only contain letters and spaces.',
             'category.regex' => 'The category may only contain letters and spaces.',
             'image.max' => 'The image must not be greater than 2MB.',
             'image.mimes' => 'Only JPG, JPEG, and PNG images are allowed.',
             'mobile_number.digits_between' => 'Mobile number must be between 7 to 12 digits.',
-            'message.min' => 'The testimonial must be at least 50 characters.',
+            'message.min' => 'The testimonial must be between 50 and 250 characters.',
+            'message.max' => 'The testimonial must be between 50 and 250 characters.',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();

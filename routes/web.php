@@ -76,7 +76,7 @@ Route::middleware('guest')->group(function () {
     Route::view('notice', 'content.notice')->name('notice');
     Route::view('privacy-policy', 'content.privacy_policy')->name('privacy_policy');
     Route::view('press-release', 'content.press_release')->name('press_release');
-    Route::get('testimonial_form', [HomeController::class, 'testimonial_form'])->name('testimonial');
+    Route::get('testimonial', [HomeController::class, 'testimonial_form'])->name('testimonial');
     Route::post('testimonial_submit', [HomeController::class, 'testimonial_store'])->name('testimonial.store');
 });
 

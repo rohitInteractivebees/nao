@@ -79,7 +79,7 @@
                         <li class="w-full textarea-sec mr-8">
                             <div class="input-group mb-4">
                                 <label for="message">Testimonial <span><sm></span></sm></label>
-                                <textarea class="form-control w-full" placeholder="We’d love a detailed response — just keep it between 50 and 250 words." name="message" id="message" required>{{ old('message') }}</textarea>
+                                <textarea class="form-control w-full" placeholder="We’d love a detailed response — just keep it between 50 and 250 characters." name="message" id="message" required>{{ old('message') }}</textarea>
                                 <span class="text-red-500 text-sm error-message">@error('message'){{ $message }}@enderror</span>
                             </div>
                         </li>
@@ -162,8 +162,8 @@ document.getElementById('formId').addEventListener('submit', function (e) {
 
     const message = document.getElementById('message');
     const charCount = message.value.trim().length;
-    if (charCount < 100) {
-        showError(message, "Testimonial must be at least 100 characters.");
+    if (charCount < 50 || charCount > 250) {
+        showError(message, "The testimonial must be between 50 and 250 characters.");
         isValid = false;
     }
 

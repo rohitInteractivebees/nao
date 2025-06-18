@@ -9,6 +9,7 @@ backup
 public/storage
 public/hot
 public/uploadCsv
+public/testimonial
 
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage

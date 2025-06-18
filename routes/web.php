@@ -40,6 +40,7 @@ use App\Http\Livewire\Admin\SchoolStudents;
 use App\Http\Livewire\Admin\SchoolStudentsParticipents;
 use App\Http\Livewire\Admin\SchoolEditForm;
 use App\Http\Livewire\Admin\StudentEditForm;
+use App\Http\Livewire\Admin\TestimonialAdmin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,12 +72,11 @@ Route::view('terms_and_conditions', 'content.terms_and_conditions');
 
 Route::middleware('guest')->group(function () {
     Route::view('thankyou/{id?}', 'content.thankyou')->name('thankyou');
-   // Route::view('testimonial', 'content.testimonial')->name('testimonial');
     Route::view('gallery', 'content.gallery')->name('gallery');
     Route::view('notice', 'content.notice')->name('notice');
     Route::view('privacy-policy', 'content.privacy_policy')->name('privacy_policy');
     Route::view('press-release', 'content.press_release')->name('press_release');
-    Route::get('testimonial', [HomeController::class, 'testimonial_form'])->name('testimonial');
+    Route::get('testimonial_form', [HomeController::class, 'testimonial_form'])->name('testimonial');
     Route::post('testimonial_submit', [HomeController::class, 'testimonial_store'])->name('testimonial.store');
 });
 
@@ -176,6 +176,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/export-quizattempt', [TestList::class, 'export'])->name('admin.export.quizattempt');
         Route::get('school/edit_school_profile/{id}', SchoolEditForm::class)->name('editschoolprofile');
         Route::get('student/edit_student_profile/{id}', StudentEditForm::class)->name('editstudentprofile');
+        Route::get('testimonialslist', TestimonialAdmin::class)->name('testimonial.list');
     });
     Route::get('student-list', ClassList::class)->name('class.list');
 });

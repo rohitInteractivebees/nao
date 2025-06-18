@@ -2,7 +2,7 @@
 <style>
 .nao-logo {
     width: 11rem;
-}    
+}
 </style>
 <section class="main-banner">
         <div class="banner-list ">
@@ -40,12 +40,12 @@
             </div>
         </div>
       </section>
-      <section class="about-sec common-spacing pb-12" id="about-nao">
+      <section class="pb-12 about-sec common-spacing" id="about-nao">
         <div class="container mx-auto">
             <div class="stats-sec">
-                <div class="flex justify-center items-center md:gap-6 flex-wrap">
+                <div class="flex flex-wrap items-center justify-center md:gap-6">
                     <div class="item">
-                        <div class="flex gap-3 items-center justify-center stats-list">
+                        <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
                                 <img src="{{ asset('/images/school-1-ico.svg') }}">
                             </div>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <div class="flex gap-3 items-center justify-center stats-list">
+                        <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
                                 <img src="{{ asset('/images/student-svg.svg') }}">
                             </div>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <div class="flex gap-3 items-center justify-center stats-list">
+                        <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
                                 <img src="{{ asset('/images/location-ico.svg') }}">
                             </div>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <div class="flex gap-3 items-center justify-center stats-list">
+                        <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
                                 <img src="{{ asset('/images/location-ico.svg') }}">
                             </div>
@@ -90,15 +90,15 @@
                     </div>
                 </div>
             </div>
-            <div class="about-content text-center lg:w-4/5 lg:mx-auto">
+            <div class="text-center about-content lg:w-4/5 lg:mx-auto">
                 <div class="common-title"><span>National Automobile Olympiad (NAO)</span></div>
                 <div class="des">
                     <p class="mb-3">The National Automobile Olympiad (NAO) is a flagship initiative by the Automotive Skills Development Council (ASDC) in collaboration with Central Board of Secondary Education (CBSE), aimed at fostering early engagement with school students from Class 6 to 12 and cultivating their interest in the dynamic world of mobility and automotive technology. This Olympiad serves as a platform to not only spark curiosity but also to educate and inspire young minds about the vast opportunities within the automobile industry.</p>
                     <p>By participating in NAO, students are introduced to a wide spectrum of emerging technologies and career pathways in fields such as automotive design, robotics, artificial intelligence (AI), mechatronics, data analytics, 3D printing, electric vehicles (EVs), and sustainable mobility solutions. The initiative is designed to bridge the gap between traditional education and real-world industry trends, empowering students with the knowledge and awareness needed to explore future-ready careers.</p>
                 </div>
             </div>
-            <div class="stats-content mb-5">
-                <div class="flex justify-center items-center gap-6 flex-wrap">
+            <div class="mb-5 stats-content">
+                <div class="flex flex-wrap items-center justify-center gap-6">
                     <div class="item">
                         Group 1 : Class 6 to 8
                     </div>
@@ -115,10 +115,10 @@
       <section class="eligibilty-sec common-spacing" id="eligibility-criteria">
         <div class="container mx-auto">
             <div class="eligibility-content">
-                <div class="common-title text-center text-white">
+                <div class="text-center text-white common-title">
                     Eligibility <span class="text-white">Criteria</span>
                 </div>
-                <div class="eligilbity-round mx-auto">
+                <div class="mx-auto eligilbity-round">
                     <div class="circle main">
                       <img src="{{ asset('/images/eligibilty-image.webp') }}" alt="student icon" />
                     </div>
@@ -144,12 +144,12 @@
             </div>
         </div>
       </section>
-      <section class="important-date pb-12 pt-8" id="important-dates">
+      <section class="pt-8 pb-12 important-date" id="important-dates">
         <div class="container mx-auto">
-            <div class="common-title text-center">
+            <div class="text-center common-title">
                 Important <span>Dates</span>
             </div>
-            <div class="md:flex gap-20 items-center date-list mt-8">
+            <div class="items-center gap-20 mt-8 md:flex date-list">
                 <div class="item round-sec">
                     <div class="round-title">Round 1</div>
                     <div class="round-icon">
@@ -182,7 +182,7 @@
       </section>
       <section class="industry-bg" id="industry-section">
         <div class="container mx-auto">
-            <div class="md:flex md:gap-10 items-center">
+            <div class="items-center md:flex md:gap-10">
                 <div class="md:w-1/3 md:order-2">
                     <div class="industry-image">
                         <img src="images/industry-right.webp">
@@ -197,16 +197,16 @@
                         <p>Designed to be highly interactive, the sessions feature open discussions that encourage students to ask questions, exchange ideas, and deepen their understanding of current trends. This engagement helps bridge the gap between industry and academia, empowering students to envision and prepare for promising careers in the evolving world of Automotive.</p>
                     </div>
                 </div>
-                
+
             </div>
         </div>
       </section>
       <!--<section class="stage-sec">-->
       <!--  <div class="container mx-auto">-->
-      <!--      <div class="common-title text-center">-->
+      <!--      <div class="text-center common-title">-->
       <!--          stage <span>Resources</span>-->
       <!--      </div>-->
-      <!--      <div class="md:flex gap-20 items-center date-list justify-between">-->
+      <!--      <div class="items-center justify-between gap-20 md:flex date-list">-->
       <!--          <div class="item round-sec">-->
       <!--              <div class="round-title">Round 1</div>-->
       <!--              <div class="stage-content">-->
@@ -246,13 +246,13 @@
       <!--      </div>-->
       <!--  </div>-->
       <!--</section>-->
-      <section class="industry-section pt-0" id="benefits">
+      <section class="pt-0 industry-section" id="benefits">
         <div class="container mx-auto">
             <!--<div class="industry-sesion">-->
             <!--    <div class="common-title">Industry <span>Session </span></div>-->
             <!--    <p>June 2025 - November 2025</p>-->
             <!--</div>-->
-            <div class="md:flex md:gap-10 items-center">
+            <div class="items-center md:flex md:gap-10">
                 <div class="left md:w-1/3">
                     <div class="benefit-image">
                         <img src="{{ asset('/images/benefit-1.webp') }}">
@@ -318,7 +318,7 @@
                     </div>
                 </div>
             </div>
-            <div class="md:flex md:gap-10 items-center">
+            <div class="items-center md:flex md:gap-10">
                 <div class="left md:w-1/3 md:order-2">
                     <div class="benefit-image school">
                         <img src="{{ asset('/images/benefit-2.webp') }}">
@@ -369,7 +369,7 @@
                                         <li>Receive insights from industry experts through sessions, mentorship, and hands-on demonstrations.</li>
                                     </ul>
                                 </div>
-                            
+
                             <div class="benefit-item">
                                     <div class="benefit-title">
                                         <span>5</span>
@@ -399,20 +399,20 @@
                                         <li>Enjoy a hands-on, engaging, and competitive environment that blends learning with excitement and creativity.</li>
                                     </ul>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
-                        
-                        
+
+
                     </div>
-                  
+
                 </div>
             </div>
-            
-           
 
-            
+
+
+
         </div>
       </section>
       <section class="registration-process" id="process">
@@ -423,12 +423,12 @@
                 </div>
                 <p>Students can register for NAO 2025 either through their respective schools or individually.</p>
             </div>
-            
+
             <div class="process-list">
                 <div class="timline">
                     <ul>
                         <li>
-                            <div class="time-head text-right">
+                            <div class="text-right time-head">
                                 <p>If you are a school you start your registration here.</p>
                             </div>
                             <div class="timeline-number">
@@ -442,7 +442,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="time-head text-right">
+                            <div class="text-right time-head">
                                 <p>If you are a student you can independently register here</p>
                             </div>
                             <div class="timeline-number">
@@ -456,7 +456,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="time-head text-right">
+                            <div class="text-right time-head">
                                 <p></p>
                             </div>
                             <div class="timeline-number">
@@ -471,16 +471,16 @@
                         </li>
                     </ul>
                 </div>
-                <div class="text-center relative">
-                    <div class="text-center inline-block">
-                        <a href="javascript:void(0);" class="common-btn registration-btn2 flex items-center">Register Now 
-                    <svg class="ml-2 w-4 h-4 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="relative text-center">
+                    <div class="inline-block text-center">
+                        <a href="javascript:void(0);" class="flex items-center common-btn registration-btn2">Register Now
+                    <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                     </svg>
                     </a>
                     </div>
-                    
-                    
+
+
                     <!-- Dropdown Menu -->
                     <div class="hidden dropdown-menu" id="dropdownMenu2">
                       <a href="{{ route('school_register') }}" class="flex items-center px-4 py-2">
@@ -500,7 +500,7 @@
   <div class="container mx-auto">
     <div class="tab-wrapper" data-tab-wrapper="success">
       <div class="flex justify-between winners-main">
-        <div class="item flex gap-4">
+        <div class="flex gap-4 item">
           <div class="nao-logo">
             <img src="{{ asset('/images/nao-logo.svg') }}" alt="Nao 2025" width="176" />
           </div>
@@ -509,8 +509,8 @@
         <div class="item">
           <div class="flex gap-4">
             <div class="tab-item">
-              <a href="#" class="tab-link active flex items-center justify-between" data-tab="success-2024">2024
-                <svg class="ml-2 w-4 h-4 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="#" class="flex items-center justify-between tab-link active" data-tab="success-2024">2024
+                <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                     </svg>
               </a>
@@ -523,8 +523,8 @@
               </div>
             </div>
             <div class="tab-item">
-              <a href="#" class="tab-link flex items-center justify-between" data-tab="success-2023">2023
-              <svg class="ml-2 w-4 h-4 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="#" class="flex items-center justify-between tab-link" data-tab="success-2023">2023
+              <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                     </svg>
               </a>
@@ -543,10 +543,10 @@
       <div class="tab-content">
         <div class="tab-panel" data-tab="success-2024">
             <div class="success-list" data-group="2024-group-1">
-                <div class="common-title text-center">
+                <div class="text-center common-title">
                     Group 1
                 </div>
-                <div class="flex justify-center flex-wrap gap-10">
+                <div class="flex flex-wrap justify-center gap-10">
             <div class="item">
               <div class="success-img">
                 <img src="{{ asset('/images/aryan-jaiwal-1.png') }}" alt="aryan" />
@@ -579,12 +579,12 @@
             </div>
           </div>
             </div>
-          
-          <div class="success-list hidden" data-group="2024-group-2">
-              <div class="common-title text-center">
+
+          <div class="hidden success-list" data-group="2024-group-2">
+              <div class="text-center common-title">
                     Group 2
                 </div>
-              <div class="flex justify-center flex-wrap gap-10 ">
+              <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
                 <img src="{{ asset('/images/sai-anish.png') }}" alt="aryan" />
@@ -617,11 +617,11 @@
             </div>
           </div>
           </div>
-          <div class="success-list hidden" data-group="2024-group-3">
-              <div class="common-title text-center">
+          <div class="hidden success-list" data-group="2024-group-3">
+              <div class="text-center common-title">
                     Group 3
                 </div>
-              <div class="flex justify-center flex-wrap gap-10 ">
+              <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
                 <img src="{{ asset('/images/samarth.png') }}" alt="aryan" />
@@ -654,15 +654,15 @@
             </div>
           </div>
           </div>
-          
+
         </div>
 
-        <div class="tab-panel hidden" data-tab="success-2023">
-           <div class="success-list hidden" data-group="2023-group-1">
-              <div class="common-title text-center">
+        <div class="hidden tab-panel" data-tab="success-2023">
+           <div class="hidden success-list" data-group="2023-group-1">
+              <div class="text-center common-title">
                     Group 1
                 </div>
-              <div class="flex justify-center flex-wrap gap-10 ">
+              <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
                 <img src="{{ asset('/images/saketh.png') }}" alt="aryan" />
@@ -695,11 +695,11 @@
             </div>
           </div>
           </div>
-          <div class="success-list hidden" data-group="2023-group-2">
-              <div class="common-title text-center">
+          <div class="hidden success-list" data-group="2023-group-2">
+              <div class="text-center common-title">
                     Group 2
                 </div>
-              <div class="flex justify-center flex-wrap gap-10 ">
+              <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
                 <img src="{{ asset('/images/rudra.png') }}" alt="aryan" />
@@ -732,11 +732,11 @@
             </div>
           </div>
           </div>
-          <div class="success-list hidden" data-group="2023-group-3">
-              <div class="common-title text-center">
+          <div class="hidden success-list" data-group="2023-group-3">
+              <div class="text-center common-title">
                     Group 3
                 </div>
-              <div class="flex justify-center flex-wrap gap-10 ">
+              <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
                 <img src="{{ asset('/images/sauhdra.png') }}" alt="aryan" />
@@ -757,7 +757,7 @@
             <!--    <p>Group-3 (Class-9th)</p>-->
             <!--  </div>-->
             <!--</div>-->
-            
+
             <div class="item">
               <div class="success-img">
                 <img src="{{ asset('/images/anuj-bhattacharya.png') }}" alt="aryan" />
@@ -780,86 +780,57 @@
             </div>
           </div>
           </div>
-          
+
         </div>
       </div>
     </div>
   </div>
 </section>
 
-
-      <section class="testimonial-sec common-spacing">
-          <div class="container mx-auto">
-              <div class="common-title">
-                   <span>Testimonials</span>
+        @if($testimonials->isNotEmpty())
+        <section class="testimonial-sec common-spacing">
+            <div class="container mx-auto">
+                <div class="common-title">
+                    <span>Testimonials</span>
                 </div>
-              <div class="testimoninal-slider">
-                  <div class="item">
-                      <div class="testimonial-content">
-                          <div class="testi-img">
-                              <img src="{{ asset('/images/testi-ico.svg') }}">
-                          </div>
-                          <div class="des">
-                              I’m Vivek, and I had the amazing opportunity to be a part of the National Automobile Olympiad (NAO)—an experience that has been nothing short of transformational.
-                          </div>
-                          <div class="testi-bottom">
-                              <!--<div class="avtar-img">-->
-                              <!--    <img src="{{ asset('/images/user.svg') }}">-->
-                              <!--</div>-->
-                              <div class="testimonial-name">Vivek</div>
-                              <div class="designation">class-11th</div>
-                              <div class="designation">School- Star Public School</div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="item">
-                      <div class="testimonial-content">
-                          <div class="testi-img">
-                              <img src="{{ asset('/images/testi-ico.svg') }}">
-                          </div>
-                          <div class="des">
-                              I’m Mayank Kumar Rai, currently studying in Class 12. I’ve had the privilege of participating in the National Olympiad twice, and one of the highlights of my journey so far has been securing All India Rank 3 in the National Automobile Olympiad (NAO).
-                          </div>
-                          <div class="testi-bottom">
-                              <!--<div class="avtar-img">-->
-                              <!--    <img src="{{ asset('/images/user.svg') }}">-->
-                              <!--</div>-->
-                              <div class="testimonial-name">Mayank Kumar Rai</div>
-                              <div class="designation">Class 12th</div>
-                              <div class="designation">School- Star Public School</div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="item">
-                      <div class="testimonial-content">
-                          <div class="testi-img">
-                              <img src="{{ asset('/images/testi-ico.svg') }}">
-                          </div>
-                          <div class="des">
-                              I’m Ritupam, and I had the amazing opportunity to be a part of the National Automobile Olympiad (NAO)—an experience that was both exciting and enriching.
-                          </div>
-                          <div class="testi-bottom">
-                              <!--<div class="avtar-img">-->
-                              <!--    <img src="{{ asset('/images/user.svg') }}">-->
-                              <!--</div>-->
-                              <div class="testimonial-name">Ritupam</div>
-                              <div class="designation">Class 9th</div>
-                              <div class="designation">School - Maharishi Vidya Mandir Senior Secondary school, Guwahati</div>
-                          </div>
-                      </div>
-                  </div>
-                  
+                <div class="testimoninal-slider">
+                    @foreach($testimonials as $testimonial)
+                        <div class="item">
+                            <div class="testimonial-content">
+                                <div class="testi-img">
+                                    <img src="{{ asset('/images/testi-ico.svg') }}">
+                                </div>
+                                <div class="des">
+                                    {!! $testimonial->message !!}
+                                </div>
+                                <div class="testi-bottom">
+                                    <!--<div class="avtar-img">-->
+                                    <!--    <img src="{{ asset('/images/user.svg') }}">-->
+                                    <!--</div>-->
+                                    <div class="testimonial-name">{{ $testimonial->name }}</div>
+                                    <div class="designation">Category-{{ $testimonial->category }}</div>
+                                    <div class="designation">School- {{ $testimonial->school_name }}</div>
+                                    @if(!is_null($testimonial->image) && $testimonial->image)
+                                        <a href="{{ asset($testimonial->image) }}" class="fancybox" data-fancybox>
+                                            View Image
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
               </div>
           </div>
       </section>
-      
+      @endif
+
       <section class="sponser-sec" id="sponsors">
         <div class="container">
-            <div class="common-title text-center mb-6">Our <span>Sponsors</span></div>
+            <div class="mb-6 text-center common-title">Our <span>Sponsors</span></div>
             <div class="SecPartnerContent SecSupportedBy">
                 <div class="rowDiv">
                     <div class="col-50">
-                        <div class="sub-title text-center">Gold Sponsor</div>
+                        <div class="text-center sub-title">Gold Sponsor</div>
                         <ul>
                             <li>
                                 <div class="imgWrap"><img src="{{ asset('/images/logo4.webp') }}" alt="Sansera Idea work" width="218" height="120">
@@ -868,7 +839,7 @@
                         </ul>
                     </div>
                     <div class="col-50">
-                        <div class="sub-title text-center">Silver Sponsor</div>
+                        <div class="text-center sub-title">Silver Sponsor</div>
                         <ul>
                             <li>
                                 <div class="imgWrap"><img src="{{ asset('/images/mgu.webp') }}" alt="MGU" width="218" height="120">
@@ -877,7 +848,7 @@
                         </ul>
                     </div>
                     <div class="col-50">
-                        <div class="sub-title text-center">NAO Partner</div>
+                        <div class="text-center sub-title">NAO Partner</div>
                         <ul>
                             <li>
                                 <div class="imgWrap"><img src="{{ asset('/images/hummig-bird.png') }}" alt="Humming Bird" width="218" height="120">
@@ -887,6 +858,6 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </section>

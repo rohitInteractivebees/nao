@@ -47,8 +47,9 @@ class HomeController extends Controller
                     ->get();
             }
         }
+        $testimonials = Testimonial::where('status',1)->orderBy('id','desc')->get();
 
-        return view('home', compact('public_quizzes', 'registered_only_quizzes','liveQuiz'));
+        return view('home', compact('public_quizzes', 'registered_only_quizzes','liveQuiz','testimonials'));
     }
 
     public function show(Quiz $quiz)

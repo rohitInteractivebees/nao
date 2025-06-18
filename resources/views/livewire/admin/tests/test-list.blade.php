@@ -8,8 +8,8 @@
                         <div class="item">
                             <div class="text-center md:mb-0 sub-title">Quiz Attempt Tracker</div>
                         </div>
-                        <div class="items-center d-flex gap-2 flex-wrap justify-center">
-                            <select class="p-3 w-64 m-auto md:m-0"
+                        <div class="items-center flex gap-2 flex-wrap justify-center">
+                            <select class="p-3 w-64 md:m-0"
                                 wire:model="quiz_id">
                                 <option value="0">All School</option>
                                 @foreach ($college as $quiz)
@@ -17,7 +17,7 @@
                                 @endforeach
                                 <option value="Other">Other</option>
                             </select>
-                            <select class="block m-auto mt-3 md:m-0 " wire:model="class_id" name="class_id">
+                            <select class="block md:m-auto md:m-0 " wire:model="class_id" name="class_id">
                                 <option value="0">All Classes</option>
                                 @foreach(App\Models\Classess::all() as $class)
                                     <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -33,7 +33,7 @@
                          </div>
                     </div>
                     <div class="md:flex justify-end">
-                        <div class="item md:min-w-[30%]">
+                        <div class="item md:min-w-[30%] p-2">
                             <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, phone or parent name..." class="form-control" style="border: 1px solid #ccc !important;">
                         </div>
                     </div>

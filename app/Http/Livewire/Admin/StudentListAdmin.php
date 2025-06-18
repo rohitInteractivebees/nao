@@ -253,6 +253,11 @@ class StudentListAdmin extends Component
             ) {
                 continue;
             }
+            
+            if ($section && !preg_match('/^[a-zA-Z0-9\s\-]+$/', $section)) {
+                // Skip if section contains characters other than letters, numbers, space, or hyphen
+                continue;
+            }
             $classId = (int) $class - 5;
 
 

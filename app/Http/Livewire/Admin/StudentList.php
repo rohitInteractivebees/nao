@@ -233,6 +233,10 @@ class StudentList extends Component
             ) {
                 continue;
             }
+            if ($section && !preg_match('/^[a-zA-Z0-9\s\-]+$/', $section)) {
+                // Skip if section contains characters other than letters, numbers, space, or hyphen
+                continue;
+            }
 
             // Convert class to integer (in case it's a string like "6")
             $classId = (int) $class - 5;

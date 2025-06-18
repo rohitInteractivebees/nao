@@ -7,6 +7,14 @@
         {{ session('success') }}
     </div>
 @endif
+<style>
+    span.select2.select2-container.select2-container--default{
+        border-color: #ccc !important;
+    }
+    .select2-container--default .select2-selection--single{
+        height: 2.78rem;
+    }
+</style>
         <div class="justify-center w-100 d-flex">
             <div class="right question-create">
                 @php
@@ -57,7 +65,8 @@
                         </div>
                         <div class="form-style">
                             <x-input-label for="phone" value="Parent Phone" />
-                            <select wire:model="country_code" name="country_code" class="block w-full mt-1">
+                            <div class="flex pincode-div items-end">
+                                <select wire:model="country_code" name="country_code" class="block w-auto mt-1">
                                 <option value="">Select Code</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country->phonecode }}">
@@ -66,6 +75,8 @@
                                 @endforeach
                             </select>
                             <x-text-input id="phone" wire:model="phone" class="block w-full mt-1" name="phone" ></x-text-input>
+                            </div>
+                            
                             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                         </div>
                         <div class="form-style">

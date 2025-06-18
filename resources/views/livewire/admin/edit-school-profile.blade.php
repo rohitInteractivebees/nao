@@ -7,6 +7,14 @@
         {{ session('success') }}
     </div>
 @endif
+<style>
+    span.select2.select2-container.select2-container--default{
+        border-color: #ccc !important;
+    }
+    .select2-container--default .select2-selection--single{
+        height: 2.78rem;
+    }
+</style>
         <div class="justify-center w-100 d-flex">
             <div class="right question-create">
                 @php
@@ -29,7 +37,8 @@
                         </div>
                         <div class="form-style">
                             <x-input-label for="phone" value="Principal Phone" />
-                            <select wire:model="country_code" name="country_code" class="block w-full mt-1">
+                            <div class="flex pincode-div items-end">
+                            <select wire:model="country_code" name="country_code" class="block w-auto mt-1">
                                 <option value="">Select Code</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country->phonecode }}">
@@ -38,6 +47,7 @@
                                 @endforeach
                             </select>
                             <x-text-input id="phone" wire:model="phone" class="block w-full mt-1" name="phone" required></x-text-input>
+                            </div>
                             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                         </div>
                         <div class="form-style">
@@ -47,7 +57,8 @@
                         </div>
                         <div class="form-style">
                             <x-input-label for="spoc_mobile" value="Spoc Mobile" />
-                            <select id="spoc_country_code" wire:model="spoc_country_code" name="spoc_country_code" required class="block w-full mt-1">
+                            <div class="flex pincode-div items-end">
+                                <select id="spoc_country_code" wire:model="spoc_country_code" name="spoc_country_code" required class="block w-auto mt-1">
                                 <option value="">Select Code</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country->phonecode }}">
@@ -56,6 +67,8 @@
                                 @endforeach
                             </select>
                             <x-text-input id="spoc_mobile" wire:model="spoc_mobile" class="block w-full mt-1" name="spoc_mobile" required></x-text-input>
+                            </div>
+                            
                             <x-input-error :messages="$errors->get('spoc_mobile')" class="mt-2" />
                         </div>
                         <div class="justify-center mt-8 d-flex">

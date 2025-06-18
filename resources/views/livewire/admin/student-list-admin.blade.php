@@ -1,15 +1,15 @@
 <div>
     <div class="pb-6 common-sec1">
         <div class="container">
-            <div class="items-center flex-wrap justify-between mt-5 lg:flex">
+            <div class="flex-wrap items-center justify-between mt-5 lg:flex">
                 <div class="item">
                 <div class="mb-0 sub-title">Student Register</div>
                 </div>
-                <div class="item d-flex gap-3 justify-center items-center">
-                    <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="student-upload-form flex items-center gap-2 flex-wrap justify-center">
+                <div class="items-center justify-center gap-3 item d-flex">
+                    <form action="{{ route('student.upload.csv') }}" method="POST" enctype="multipart/form-data" id="csv-upload-form" class="flex flex-wrap items-center justify-center gap-2 student-upload-form">
                         @csrf
                         <div class="items-end justify-center half-view d-flex gap sm:justify-end">
-                            <div class="w-auto form-style mt-0 md:w-auto w-100">
+                            <div class="w-auto mt-0 form-style md:w-auto w-100">
                                 <input type="file" name="csv_file" required>
                             </div>
                         </div>
@@ -59,6 +59,22 @@
 
 
             </div>
+            @if ($selectedStudents)
+                <div class="mt-0 filter-options form-style">
+                    <select class="block" wire:model="change_school" name="quiz">
+                        <option value="0">Select School</option>
+                        @foreach(App\Models\Instute::all() as $college)
+                            <option value="{{ $college->id }}">{{ $college->name }}</option>
+                        @endforeach
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <button wire:click="deleteSelected" class="px-4 py-2 text-white bg-red-500 rounded">
+                        Change ({{ count($selectedStudents) }})
+                    </button>
+                </div>
+            @endif
             <!--Export Div Ends here-->
             <div class="mx-auto max-w-7xl">
                 <div class="overflow-hidden bg-white">
@@ -73,20 +89,11 @@
                     </div>
                     <div id="success-message" style="display: none;">CSV uploaded and emails sent successfully.</div>
                     @if (session()->has('success'))
-    <div class="alert alert-success" id="success-alert">
+    <div class="px-4 py-3 text-green-700 bg-green-100 border border-green-400 rounded" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">
         {{ session('success') }}
     </div>
 
-    <script>
-        setTimeout(function () {
-            let alertBox = document.getElementById('success-alert');
-            if (alertBox) {
-                alertBox.style.transition = 'opacity 0.5s ease';
-                alertBox.style.opacity = '0';
-                setTimeout(() => alertBox.remove(), 500); // Fully remove after fade out
-            }
-        }, 3000); // 3 seconds
-    </script>
+    
 @endif
 
                     <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
@@ -94,6 +101,7 @@
                             <thead>
                                 <tr>
                                     <th width="100">Sr.No</th>
+                                    <th width="100"></th>
                                     <th width="300">School Name</th>
                                     <th width="300">School Code</th>
                                     <th width="300">Student Name</th>
@@ -112,8 +120,9 @@
                             <tbody>
                                 @forelse($students as $student)
 
-                                    <tr>
+                                    <tr wire:key="student-{{ $student->id }}">
                                         <td>{{ $serial++ }}</td>
+                                        <td><input type="checkbox" wire:model="selectedStudents" name="selectedStudents[]" value="{{ $student->id }}"></td>
                                         @php
                                             if($student->institute != 'Other')
                                             {

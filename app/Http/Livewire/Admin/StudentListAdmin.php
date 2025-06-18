@@ -24,8 +24,11 @@ class StudentListAdmin extends Component
     public $quiz_id1 = 0;
     public $class_id = 0;
     public $search = '';
+    public $selectedStudents = [];
+    public $change_school = '';
 
-    protected $updatesQueryString = ['quiz_id1','class_id'];
+    protected $updatesQueryString = ['quiz_id1','class_id','change_school'];
+    protected $listeners = ['toggleStudentSelection'];
 
     public function mount()
     {
@@ -52,6 +55,21 @@ class StudentListAdmin extends Component
         $this->resetPage();
     }
 
+
+    public function deleteSelected()
+    {
+        if($this->change_school > 0)
+        {
+            abort_if(!auth()->user()->is_admin, HttpResponse::HTTP_FORBIDDEN, '403 Forbidden');
+            User::whereIn('id', $this->selectedStudents)->update([
+                'institute' => $this->change_school, // or whatever status you want to mark as "deleted"
+                'school_name' => null, // will be handled automatically if using soft deletes
+            ]);
+            $this->selectedStudents = [];
+
+            session()->flash('success', 'School name updated successfully.');
+        }
+    }
     public function render()
     {
         $is_login = auth()->user();
@@ -79,7 +97,8 @@ class StudentListAdmin extends Component
                     $q->where('name', 'like', $searchTerm)
                       ->orWhere('email', 'like', $searchTerm)
                       ->orWhere('phone', 'like', $searchTerm)
-                      ->orWhere('loginId', 'like', $searchTerm);
+                      ->orWhere('loginId', 'like', $searchTerm)
+                      ->orWhere('school_name', 'like', $searchTerm);
                 });
             }
 
@@ -253,7 +272,7 @@ class StudentListAdmin extends Component
             ) {
                 continue;
             }
-            
+
             if ($section && !preg_match('/^[a-zA-Z0-9\s\-]+$/', $section)) {
                 // Skip if section contains characters other than letters, numbers, space, or hyphen
                 continue;
@@ -268,18 +287,18 @@ class StudentListAdmin extends Component
                     ->whereRaw('LOWER(name) = ?', [trim(strtolower($studentName))])
                     ->whereRaw('JSON_CONTAINS(class, ?)', ['"' . $classId . '"'])
                     ->first();
-            
+
                 if ($userByEmail) {
                     $skip = true;
                 }
             }
-            
+
             if (!$skip && $phone) {
                 $userByPhone = User::where('phone', $phone)
                     ->whereRaw('LOWER(name) = ?', [trim(strtolower($studentName))])
                     ->whereRaw('JSON_CONTAINS(class, ?)', ['"' . $classId . '"'])
                     ->first();
-            
+
                 if ($userByPhone) {
                     $skip = true;
                 }

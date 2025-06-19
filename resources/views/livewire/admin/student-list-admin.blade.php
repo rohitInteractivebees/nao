@@ -70,7 +70,7 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <button wire:click="deleteSelected" class="px-4 py-2 text-white bg-red-500 rounded">
+                    <button wire:click="updateSelected" class="px-4 py-2 text-white bg-red-500 rounded">
                         Change ({{ count($selectedStudents) }})
                     </button>
                 </div>
@@ -89,19 +89,19 @@
                     </div>
                     <div id="success-message" style="display: none;">CSV uploaded and emails sent successfully.</div>
                     @if (session()->has('success'))
-    <div class="px-4 py-3 text-green-700 bg-green-100 border border-green-400 rounded" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">
-        {{ session('success') }}
-    </div>
+                        <div class="px-4 py-3 text-green-700 bg-green-100 border border-green-400 rounded" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">
+                            {{ session('success') }}
+                        </div>
 
-    
-@endif
+
+                    @endif
 
                     <div class="min-w-full mt-6 mb-4 overflow-hidden overflow-x-auto align-middle sm:rounded-md">
                         <table class="min-w-full border divide-y divide-gray-200">
                             <thead>
                                 <tr>
                                     <th width="100">Sr.No</th>
-                                    <th width="100"></th>
+                                    <th width="100"><input type="checkbox" wire:model="selectAll"></th>
                                     <th width="300">School Name</th>
                                     <th width="300">School Code</th>
                                     <th width="300">Student Name</th>

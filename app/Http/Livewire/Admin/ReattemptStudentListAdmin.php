@@ -85,9 +85,9 @@ class ReattemptStudentListAdmin extends Component
     public function updateSelected()
     {
         abort_if(!auth()->user()->is_admin, HttpResponse::HTTP_FORBIDDEN, '403 Forbidden');
-        // User::whereIn('id', $this->selectedStudents)->update([
-        //     'attempt_count' => 0, // will be handled automatically if using soft deletes
-        // ]);
+        User::whereIn('id', $this->selectedStudents)->update([
+            'attempt_count' => 0, // will be handled automatically if using soft deletes
+        ]);
 
         foreach($this->selectedStudents as $user_id)
         {

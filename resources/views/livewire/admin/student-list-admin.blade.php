@@ -1,4 +1,5 @@
 <div>
+
     <div class="pb-6 common-sec1">
         <div class="container">
             <div class="flex-wrap items-center justify-between mt-5 lg:flex">
@@ -66,11 +67,13 @@
                         @foreach(App\Models\Instute::all() as $college)
                             <option value="{{ $college->id }}">{{ $college->name }}</option>
                         @endforeach
-                        <option value="Other">Other</option>
+
                     </select>
                 </div>
                 <div class="mb-4">
-                    <button wire:click="updateSelected" class="px-4 py-2 text-white bg-red-500 rounded">
+                    <button wire:click="updateSelected"
+                            wire:loading.attr="disabled"
+                            class="px-4 py-2 text-white bg-red-500 rounded">
                         Change ({{ count($selectedStudents) }})
                     </button>
                 </div>
@@ -78,7 +81,14 @@
             <!--Export Div Ends here-->
             <div class="mx-auto max-w-7xl">
                 <div class="overflow-hidden bg-white">
-
+                    <div class="loader-sec" wire:loading wire:target="updateSelected" id="loader-livewire">
+                        <div class="inner livewire-loader">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
                     <div class="loader-sec" id="loader" style="display: none;">
                         <div class="inner">
                             <span class="dot"></span>
@@ -264,6 +274,18 @@
             text-align: center;
             font-size: 1.5em;
             color: #333;
+        }
+        #loader-livewire {
+            text-align: center;
+            font-size: 1.5em;
+            color: #333;
+
+        }
+        .livewire-loader {
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+            height: 100% !important;
         }
 
         #success-message {

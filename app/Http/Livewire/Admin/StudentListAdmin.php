@@ -119,9 +119,9 @@ class StudentListAdmin extends Component
                       ->orWhere('school_name', 'like', $searchTerm);
                 });
             }
-            $this->students_selected = $query->get();
+            $students_all = $query->get();
             $students = $query->paginate(10);
-
+            $this->students_selected = $students_all->filter(fn($s) => $s->institute == 'Other');
             return view('livewire.admin.student-list-admin', [
                 'students' => $students,
             ]);

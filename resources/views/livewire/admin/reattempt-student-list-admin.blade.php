@@ -64,11 +64,7 @@
 
                                     <tr>
                                         <td>{{ $serial++ }}</td>
-                                        <td>
-                                            @if($student->institute == 'Other')
-                                                <input type="checkbox" wire:model="selectedStudents" name="selectedStudents[]" value="{{ $student->id }}">
-                                            @endif
-                                        </td>
+                                        <td><input type="checkbox" wire:model="selectedStudents" name="selectedStudents[]" value="{{ $student->id }}"></td>
                                         @php
                                             if($student->institute != 'Other')
                                             {

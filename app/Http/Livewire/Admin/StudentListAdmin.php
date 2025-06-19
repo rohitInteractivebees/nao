@@ -26,6 +26,8 @@ class StudentListAdmin extends Component
     public $search = '';
     public $selectedStudents = [];
     public $change_school = '';
+    public $selectAll = false;
+    public $students_selected;
 
     protected $updatesQueryString = ['quiz_id1','class_id','change_school'];
     protected $listeners = ['toggleStudentSelection'];
@@ -54,9 +56,25 @@ class StudentListAdmin extends Component
     {
         $this->resetPage();
     }
+    public function updatedSelectedStudents()
+    {
+        if (count($this->selectedStudents) !== $this->students_selected->count()) {
+            $this->selectAll = false;
+        } else {
+            $this->selectAll = true;
+        }
+    }
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            // Select all students from current page
+            $this->selectedStudents = $this->students_selected->pluck('id')->toArray();
+        } else {
+            $this->selectedStudents = [];
+        }
+    }
 
-
-    public function deleteSelected()
+    public function updateSelected()
     {
         if($this->change_school > 0)
         {
@@ -66,7 +84,7 @@ class StudentListAdmin extends Component
                 'school_name' => null, // will be handled automatically if using soft deletes
             ]);
             $this->selectedStudents = [];
-
+            $this->selectAll = false;
             session()->flash('success', 'School name updated successfully.');
         }
     }
@@ -101,7 +119,7 @@ class StudentListAdmin extends Component
                       ->orWhere('school_name', 'like', $searchTerm);
                 });
             }
-
+            $this->students_selected = $query->get();
             $students = $query->paginate(10);
 
             return view('livewire.admin.student-list-admin', [

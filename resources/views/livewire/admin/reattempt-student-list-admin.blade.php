@@ -1,14 +1,14 @@
 <div>
     <div class="common-sec1">
         <div class="container">
-            <div class="items-end justify-between md:flex">
+            <div class="items-center justify-between md:flex">
                 <div class="item">
                     <div class="mb-0 sub-title">Quiz Re-attempt</div>
                 </div>
                 <div class="item sm:w-3/4">
-                    <div class="items-end justify-center gap-3 right md:flex sm:justify-end">
+                    <div class="item md:flex gap-2 justify-center mt-4 items-center">
                         @if(auth()->user()->is_admin)
-                        <div class=" filter-options form-style">
+                        <div class=" filter-options form-style md:w-2/5 md:mt-0">
                             <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
                                 <option value="0">All School</option>
                                 @foreach(App\Models\Instute::all() as $college)
@@ -18,15 +18,20 @@
                             </select>
                         </div>
                         @endif
-                    <div class="mt-4 md:w-2/5 md:mt-0">
-                        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, or phone..." class="form-control" style="border: 1px solid #ccc !important;">
-                    </div>
+                        <div class="mt-4 md:w-2/5 md:mt-0">
+                            <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, or phone..." class="form-control" style="border: 1px solid #ccc !important;">
+                        </div>
+                        <div class="md:w-[25%]">
+                            <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 h-[40px] m-auto">
+                                <!--<span><img src="https://naostag.asdc.org.in/assets/images/icon-view.png" alt=""></span>-->
+                                <a href="{{ route('allow.reattemptstudentlistadmin') }}" ><span>View Re-attempted Users</span></a>
+                            </button>
+                            <!--<a href="{{ route('allow.reattemptstudentlistadmin') }}" class="">-->
+                            <!--    View Re-attempted Users-->
+                            <!--</a>-->
+                        </div>
                 </div>
-                <div class="mb-4">
-                    <a href="{{ route('allow.reattemptstudentlistadmin') }}" class="px-4 py-2 text-white bg-red-500 rounded">
-                        View Re-attempted Users
-                    </a>
-                </div>
+                
             </div>
         </div>
             @if ($selectedStudents)

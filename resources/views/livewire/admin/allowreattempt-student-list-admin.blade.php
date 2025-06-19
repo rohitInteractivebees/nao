@@ -8,7 +8,7 @@
                 <div class="item sm:w-3/4">
                     <div class="items-end justify-center gap-3 right md:flex sm:justify-end">
                         @if(auth()->user()->is_admin)
-                        <div class=" filter-options form-style">
+                        <div class=" filter-options form-style md:md:w-2/5">
                             <select class="block w-full mt-1" wire:model="quiz_id1" name="quiz">
                                 <option value="0">All School</option>
                                 @foreach(App\Models\Instute::all() as $college)

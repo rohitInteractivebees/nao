@@ -61,10 +61,7 @@
                                                                     NAO 2025 examination,</strong> we would like to
                                                                 inform
                                                                 you that after
-                                                                due diligence by our tech support team, <strong>your
-                                                                    profile
-                                                                    has
-                                                                    been re-activated.</strong> Please ensure that you
+                                                                due diligence by our tech support team, <strong>Quiz has been reactivated.</strong> Please ensure that you
                                                                 read
                                                                 and follow
                                                                 the instructions below before initiating the online
@@ -142,8 +139,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td
-                                                                style='font-size:14px; font-family:Arial,Helvetica,sans-serif; font-weight:600; color:#2E2E2E;'>
-                                                                Best Regards,</td>
+                                                                style='font-size:14px; font-family:Arial,Helvetica,sans-serif; font-weight:500; color:#2E2E2E;'>
+                                                                Warm Regards,</td>
                                                         </tr>
                                                         <tr>
                                                             <td height='5px'></td>
@@ -151,8 +148,8 @@
                                                         <tr>
                                                             <td
                                                                 style='font-size:14px; font-family:Arial,Helvetica,sans-serif; line-height: 24px; font-weight:500; color:#2E2E2E;'>
-                                                                NEP Team <br>
-                                                                Automotive Skills Development Council (ASDC)</td>
+                                                                <span style="font-weight: 600;">NAO Team </span><br>
+                                                                [National Automobile Olympiad]</td>
                                                         </tr>
                                                         <tr>
                                                             <td height='20px'></td>

@@ -51,6 +51,7 @@ class ReattemptStudentListAdmin extends Component
         $user = User::find($userId);
         if ($user) {
             $user->attempt_count = 0;
+            $user->quiz_allow_block = 1;
             $user->save();
 
             if($user->email != '' && $user->email != null)
@@ -86,7 +87,8 @@ class ReattemptStudentListAdmin extends Component
     {
         abort_if(!auth()->user()->is_admin, HttpResponse::HTTP_FORBIDDEN, '403 Forbidden');
         User::whereIn('id', $this->selectedStudents)->update([
-            'attempt_count' => 0, // will be handled automatically if using soft deletes
+            'attempt_count' => 0,
+            'quiz_allow_block' => 1,
         ]);
 
         foreach($this->selectedStudents as $user_id)
@@ -115,6 +117,7 @@ class ReattemptStudentListAdmin extends Component
         if ($is_login->is_admin) {
             $query = User::where('id', '!=', $is_login->id)
                          ->where('attempt_count', '>', 0)
+                         ->whereNull('quiz_allow_block')
                          ->where(function ($query) {
                              $query->where('is_college', 0)
                                    ->orWhereNull('is_college');

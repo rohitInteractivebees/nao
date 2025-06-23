@@ -56,8 +56,9 @@ class ReattemptStudentListAdmin extends Component
 
             if($user->email != '' && $user->email != null)
             {
+                $AdminEmail = User::where('is_admin', 1)->value('email');
                 try {
-                    Mail::to($user->email)->send(new ReattemptMail($user->name));
+                    Mail::to($user->email)->cc($AdminEmail)->send(new ReattemptMail($user->name));
                 } catch (\Throwable $e) {
 
                 }

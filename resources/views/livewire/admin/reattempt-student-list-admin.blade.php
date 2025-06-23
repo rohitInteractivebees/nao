@@ -35,7 +35,7 @@
             </div>
         </div>
             @if ($selectedStudents)
-                <div class="mb-4">
+                <div class=" md:text-right md:mt-0 mt-4 flex md:justify-end justify-center">
                     <button wire:click="updateSelected"
                             wire:loading.attr="disabled"
                             class="px-4 py-2 text-white bg-red-500 rounded">

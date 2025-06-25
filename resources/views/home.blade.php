@@ -170,7 +170,7 @@
                     </div>
                     @if(count($totalclg) > 9)
                         <div class="justify-center mt-6 links d-flex">
-                            <a class="common-btn short" href="/school">View All</a>
+                            <a class="common-btn short" href="/school_login">View All</a>
                         </div>
                     @endif
                 </div>

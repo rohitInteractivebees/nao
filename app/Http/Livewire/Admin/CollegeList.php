@@ -197,7 +197,7 @@ class CollegeList extends Component
                 $schoolName === '' || $principalName === '' || $mobile === '' || $email === '' ||
                 $country === '' || $state === '' || $city === '' || $spocName === '' ||
                 $spocEmail === '' || $spocMobile === '' || $principalCountryCode === '' ||
-                $spocCountryCode === '' || $pincode === ''
+                $spocCountryCode === ''
             ) {
                 continue; // Skip row with any blank value
             }

@@ -229,7 +229,7 @@ class StudentList extends Component
             ] = $row;
 
             if (
-                $studentName === '' || $class === '' || $sessionYear === '' || $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === '' || strlen($section) > 15
+                $studentName === '' || $class === '' || $sessionYear === '' || $parentName === '' || $country === '' || $state === '' || $city === '' || strlen($section) > 15
             ) {
                 continue;
             }

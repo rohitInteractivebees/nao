@@ -8,26 +8,26 @@
             </div>
             <div class="item">
                 <div class="social-icons flex gap-2">
-                    <a href="https://www.facebook.com/AutomotiveSkillsDevelopmentCouncil" target="_blank"><img src="{{ asset('/images//fb.svg') }}"></a>
-                    <a href="https://twitter.com/SkillsASDC" target="_blank"><img src="{{ asset('/images//tw.svg') }}"></a>
-                    <a href="https://www.youtube.com/channel/UCHEuklRdNjFO6d73wfM8l8w?view_as=subscriber" target="_blank"><img src="{{ asset('/images//yt.svg') }}"></a>
-                    <a href="https://www.instagram.com/asdc_india/" target="_blank"><img src="{{ asset('/images//insta.svg') }}"></a>
-                    <a href="https://www.linkedin.com/company/asdc-in/" target="_blank"><img src="{{ asset('/images//linkdin.svg') }}"></a>
-                    <a href="https://www.threads.net/@asdc_india" target="_blank"><img src="{{ asset('/images//dribble.svg') }}"></a>
+                    <a href="https://www.facebook.com/AutomotiveSkillsDevelopmentCouncil" target="_blank" aria-label="Facebook"><img src="{{ asset('/images//fb.svg') }}" alt="Facebook" width="15" height="15"></a>
+                    <a href="https://twitter.com/SkillsASDC" target="_blank" aria-label="Twitter"><img src="{{ asset('/images//tw.svg') }}" alt="Twitter" width="15" height="15"></a>
+                    <a href="https://www.youtube.com/channel/UCHEuklRdNjFO6d73wfM8l8w?view_as=subscriber" target="_blank" aria-label="Youtube"><img src="{{ asset('/images//yt.svg') }}" alt="Youtube" width="15" height="15"></a>
+                    <a href="https://www.instagram.com/asdc_india/" target="_blank" aria-label="Instagram"><img src="{{ asset('/images//insta.svg') }}" alt="Instagram" width="15" height="15"></a>
+                    <a href="https://www.linkedin.com/company/asdc-in/" target="_blank" aria-label="Linkdien"><img src="{{ asset('/images//linkdin.svg') }}" alt="Linkdien" width="15" height="15"></a>
+                    <a href="https://www.threads.net/@asdc_india" target="_blank" aria-label="Dribble"><img src="{{ asset('/images//dribble.svg') }}" alt="Dribble" width="15" height="15"></a>
                 </div>
             </div>
         </div>
         <div class="contact-details md:flex justify-between gap-20">
             <div class="item">
                 <div class="flex gap-2 items-center">
-                    <img src="{{ asset('/images/location.svg') }}">
+                    <img src="{{ asset('/images/location.svg') }}" alt="address" width="54" height="54">
                     <p>Address</p>
                 </div>
                 <p>E-113, Okhla Industrial Estate Phase- III, New Delhi - 110020</p>
             </div>
             <div class="item">
                 <div class="flex gap-2 items-center">
-                    <img src="{{ asset('/images/mail.svg') }}">
+                    <img src="{{ asset('/images/mail.svg') }}" alt="Email" width="30" height="30">
                     <p>Email</p>
                 </div>
                 <p><a href="mailto:nep@asdc.org.in">nep@asdc.org.in</a></p>

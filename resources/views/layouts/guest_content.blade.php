@@ -4,14 +4,14 @@
     width: 11rem;
 }
 </style>
-<section class="main-banner">
+<section class="main-banner min-h-[100px]">
         <div class="banner-list ">
             <div class="item">
                 <div class="hidden sm:block">
-                    <img src="{{ asset('/images/banner12.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/banner12.webp') }}" alt="Nao 2025" width="1512" height="580">
                 </div>
                 <div class="block sm:hidden">
-                    <img src="{{ asset('/images/mobile-banner.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/mobile-banner.webp') }}" alt="Nao 2025" width="700" height="840">
                 </div>
             </div>
             <!--<div class="item">-->
@@ -24,30 +24,30 @@
             <!--</div>-->
             <div class="item">
                 <div class="hidden sm:block">
-                    <img src="{{ asset('/images/banner33.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/banner33.webp') }}" alt="Nao 2025" width="1512" height="580">
                 </div>
                 <div class="block sm:hidden">
-                    <img src="{{ asset('/images/mobile-banner-3.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/mobile-banner-3.webp') }}" alt="Nao 2025" width="700" height="840">
                 </div>
             </div>
             <div class="item">
                 <div class="hidden sm:block">
-                    <img src="{{ asset('/images/banner22.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/banner22.webp') }}" alt="Nao 2025" width="1512" height="580">
                 </div>
                 <div class="block sm:hidden">
-                    <img src="{{ asset('/images/mobile-banner3.webp') }}" alt="Nao 2025">
+                    <img src="{{ asset('/images/mobile-banner3.webp') }}" alt="Nao 2025" width="700" height="840">
                 </div>
             </div>
         </div>
       </section>
-      <section class="pb-12 about-sec common-spacing" id="about-nao">
+      <section class="pb-12 about-sec common-spacing min-h-[100px]" id="about-nao">
         <div class="container mx-auto">
             <div class="stats-sec">
                 <div class="flex flex-wrap items-center justify-center md:gap-6">
                     <div class="item">
                         <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
-                                <img src="{{ asset('/images/school-1-ico.svg') }}">
+                                <img src="{{ asset('/images/school-1-ico.svg') }}" alt="Students" width="57" height="57">
                             </div>
                             <div class="des">
                                 <h2>30,000+</h2>
@@ -58,7 +58,7 @@
                     <div class="item">
                         <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
-                                <img src="{{ asset('/images/student-svg.svg') }}">
+                                <img src="{{ asset('/images/student-svg.svg') }}" alt="Schools" width="57" height="57">
                             </div>
                             <div class="des">
                                 <h2>800+</h2>
@@ -69,7 +69,7 @@
                     <div class="item">
                         <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
-                                <img src="{{ asset('/images/location-ico.svg') }}">
+                                <img src="{{ asset('/images/location-ico.svg') }}" alt="locations" width="57" height="57">
                             </div>
                             <div class="des">
                                 <h2>3+</h2>
@@ -80,7 +80,7 @@
                     <div class="item">
                         <div class="flex items-center justify-center gap-3 stats-list">
                             <div class="stats-img">
-                                <img src="{{ asset('/images/location-ico.svg') }}">
+                                <img src="{{ asset('/images/location-ico.svg') }}" alt="locations" width="57" height="57">
                             </div>
                             <div class="des">
                                 <h2>23+</h2>
@@ -120,23 +120,23 @@
                 </div>
                 <div class="mx-auto eligilbity-round">
                     <div class="circle main">
-                      <img src="{{ asset('/images/eligibilty-image.webp') }}" alt="student icon" />
+                      <img src="{{ asset('/images/eligibilty-image.webp') }}" alt="student icon" width="56" height="32" />
                     </div>
                     <div class="circle left">
                       <div class="icon">
-                        <img src="{{ asset('/images/academic.svg') }}" alt="">
+                        <img src="{{ asset('/images/academic.svg') }}" alt="Cometitions" width="56" height="32">
                       </div>
                       <p>The competition is open for students of <b>class 6 - 12</b> across all education boards</p>
                     </div>
                     <div class="circle center">
                       <div class="icon">
-                        <img src="{{ asset('/images/age.svg') }}" alt="">
+                        <img src="{{ asset('/images/age.svg') }}" alt="Students" width="56" height="32">
                       </div>
                       <p>There is <b>no age restriction</b> for the students in the above classes</p>
                     </div>
                     <div class="circle right">
                       <div class="icon">
-                        <img src="{{ asset('/images/instruction.svg') }}" alt="">
+                        <img src="{{ asset('/images/instruction.svg') }}" alt="Instructions" width="56" height="32">
                       </div>
                       <p>The medium of instructions will be in <b>English & Hindi</b></p>
                     </div>
@@ -153,7 +153,7 @@
                 <div class="item round-sec">
                     <div class="round-title">Round 1</div>
                     <div class="round-icon">
-                        <img src="{{ asset('/images/qualifying-round.svg') }}">
+                        <img src="{{ asset('/images/qualifying-round.svg') }}" alt="Qualifying Round" width="56" height="56">
                     </div>
                     <div class="round-title date">23rd May - 31st July 2025</div>
                     <div class="round-title">Qualifying Round</div>
@@ -162,7 +162,7 @@
                 <div class="item round-sec">
                     <div class="round-title">Round 2</div>
                     <div class="round-icon">
-                        <img src="{{ asset('/images/regional-round.svg') }}">
+                        <img src="{{ asset('/images/regional-round.svg') }}" alt="Regional Round" width="56" height="56">
                     </div>
                     <div class="round-title date">September - October 2025</div>
                     <div class="round-title">Regional Round</div>
@@ -171,7 +171,7 @@
                 <div class="item round-sec">
                     <div class="round-title">Round 3</div>
                     <div class="round-icon">
-                        <img src="{{ asset('/images/final-round.svg') }}">
+                        <img src="{{ asset('/images/final-round.svg') }}" alt="NAO Finals" width="56" height="56">
                     </div>
                     <div class="round-title date">December 2025</div>
                     <div class="round-title">NAO Finals</div>
@@ -185,7 +185,7 @@
             <div class="items-center md:flex md:gap-10">
                 <div class="md:w-1/3 md:order-2">
                     <div class="industry-image">
-                        <img src="images/industry-right.webp">
+                        <img src="images/industry-right.webp" alt="Industry Session" width="364" height="364">
                     </div>
                 </div>
                 <div class="md:w-2/3">
@@ -255,7 +255,7 @@
             <div class="items-center md:flex md:gap-10">
                 <div class="left md:w-1/3">
                     <div class="benefit-image">
-                        <img src="{{ asset('/images/benefit-1.webp') }}">
+                        <img src="{{ asset('/images/benefit-1.webp') }}" alt="Benefits" width="364" height="364">
                     </div>
                 </div>
                 <div class="right md:w-2/3">
@@ -321,7 +321,7 @@
             <div class="items-center md:flex md:gap-10">
                 <div class="left md:w-1/3 md:order-2">
                     <div class="benefit-image school">
-                        <img src="{{ asset('/images/benefit-2.webp') }}">
+                        <img src="{{ asset('/images/benefit-2.webp') }}" alt="Benefits" width="364" height="364">
                     </div>
                 </div>
                 <div class="right md:w-2/3 ">
@@ -473,7 +473,7 @@
                 </div>
                 <div class="relative text-center">
                     <div class="inline-block text-center">
-                        <a href="javascript:void(0);" class="flex items-center common-btn registration-btn2">Register Now
+                        <a href="#" onclick="event.preventDefault();" class="flex items-center common-btn registration-btn2">Register Now
                     <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                     </svg>
@@ -484,11 +484,11 @@
                     <!-- Dropdown Menu -->
                     <div class="hidden dropdown-menu" id="dropdownMenu2">
                       <a href="{{ route('school_register') }}" class="flex items-center px-4 py-2">
-                        <img src="{{ asset('/images/school-ico.svg') }}" alt="School" class="mr-2"/>
+                        <img src="{{ asset('/images/school-ico.svg') }}" alt="School" class="mr-2" width="40" height="40"/>
                         For School
                       </a>
                       <a href="{{ route('register') }}" class="flex items-center px-4 py-2">
-                        <img src="{{ asset('/images/student-ico.svg') }}" alt="Student" class="mr-2"/>
+                        <img src="{{ asset('/images/student-ico.svg') }}" alt="Student" class="mr-2" width="40" height="40"/>
                         For Student
                       </a>
                     </div>
@@ -502,7 +502,7 @@
       <div class="flex justify-between winners-main">
         <div class="flex gap-4 item">
           <div class="nao-logo">
-            <img src="{{ asset('/images/nao-logo.svg') }}" alt="Nao 2025" width="176" />
+            <img src="{{ asset('/images/nao-logo.svg') }}" alt="Nao 2025" width="176" height="100"/>
           </div>
           <div class="common-title">NAO <span>Winners</span></div>
         </div>
@@ -516,9 +516,9 @@
               </a>
               <div class="dropdown">
                 <ul>
-                  <li><a href="javascript:void(0);" class="group-link" data-group="2024-group-1">Group 1</a></li>
-                  <li><a href="javascript:void(0);" class="group-link" data-group="2024-group-2">Group 2</a></li>
-                  <li><a href="javascript:void(0);" class="group-link" data-group="2024-group-3">Group 3</a></li>
+                  <li><a href="#" onclick="event.preventDefault();" class="group-link" data-group="2024-group-1">Group 1</a></li>
+                  <li><a href="#" onclick="event.preventDefault();" class="group-link" data-group="2024-group-2">Group 2</a></li>
+                  <li><a href="#" onclick="event.preventDefault();" class="group-link" data-group="2024-group-3">Group 3</a></li>
                 </ul>
               </div>
             </div>
@@ -530,9 +530,9 @@
               </a>
               <div class="dropdown">
                 <ul>
-                  <li><a href="javascript:void(0);" class="group-link" data-group="2023-group-1">Group 1</a></li>
-                  <li><a href="javascript:void(0);" class="group-link" data-group="2023-group-2">Group 2</a></li>
-                  <li><a href="javascript:void(0);" class="group-link" data-group="2023-group-3">Group 3</a></li>
+                  <li><a href="#" onclick="event.preventDefault();" class="group-link" data-group="2023-group-1">Group 1</a></li>
+                  <li><a href="#" onclick="event.preventDefault();" class="group-link" data-group="2023-group-2">Group 2</a></li>
+                  <li><a href="#" onclick="event.preventDefault();" class="group-link" data-group="2023-group-3">Group 3</a></li>
                 </ul>
               </div>
             </div>
@@ -549,7 +549,7 @@
                 <div class="flex flex-wrap justify-center gap-10">
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/aryan-jaiwal-1.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/aryan-jaiwal-1.webp') }}" alt="aryan" width="282" height="282" />
               </div>
               <div class="sucess-content">
                 <div class="success-title">Aryan Jaiswal</div>
@@ -559,7 +559,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/drishti.png') }}" alt="ritupam" />
+                <img src="{{ asset('/images/drishti.webp') }}" alt="ritupam" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Drishti Verma</div>
@@ -569,7 +569,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/proobi-verma.png') }}" alt="hitarth" />
+                <img src="{{ asset('/images/proobi-verma.webp') }}" alt="hitarth" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Proobi Verma</div>
@@ -587,7 +587,7 @@
               <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/sai-anish.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/sai-anish.webp') }}" alt="aryan" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">V.Sai Anish</div>
@@ -597,7 +597,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/suryanshu.png') }}" alt="ritupam" />
+                <img src="{{ asset('/images/suryanshu.webp') }}" alt="ritupam" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Suryanshu Sundar Subudhi</div>
@@ -607,7 +607,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/ritupam.png') }}" alt="hitarth" />
+                <img src="{{ asset('/images/ritupam.webp') }}" alt="hitarth" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Ritupam Barman</div>
@@ -624,7 +624,7 @@
               <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/samarth.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/samarth.webp') }}" alt="aryan" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Samarth Prakash</div>
@@ -634,7 +634,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/vidhan.png') }}" alt="ritupam" />
+                <img src="{{ asset('/images/vidhan.webp') }}" alt="ritupam" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Vidhan herpalani</div>
@@ -644,7 +644,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/hitarth-sandeep.png') }}" alt="hitarth" />
+                <img src="{{ asset('/images/hitarth-sandeep.webp') }}" alt="hitarth" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Hitarth sandeep kumar</div>
@@ -665,7 +665,7 @@
               <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/saketh.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/saketh.webp') }}" alt="aryan" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Saketh Sandeep</div>
@@ -675,7 +675,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/hiral.png') }}" alt="ritupam" />
+                <img src="{{ asset('/images/hiral.webp') }}" alt="ritupam" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Hiral Sharma</div>
@@ -685,7 +685,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/ishan.png') }}" alt="hitarth" />
+                <img src="{{ asset('/images/ishan.webp') }}" alt="hitarth" width="282" height="282"/>
               </div>
               <div class="sucess-content">
                 <div class="success-title">Ishan Snehi</div>
@@ -702,7 +702,7 @@
               <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/rudra.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/rudra.webp') }}" alt="aryan" width="282" height="282" />
               </div>
               <div class="sucess-content">
                 <div class="success-title">Rudraraju Lohit</div>
@@ -712,7 +712,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/tripathy.png') }}" alt="ritupam" />
+                <img src="{{ asset('/images/tripathy.webp') }}" alt="ritupam" width="282" height="282" />
               </div>
               <div class="sucess-content">
                 <div class="success-title">Tripathy Divyajyoti Senapati</div>
@@ -722,7 +722,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/mayank.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/mayank.webp') }}" alt="aryan" width="282" height="282" />
               </div>
               <div class="sucess-content">
                 <div class="success-title">Mayank Kumar Rai</div>
@@ -739,7 +739,7 @@
               <div class="flex flex-wrap justify-center gap-10 ">
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/sauhdra.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/sauhdra.webp') }}" alt="aryan" width="282" height="282" />
               </div>
               <div class="sucess-content">
                 <div class="success-title">Souhardya Roy</div>
@@ -760,7 +760,7 @@
 
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/anuj-bhattacharya.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/anuj-bhattacharya.webp') }}" alt="aryan"  width="282" height="282" />
               </div>
               <div class="sucess-content">
                 <div class="success-title">Anuj Bhattacharya</div>
@@ -770,7 +770,7 @@
             </div>
             <div class="item">
               <div class="success-img">
-                <img src="{{ asset('/images/ayushman.png') }}" alt="aryan" />
+                <img src="{{ asset('/images/ayushman.webp') }}" alt="aryan" width="282" height="282" />
               </div>
               <div class="sucess-content">
                 <div class="success-title">Ayushman Sahoo</div>
@@ -798,7 +798,7 @@
                         <div class="item">
                             <div class="testimonial-content">
                                 <div class="testi-img">
-                                    <img src="{{ asset('/images/testi-ico.svg') }}">
+                                    <img src="{{ asset('/images/testi-ico.svg') }}" width="44" height="44" alt="testimonial">
                                 </div>
                                 <div class="des">
                                     {!! $testimonial->message !!}

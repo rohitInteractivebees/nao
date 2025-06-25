@@ -104,7 +104,7 @@
                         <a href="javascript:void(0);" class="">X</a>
                     </li>
                         <li class="">
-                            <a href="javascript:void(0);" class="flex items-center">About NAO
+                            <a href="#" onclick="event.preventDefault();" class="flex items-center">About NAO
                                 <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                 </svg>
@@ -125,7 +125,7 @@
                         <li><a href="{{url('/#nao-winners')}}">NAO Winner</a></li>
                         <li><a href="{{url('/testimonial')}}">Write a Testimonial</a></li>
                         <li class="">
-                            <a href="javarscript:void(0);" class="flex items-center">Courses
+                            <a href="#" onclick="event.preventDefault();" class="flex items-center">Courses
                                 <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                 </svg>
@@ -135,7 +135,7 @@
                             </ul>
                         </li>
                         <li class="">
-                            <a href="javarscript:void(0);" class="flex items-center">Media
+                            <a href="#" onclick="event.preventDefault();" class="flex items-center">Media
                                 <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                 </svg>
@@ -157,7 +157,7 @@
                             </ul>
                         </li>
                         <li class="">
-                            <a href="javarscript:void(0);" class="flex items-center">Sample Paper
+                            <a href="#" onclick="event.preventDefault();" class="flex items-center">Sample Paper
                                 <svg class="w-4 h-4 ml-2 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                 </svg>

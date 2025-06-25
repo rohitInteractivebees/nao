@@ -12,7 +12,7 @@
     <div class="container flex items-center justify-between py-4 mx-auto">
       <!-- Logo -->
       <a href="{{url('')}}" aria-label="NAO" class="flex items-center logo-img">
-        <img src="{{ asset('/images/nao-logo-new.png') }}" alt="Logo" class="w-full">
+        <img src="{{ asset('/images/nao-logo-new.png') }}" alt="Logo" class="w-full" width="178" height="100">
       </a>
   <div class="flex items-center gap-4 right-nav">
       <!-- Toggle button for mobile -->

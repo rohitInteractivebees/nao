@@ -286,7 +286,7 @@ class StudentListAdmin extends Component
 
             if (
                 $schoolCode === '' || $studentName === '' || $class === '' || $sessionYear === '' ||
-                $parentName === '' || $country === '' || $state === '' || $city === '' || $pincode === '' || strlen($section) > 15
+                $parentName === '' || $country === '' || $state === '' || $city === '' || strlen($section) > 15
             ) {
                 continue;
             }

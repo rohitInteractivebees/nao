@@ -5,6 +5,7 @@
 
 
     <title>National Automobile Olympiad 2025</title>
+    <meta name="description" content="National Automobile Olympiad 2025" />
 
 <!-- Favicon -->
 <link rel="icon" href="{{ asset('/images/logo.jpg') }}" type="image/x-icon">

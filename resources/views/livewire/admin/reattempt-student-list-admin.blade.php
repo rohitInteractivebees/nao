@@ -3,7 +3,7 @@
         <div class="container">
             <div class="items-center justify-between md:flex">
                 <div class="item">
-                    <div class="mb-0 sub-title">Quiz Re-attempt</div>
+                    <div class="mb-0 sub-title">Interrupted Attempt - Initial</div>
                 </div>
                 <div class="item sm:w-3/4">
                     <div class="item md:flex gap-2 justify-center mt-4 items-center">
@@ -24,7 +24,7 @@
                         <div class="md:w-[25%]">
                             <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 h-[40px] m-auto">
                                 <!--<span><img src="https://naostag.asdc.org.in/assets/images/icon-view.png" alt=""></span>-->
-                                <a href="{{ route('allow.reattemptstudentlistadmin') }}" ><span>View Re-attempted Users</span></a>
+                                <a href="{{ route('allow.reattemptstudentlistadmin') }}" ><span>View Re-Allowed Students</span></a>
                             </button>
                             <!--<a href="{{ route('allow.reattemptstudentlistadmin') }}" class="">-->
                             <!--    View Re-attempted Users-->

@@ -36,6 +36,7 @@ use App\Http\Livewire\Admin\PhaseSubmissionForm;
 use App\Http\Livewire\Admin\PhysciallySubmissonList;
 use App\Http\Livewire\Admin\ReattemptStudentListAdmin;
 use App\Http\Livewire\Admin\AllowReattemptStudentListAdmin;
+use App\Http\Livewire\Admin\SecondAllowReattemptStudentListAdmin;
 use App\Http\Livewire\Admin\StudentPhysciallySubmisson;
 use App\Http\Livewire\Admin\SchoolStudents;
 use App\Http\Livewire\Admin\SchoolStudentsParticipents;
@@ -142,6 +143,7 @@ Route::middleware('auth')->group(function () {
         Route::get('studentlistadmin', StudentListAdmin::class)->name('studentlistadmin');
         Route::get('reattemptlist', ReattemptStudentListAdmin::class)->name('reattemptstudentlistadmin');
         Route::get('allowreattemptlist', AllowReattemptStudentListAdmin::class)->name('allow.reattemptstudentlistadmin');
+        Route::get('secondallowreattemptlist', SecondAllowReattemptStudentListAdmin::class)->name('allow.secondreattemptstudentlistadmin');
         Route::post('/student-upload-csv', [StudentListAdmin::class, 'uploadCsv'])->name('student.upload.csv');
         Route::post('/question-upload-csv', [QuestionList::class, 'uploadCsv'])->name('question.upload.csv');
         Route::post('/update-quiz-status', [UpdateQuizStatus::class, 'updateQuizStatus']);

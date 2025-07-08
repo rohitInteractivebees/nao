@@ -204,7 +204,7 @@
                                 <li><a href="{{ route('class.list') }}"> Class Insights </a></li>
                                 <li><a href="{{ route('quizzes') }}"> Quizzes </a></li>
                                 <li><a href="{{ route('tests') }}">  Quiz Attempt Tracker </a></li>
-                                <li><a href="{{ route('reattemptstudentlistadmin') }}">Quiz Re-attempt  </a></li>
+                                <li><a href="{{ route('reattemptstudentlistadmin') }}">Quiz Interrupted Students  </a></li>
                                 <li><a href="{{ route('testimonial.list') }}">Testimonials  </a></li>
                             </ul>
                         </li>

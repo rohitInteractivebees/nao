@@ -3,7 +3,7 @@
         <div class="container">
             <div class="items-end justify-between md:flex">
                 <div class="item">
-                    <div class="mb-0 sub-title">Re-Allowed for First Attempt</div>
+                    <div class="mb-0 sub-title">Interrupted Attempt - Re-Allowed</div>
                 </div>
                 <div class="item sm:w-3/4">
                     <div class="items-end justify-center gap-3 right md:flex sm:justify-end">
@@ -21,12 +21,7 @@
                         <div class="mt-4 md:w-2/5 md:mt-0">
                             <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name, email, or phone..." class="form-control" style="border: 1px solid #ccc !important;">
                         </div>
-                        <div class="md:w-[25%]">
-                            <button class="items-center mt-4 common-btn admin-btn d-flex common-btn-two md:mt-0 h-[40px] m-auto">
-                                <a href="{{ route('allow.secondreattemptstudentlistadmin') }}" ><span>View Re-Interrupted Students</span></a>
-                            </button>
-                            
-                        </div>
+                        
                     </div>
                 </div>
             </div>
